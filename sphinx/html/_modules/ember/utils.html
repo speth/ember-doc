@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ember.utils &mdash; Ember 1.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.0b1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Ember 1.0b1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ember.utils</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">Cantera</span> <span class="kn">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">_ember</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="Struct"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.Struct">[docs]</a><span class="k">class</span> <span class="nc">Struct</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A dictionary-like data structure where fields are accessible as both</span>
+<span class="sd">    attributes and dictionary keys::</span>
+
+<span class="sd">        &gt;&gt;&gt; s = Struct()</span>
+<span class="sd">        &gt;&gt;&gt; s[&#39;foo&#39;] = 6</span>
+<span class="sd">        &gt;&gt;&gt; s.foo</span>
+<span class="sd">        6</span>
+<span class="sd">        &gt;&gt;&gt; s.bar = &#39;x&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;bar&#39; in s:</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; s[&#39;bar&#39;]</span>
+<span class="sd">        &#39;x&#39;</span>
+<span class="sd">        &gt;&gt;&gt; s.keys()</span>
+<span class="sd">        [&#39;foo&#39;, &#39;bar&#39;]</span>
+
+<span class="sd">    Valid methods of initialization, equivalent to the above:</span>
+
+<span class="sd">        &gt;&gt;&gt; s = Struct(foo=6, bar=&#39;x&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; s = Struct({&#39;foo&#39;: 6, &#39;bar&#39;: &#39;x&#39;})</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="s">&#39;items&#39;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="HDFStruct"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.HDFStruct">[docs]</a><span class="k">class</span> <span class="nc">HDFStruct</span><span class="p">(</span><span class="n">Struct</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Like :class:`Struct`, but converts HDF5 structs to numpy arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;File not found: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="c"># We don&#39;t need to write to the file</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># I don&#39;t know if this is necessary, but it can&#39;t hurt</span>
+
+</div>
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate an :class:`HDFStruct` object from a saved profile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">HDFStruct</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_qdot"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.get_qdot">[docs]</a><span class="k">def</span> <span class="nf">get_qdot</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mi">101325</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the heat release rate along the flame coordinate.</span>
+
+<span class="sd">    :param gas:</span>
+<span class="sd">        A Cantera `Solution` object made using the same mechanism file used</span>
+<span class="sd">        for the simulation.</span>
+<span class="sd">    :param profile:</span>
+<span class="sd">        An :class:`.HDFStruct` object created by loading a `profNNNNNN.h5` file.</span>
+<span class="sd">    :param pressure:</span>
+<span class="sd">        The pressure at which the simulation was run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">T</span><span class="p">)):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">P</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">Y</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">Y</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">hk</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">enthalpies_RT</span><span class="p">()</span> <span class="o">*</span> <span class="n">profile</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">ct</span><span class="o">.</span><span class="n">GasConstant</span>
+        <span class="n">wDot</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">netProductionRates</span><span class="p">()</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wDot</span><span class="p">,</span><span class="n">hk</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="expandProfile"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.expandProfile">[docs]</a><span class="k">def</span> <span class="nf">expandProfile</span><span class="p">(</span><span class="n">prof</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reconstruct derived data associated with a flame profile.</span>
+
+<span class="sd">    :param prof:</span>
+<span class="sd">        An :class:`.HDFStruct` object created by loading a `profNNNNNN.h5` file</span>
+<span class="sd">    :param gas:</span>
+<span class="sd">        A Cantera `Solution` object made using the same mechanism file used</span>
+<span class="sd">        for the simulation.</span>
+
+<span class="sd">    Arrays which are reconstructed:</span>
+
+<span class="sd">        * grid properties: *hh*, *cfp*, *cf*, *cfm*, *rphalf*, *dlj*</span>
+<span class="sd">        * thermodynamic properties: *rho*, *cp*, *Wmx*, *W*</span>
+<span class="sd">        * kinetic properties: *wdot*, *q*</span>
+<span class="sd">        * transport properties: *rhoD*, *k*, *mu*, *Dkt*, *jFick*, *jSoret*, *jCorr*</span>
+<span class="sd">        * other: *X* (mole fractions)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c"># Grid properties</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">gridAlpha</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">gridAlpha</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">gridAlpha</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">prof</span><span class="o">.</span><span class="n">hh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">cfp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">cf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">cfm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">rphalf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">dlj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">rphalf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span><span class="o">**</span><span class="n">prof</span><span class="o">.</span><span class="n">gridAlpha</span>
+
+    <span class="n">hh</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">hh</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">cfp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">cf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">cfm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">dlj</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c"># Thermodynamic / Transport / Kinetic properties</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">P</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="mi">101325</span>
+
+    <span class="n">prof</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">wdot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">Wmx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">Y</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[:,</span><span class="n">j</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="n">P</span><span class="p">)</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
+        <span class="n">hk</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">enthalpies_RT</span><span class="p">()</span> <span class="o">*</span> <span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">ct</span><span class="o">.</span><span class="n">GasConstant</span>
+        <span class="n">wdot</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">netProductionRates</span><span class="p">()</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">wdot</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">wdot</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wdot</span><span class="p">,</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">X</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">moleFractions</span><span class="p">()</span>
+
+        <span class="n">Dbin</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">binaryDiffCoeffs</span><span class="p">()</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">thermalDiffCoeffs</span><span class="p">()</span>
+
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-15</span><span class="p">;</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">moleFractions</span><span class="p">()</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
+            <span class="n">sum1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
+            <span class="n">sum2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="o">/</span><span class="n">K</span><span class="p">)</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">sum1</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eps</span><span class="o">-</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">*</span><span class="n">sum2</span><span class="p">)</span>
+
+        <span class="n">prof</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">thermalConductivity</span><span class="p">()</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">cp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">cp_mass</span><span class="p">()</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">mu</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">viscosity</span><span class="p">()</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">Wmx</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">meanMolecularWeight</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
+                                      <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span>
+                                        <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
+                                        <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+
+    <span class="n">prof</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">molecularWeights</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../run-sim.html#ember.utils.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run a single flame simulation using the parameters set in *conf*.</span>
+
+<span class="sd">    If the script which calls this function is passed the argument *validate*,</span>
+<span class="sd">    then the configuration will be checked for errors and the script will exit</span>
+<span class="sd">    without running the simulation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Validate the configuration and exit</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span>
+        <span class="n">conf</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="n">confString</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">stringify</span><span class="p">()</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+    <span class="n">confOutPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">)</span>
+    <span class="n">confOut</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">confOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">confString</span><span class="p">)</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">_ember</span><span class="o">.</span><span class="n">FlameSolver</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">solver</span>
+
+</div>
+<div class="viewcode-block" id="multirun"><a class="viewcode-back" href="../../run-sim.html#ember.utils.multirun">[docs]</a><span class="k">def</span> <span class="nf">multirun</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run a sequence of flame simulations at different strain rates using the</span>
+<span class="sd">    parameters set in *conf*. The list of strain rates is defined by the</span>
+<span class="sd">    configuration field :attr:`strainParameters.rates`.</span>
+
+<span class="sd">    If the script which calls this function is passed the argument *validate*,</span>
+<span class="sd">    then the configuration will be checked for errors and the script will exit</span>
+<span class="sd">    without running the simulations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Validate the configuration and exit</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span>
+        <span class="n">conf</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="n">confString</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">stringify</span><span class="p">()</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+    <span class="n">strainRates</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">rates</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">strainRates</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;No strain rate list specified&#39;</span>
+        <span class="k">return</span>
+
+    <span class="n">conf</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">rates</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_logFile</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="n">_logFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">_logFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">_logFile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">conf</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">relativeRestartPath</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+
+    <span class="n">conf</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">strainRates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+    <span class="n">Q</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Sc</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">xFlame</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">strainRates</span><span class="p">:</span>
+        <span class="n">restartFile</span> <span class="o">=</span> <span class="s">&#39;prof_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+        <span class="n">historyFile</span> <span class="o">=</span> <span class="s">&#39;out_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+        <span class="n">configFile</span> <span class="o">=</span> <span class="s">&#39;conf_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+
+        <span class="n">restartPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">restartFile</span><span class="p">)</span>
+        <span class="n">historyPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">historyFile</span><span class="p">)</span>
+        <span class="n">configPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">configFile</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">restartPath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">historyPath</span><span class="p">):</span>
+            <span class="c"># If the output files already exist, we simply retrieve the</span>
+            <span class="c"># integral flame properties from the existing profiles and</span>
+            <span class="c"># advance to the next strain rate.</span>
+
+            <span class="n">log</span><span class="p">(</span><span class="s">&#39;Skipping run at strain rate a = </span><span class="si">%g</span><span class="s">&#39;</span>
+                <span class="s">&#39; because the output file &quot;</span><span class="si">%s</span><span class="s">&quot; already exists.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">restartFile</span><span class="p">))</span>
+
+            <span class="c"># Compute integral properties using points from the last half</span>
+            <span class="c"># of the termination-check period</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">HDFStruct</span><span class="p">(</span><span class="n">historyPath</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">conf</span><span class="o">.</span><span class="n">terminationCondition</span><span class="o">.</span><span class="n">steadyPeriod</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+                <span class="n">log</span><span class="p">(</span><span class="s">&#39;Warning: old data file did not contain data&#39;</span>
+                    <span class="s">&#39; spanning the requested period.&#39;</span><span class="p">)</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">Sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Sc</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">xFlame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">xFlame</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="k">del</span> <span class="n">data</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Data is not already present, so run the flame solver for this strain rate</span>
+
+            <span class="n">log</span><span class="p">(</span><span class="s">&#39;Beginning run at strain rate a = </span><span class="si">%g</span><span class="s"> s^-1&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">confOut</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">configPath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">confOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">confString</span><span class="p">)</span>
+
+            <span class="n">conf</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">a</span>
+            <span class="n">conf</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">final</span> <span class="o">=</span> <span class="n">a</span>
+            <span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&#39;log-eps</span><span class="si">%04i</span><span class="s">.txt&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">solver</span> <span class="o">=</span> <span class="n">_ember</span><span class="o">.</span><span class="n">FlameSolver</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+                <span class="n">done</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="n">log</span><span class="p">(</span><span class="s">&#39;Completed run at strain rate a = </span><span class="si">%g</span><span class="s"> s^-1&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">log</span><span class="p">(</span><span class="s">&#39;Integration took </span><span class="si">%.1f</span><span class="s"> seconds.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+            <span class="n">solver</span><span class="o">.</span><span class="n">writeStateFile</span><span class="p">(</span><span class="n">restartFile</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">writeTimeseriesFile</span><span class="p">(</span><span class="n">historyFile</span><span class="p">)</span>
+            <span class="n">tRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">timeVector</span><span class="p">)</span>
+            <span class="n">QRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">heatReleaseRate</span><span class="p">)</span>
+            <span class="n">ScRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">consumptionSpeed</span><span class="p">)</span>
+            <span class="n">xFlameRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">flamePosition</span><span class="p">)</span>
+
+            <span class="c"># Compute integral properties using points from the last half</span>
+            <span class="c"># of the termination-check period</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">tRun</span> <span class="o">&gt;</span> <span class="n">tRun</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">conf</span><span class="o">.</span><span class="n">terminationCondition</span><span class="o">.</span><span class="n">steadyPeriod</span>
+            <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">QRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">Sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ScRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">xFlame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xFlameRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+
+        <span class="n">conf</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span> <span class="o">=</span> <span class="n">restartPath</span>
+
+        <span class="c"># Sort by strain rate:</span>
+        <span class="n">strainRates</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sc</span><span class="p">,</span> <span class="n">xFlame</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">strainRates</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sc</span><span class="p">,</span> <span class="n">xFlame</span><span class="p">))))</span>
+
+        <span class="n">integralFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&quot;integral.h5&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">integralFile</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">integralFile</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">integralFile</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strainRates</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;Q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;Sc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sc</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;xFlame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xFlame</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+</div>
+<span class="k">def</span> <span class="nf">calculateReactantMixture</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">fuel</span><span class="p">,</span> <span class="n">oxidizer</span><span class="p">,</span> <span class="n">equivalenceRatio</span><span class="p">):</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">fuel</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">101325</span><span class="p">)</span>
+    <span class="n">Xf</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">moleFractions</span><span class="p">()</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">oxidizer</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">101325</span><span class="p">)</span>
+    <span class="n">Xo</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">moleFractions</span><span class="p">()</span>
+
+    <span class="n">nC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">nAtoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">())])</span>
+    <span class="n">nO</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">nAtoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;O&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">())])</span>
+    <span class="n">nH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">nAtoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">())])</span>
+
+    <span class="n">Cf</span> <span class="o">=</span> <span class="p">(</span><span class="n">nC</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">Co</span> <span class="o">=</span> <span class="p">(</span><span class="n">nC</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">Of</span> <span class="o">=</span> <span class="p">(</span><span class="n">nO</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">Oo</span> <span class="o">=</span> <span class="p">(</span><span class="n">nO</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">Hf</span> <span class="o">=</span> <span class="p">(</span><span class="n">nH</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">Ho</span> <span class="o">=</span> <span class="p">(</span><span class="n">nH</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">stoichAirFuelRatio</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">Of</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">Cf</span> <span class="o">-</span> <span class="n">Hf</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Oo</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">Co</span> <span class="o">-</span> <span class="n">Ho</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">Xr</span> <span class="o">=</span> <span class="n">Xf</span> <span class="o">*</span> <span class="n">equivalenceRatio</span> <span class="o">+</span> <span class="n">stoichAirFuelRatio</span> <span class="o">*</span> <span class="n">Xo</span>
+    <span class="n">Xr</span> <span class="o">/=</span> <span class="n">Xr</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">Xr</span>
+
+
+<span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">v</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Ember 1.0b1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1092 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Input Files &mdash; Ember 1.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.0b1 documentation" href="index.html" />
+    <link rel="next" title="Running Simulations" href="run-sim.html" />
+    <link rel="prev" title="Flame Model" href="flame-model.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="run-sim.html" title="Running Simulations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="flame-model.html" title="Flame Model"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Input Files</a><ul>
+<li><a class="reference internal" href="#configuration-options">Configuration Options</a></li>
+<li><a class="reference internal" href="#implementation-classes">Implementation Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="flame-model.html"
+                        title="previous chapter">Flame Model</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="run-sim.html"
+                        title="next chapter">Running Simulations</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/input.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ember.input">
+<span id="input-files"></span><h1>Input Files<a class="headerlink" href="#module-ember.input" title="Permalink to this headline">¶</a></h1>
+<p>A set of classes for specifying input parameters for the Ember solver.</p>
+<p>Create a <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a> object to be passed to <a class="reference internal" href="run-sim.html#ember.utils.run" title="ember.utils.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> or
+<a class="reference internal" href="run-sim.html#ember.utils.multirun" title="ember.utils.multirun"><tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt></a>.
+Sane defaults are given for most input parameters. Create a customized
+configuration by passing <a class="reference internal" href="#ember.input.Options" title="ember.input.Options"><tt class="xref py py-class docutils literal"><span class="pre">Options</span></tt></a> objects to the constructor for
+<a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">inputDir</span><span class="o">=</span><span class="s">&quot;somewhere&quot;</span><span class="p">,</span>
+          <span class="n">outputDir</span><span class="o">=</span><span class="s">&quot;somewhereElse&quot;</span><span class="p">),</span>
+    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="section" id="configuration-options">
+<h2>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ember.input.Paths">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Paths</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directories for input and output files</p>
+<dl class="attribute">
+<dt id="ember.input.Paths.inputDir">
+<tt class="descname">inputDir</tt><em class="property"> = 'input'</em><a class="headerlink" href="#ember.input.Paths.inputDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative path to the directory where input files (such as the
+Cantera mechanism file) are located.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Paths.outputDir">
+<tt class="descname">outputDir</tt><em class="property"> = 'run/test1'</em><a class="headerlink" href="#ember.input.Paths.outputDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative path to the directory where output files
+(outNNNNNN.h5, profNNNNNN.h5) will be stored.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Paths.logFile">
+<tt class="descname">logFile</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.Paths.logFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>File to use for log messages. If <em>None</em>, write output to stdout</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.General">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">General</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#General"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.General" title="Permalink to this definition">¶</a></dt>
+<dd><p>High-level configuration options</p>
+<dl class="attribute">
+<dt id="ember.input.General.fixedBurnedVal">
+<tt class="descname">fixedBurnedVal</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.General.fixedBurnedVal" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the temperature and mass fractions on the burned gas
+side of the flame should be held constant. Applicable only to
+premixed flames.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.fixedLeftLocation">
+<tt class="descname">fixedLeftLocation</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.General.fixedLeftLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the position of the leftmost grid point should be held
+constant. Should usually be True for Twin and Curved flame
+configurations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.curvedFlame">
+<tt class="descname">curvedFlame</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.General.curvedFlame" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if solving a radially propagating flame in a cylindrical
+coordinate system.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.twinFlame">
+<tt class="descname">twinFlame</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.General.twinFlame" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if solving a planar flame that is symmetric about the x = 0 plane.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.interpFile">
+<tt class="descname">interpFile</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.General.interpFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input file (HDF5 format) containing the interpolation data needed for
+the quasi2d mode. Contains:</p>
+<ul class="simple">
+<li>vector <em>r</em> (length <em>N</em>)</li>
+<li>vector <em>z</em> (length <em>M</em>)</li>
+<li>Temperature array <em>T</em> (size <em>N</em> x <em>M</em>)</li>
+<li>radial velocity array <em>vr</em> (size <em>N</em> x <em>M</em>)</li>
+<li>axial velocity array <em>vz</em> (size <em>N</em> x <em>M</em>)</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.unburnedLeft">
+<tt class="descname">unburnedLeft</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.General.unburnedLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>True</em> if the unburned fuel/air mixture should be used as the
+left boundary condition. Applicable only to premixed flames.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.fuelLeft">
+<tt class="descname">fuelLeft</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.General.fuelLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>True</em> if the fuel mixture should be used as the left boundary
+condition. Applicable only to diffusion flames.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.continuityBC">
+<tt class="descname">continuityBC</tt><em class="property"> = 'fixedLeft'</em><a class="headerlink" href="#ember.input.General.continuityBC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for setting the boundary condition for the continuity equation
+Valid options are: <tt class="docutils literal"><span class="pre">fixedLeft</span></tt>, <tt class="docutils literal"><span class="pre">fixedRight</span></tt>, <tt class="docutils literal"><span class="pre">fixedQdot</span></tt>,
+<tt class="docutils literal"><span class="pre">fixedTemperature</span></tt>, and <tt class="docutils literal"><span class="pre">stagnationPoint</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.chemistryIntegrator">
+<tt class="descname">chemistryIntegrator</tt><em class="property"> = 'qss'</em><a class="headerlink" href="#ember.input.General.chemistryIntegrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrator to use for the chemical source terms. Choices are
+<tt class="docutils literal"><span class="pre">qss</span></tt> (explicit, quasi-steady state) and <tt class="docutils literal"><span class="pre">cvode</span></tt> (implicit,
+variable-order BDF).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.splittingMethod">
+<tt class="descname">splittingMethod</tt><em class="property"> = 'balanced'</em><a class="headerlink" href="#ember.input.General.splittingMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to use for splitting the convection / diffusion / reaction
+terms. Options are <tt class="docutils literal"><span class="pre">strang</span></tt> and <tt class="docutils literal"><span class="pre">balanced</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.errorStopCount">
+<tt class="descname">errorStopCount</tt><em class="property"> = 100</em><a class="headerlink" href="#ember.input.General.errorStopCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of integration failures to tolerate in the chemistry
+integrator before aborting.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.General.nThreads">
+<tt class="descname">nThreads</tt><em class="property"> = 1</em><a class="headerlink" href="#ember.input.General.nThreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of threads to use for evaluating terms in parallel</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Chemistry">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Chemistry</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Chemistry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Chemistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings pertaining to the Cantera mechanism file</p>
+<dl class="attribute">
+<dt id="ember.input.Chemistry.mechanismFile">
+<tt class="descname">mechanismFile</tt><em class="property"> = 'ucsd-methane.xml'</em><a class="headerlink" href="#ember.input.Chemistry.mechanismFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to the Cantera mechanism file in XML format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Chemistry.phaseID">
+<tt class="descname">phaseID</tt><em class="property"> = 'gas'</em><a class="headerlink" href="#ember.input.Chemistry.phaseID" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the phase to use in the mechanism file.
+Found on a line that looks like:</p>
+<div class="highlight-python"><pre>&lt;phase dim="3" id="gas"&gt;</pre>
+</div>
+<p>in the mechanism file. This is always &#8220;gas&#8221; for mechanisms
+converted using ck2cti and cti2ctml.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Chemistry.transportModel">
+<tt class="descname">transportModel</tt><em class="property"> = 'Mix'</em><a class="headerlink" href="#ember.input.Chemistry.transportModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transport model to use. Valid options are <tt class="docutils literal"><span class="pre">Mix</span></tt>, <tt class="docutils literal"><span class="pre">Multi</span></tt>, and <tt class="docutils literal"><span class="pre">Approx</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Chemistry.threshold">
+<tt class="descname">threshold</tt><em class="property"> = 1e-05</em><a class="headerlink" href="#ember.input.Chemistry.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mole fraction threshold for including species with <tt class="docutils literal"><span class="pre">transportModel</span> <span class="pre">=</span> <span class="pre">&quot;Approx&quot;</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Grid">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Grid</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters controlling the adaptive grid</p>
+<dl class="attribute">
+<dt id="ember.input.Grid.vtol">
+<tt class="descname">vtol</tt><em class="property"> = 0.12</em><a class="headerlink" href="#ember.input.Grid.vtol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum relative scalar variation of each state vector
+component between consecutive grid points. For high accuracy,
+<tt class="docutils literal"><span class="pre">vtol</span> <span class="pre">=</span> <span class="pre">0.08</span></tt>; For minimal accuracy, <tt class="docutils literal"><span class="pre">vtol</span> <span class="pre">=</span> <span class="pre">0.20</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.dvtol">
+<tt class="descname">dvtol</tt><em class="property"> = 0.2</em><a class="headerlink" href="#ember.input.Grid.dvtol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum relative variation of the gradient of each state vector
+component between consecutive grid points. For high accuracy,
+<tt class="docutils literal"><span class="pre">dvtol</span> <span class="pre">=</span> <span class="pre">0.12</span></tt>; For minimal accuracy, <tt class="docutils literal"><span class="pre">dvtol</span> <span class="pre">=</span> <span class="pre">0.4</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.rmTol">
+<tt class="descname">rmTol</tt><em class="property"> = 0.6</em><a class="headerlink" href="#ember.input.Grid.rmTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative tolerance (compared to vtol and dvtol) for grid point removal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.dampConst">
+<tt class="descname">dampConst</tt><em class="property"> = 7</em><a class="headerlink" href="#ember.input.Grid.dampConst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter to limit numerical diffusion in regions with high
+convective velocities.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.gridMin">
+<tt class="descname">gridMin</tt><em class="property"> = 5e-07</em><a class="headerlink" href="#ember.input.Grid.gridMin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum grid spacing [m]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.gridMax">
+<tt class="descname">gridMax</tt><em class="property"> = 0.0002</em><a class="headerlink" href="#ember.input.Grid.gridMax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum grid spacing [m]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.uniformityTol">
+<tt class="descname">uniformityTol</tt><em class="property"> = 2.5</em><a class="headerlink" href="#ember.input.Grid.uniformityTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum ratio of the distances between adjacent pairs of grid
+points.</p>
+<div class="math">
+\[\begin{split}\frac{1}{\tt uniformityTol} &lt; \frac{x_{j+1}-x_j}{x_j-x_{j-1}}
+&lt; {\tt uniformityTol}\end{split}\]</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.absvtol">
+<tt class="descname">absvtol</tt><em class="property"> = 1e-08</em><a class="headerlink" href="#ember.input.Grid.absvtol" title="Permalink to this definition">¶</a></dt>
+<dd><p>State vector components smaller than this value are not
+considered whether to add or remove a grid point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.boundaryTol">
+<tt class="descname">boundaryTol</tt><em class="property"> = 5e-05</em><a class="headerlink" href="#ember.input.Grid.boundaryTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tolerance for each state vector component for extending the
+domain to satisfy zero-gradient conditions at the left and
+right boundaries.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.boundaryTolRm">
+<tt class="descname">boundaryTolRm</tt><em class="property"> = 1e-05</em><a class="headerlink" href="#ember.input.Grid.boundaryTolRm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tolerance for removing points at the boundary. Must be smaller
+than boundaryTol.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.unstrainedDownstreamWidth">
+<tt class="descname">unstrainedDownstreamWidth</tt><em class="property"> = 5</em><a class="headerlink" href="#ember.input.Grid.unstrainedDownstreamWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>For unstrained flames, number of flame thicknesses (based on
+reaction zone width) downstream of the flame to keep the right
+edge of the domain.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.addPointCount">
+<tt class="descname">addPointCount</tt><em class="property"> = 3</em><a class="headerlink" href="#ember.input.Grid.addPointCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of points to add when extending a boundary to satisfy
+boundaryTol.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Grid.centerGridMin">
+<tt class="descname">centerGridMin</tt><em class="property"> = 0.0001</em><a class="headerlink" href="#ember.input.Grid.centerGridMin" title="Permalink to this definition">¶</a></dt>
+<dd><p>For curved or twin flames, the minimum position of the first
+grid point past x = 0.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.InitialCondition">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">InitialCondition</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#InitialCondition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.InitialCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings controlling the initial condition for the integrator. If
+no restartFile is specified, an initial profile is created based
+on the specified fuel and oxidizer compositions.</p>
+<p>If an input file is specified, then setting fuel and oxidizer
+compositions will cause new values to be used only at the
+boundaries of the domain.</p>
+<p>The grid parameters are only used if no restart file is specified.</p>
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.restartFile">
+<tt class="descname">restartFile</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.InitialCondition.restartFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read initial profiles from the specified file, or if &#8216;None&#8217;,
+create a new initial profile.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.relativeRestartPath">
+<tt class="descname">relativeRestartPath</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.InitialCondition.relativeRestartPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the restart file path is relative to Paths.inputDir.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.flameType">
+<tt class="descname">flameType</tt><em class="property"> = 'premixed'</em><a class="headerlink" href="#ember.input.InitialCondition.flameType" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;premixed&#8221;, &#8220;diffusion&#8221;, or &#8220;quasi2d&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.Tu">
+<tt class="descname">Tu</tt><em class="property"> = 300</em><a class="headerlink" href="#ember.input.InitialCondition.Tu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature of the unburned fuel/air mixture for premixed flames [K].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.Tfuel">
+<tt class="descname">Tfuel</tt><em class="property"> = 300</em><a class="headerlink" href="#ember.input.InitialCondition.Tfuel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature of the fuel mixture for diffusion flames [K].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.Toxidizer">
+<tt class="descname">Toxidizer</tt><em class="property"> = 300</em><a class="headerlink" href="#ember.input.InitialCondition.Toxidizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature of the oxidizer mixture for diffusion flames [K].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.fuel">
+<tt class="descname">fuel</tt><em class="property"> = 'CH4:1.0'</em><a class="headerlink" href="#ember.input.InitialCondition.fuel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Molar composition of the fuel mixture.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.oxidizer">
+<tt class="descname">oxidizer</tt><em class="property"> = 'N2:3.76, O2:1.0'</em><a class="headerlink" href="#ember.input.InitialCondition.oxidizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Molar composition of the oxidizer mixture.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.equivalenceRatio">
+<tt class="descname">equivalenceRatio</tt><em class="property"> = 0.75</em><a class="headerlink" href="#ember.input.InitialCondition.equivalenceRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalence ratio of the fuel/air mixture for premixed flames.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.pressure">
+<tt class="descname">pressure</tt><em class="property"> = 101325</em><a class="headerlink" href="#ember.input.InitialCondition.pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thermodynamic pressure [Pa]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.nPoints">
+<tt class="descname">nPoints</tt><em class="property"> = 100</em><a class="headerlink" href="#ember.input.InitialCondition.nPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of points in the initial uniform grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.xLeft">
+<tt class="descname">xLeft</tt><em class="property"> = -0.002</em><a class="headerlink" href="#ember.input.InitialCondition.xLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position of the leftmost point of the initial grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.xRight">
+<tt class="descname">xRight</tt><em class="property"> = 0.002</em><a class="headerlink" href="#ember.input.InitialCondition.xRight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position of the rightmost point of the initial grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.centerWidth">
+<tt class="descname">centerWidth</tt><em class="property"> = 0.0</em><a class="headerlink" href="#ember.input.InitialCondition.centerWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the central plateau in the initial profile
+[m]. For premixed flames, this mixture is composed of oxidizer
+at the unburned gas temperature. Recommended value: 0.0. For
+diffusion flames, this mixture is composed of a stoichiometric
+fuel/air brought to equilibrium at constant enthalpy and
+pressure. Recommended value: 0.002.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.slopeWidth">
+<tt class="descname">slopeWidth</tt><em class="property"> = 0.0005</em><a class="headerlink" href="#ember.input.InitialCondition.slopeWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the slope away from the central plateau in the
+initial profile [m]. Recommended value for premixed flames:
+5e-4. Recommended value for diffusion flames: 1e-3.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.smoothCount">
+<tt class="descname">smoothCount</tt><em class="property"> = 4</em><a class="headerlink" href="#ember.input.InitialCondition.smoothCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of times to run the generated profile through a low pass
+filter before starting the simulation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.haveProfiles">
+<tt class="descname">haveProfiles</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.InitialCondition.haveProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if initial profiles for x,T,U and Y (as well as rVzero) are given</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.WallFlux">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">WallFlux</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#WallFlux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.WallFlux" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="ember.input.WallFlux.Tinf">
+<tt class="descname">Tinf</tt><em class="property"> = 300</em><a class="headerlink" href="#ember.input.WallFlux.Tinf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference temperature for the wall heat flux</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.WallFlux.Kwall">
+<tt class="descname">Kwall</tt><em class="property"> = 100</em><a class="headerlink" href="#ember.input.WallFlux.Kwall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conductance of the wall [W/m^2-K]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Ignition">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Ignition</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Ignition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Ignition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters for an artificial heat release rate function which can
+be used to simulate ignition. The heat release rate is a step
+function in time with a Gaussian spatial distribution.</p>
+<dl class="attribute">
+<dt id="ember.input.Ignition.tStart">
+<tt class="descname">tStart</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.Ignition.tStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Beginning of the external heat release rate pulse [s].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Ignition.duration">
+<tt class="descname">duration</tt><em class="property"> = 0.001</em><a class="headerlink" href="#ember.input.Ignition.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duration of the external heat release rate pulse [s].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Ignition.energy">
+<tt class="descname">energy</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.Ignition.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integral amplitude of the pulse [W/m^2].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Ignition.center">
+<tt class="descname">center</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.Ignition.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of the center of the pulse [m].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Ignition.stddev">
+<tt class="descname">stddev</tt><em class="property"> = 0.0001</em><a class="headerlink" href="#ember.input.Ignition.stddev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Characteristic width (standard deviation) of the pulse [m].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.StrainParameters">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">StrainParameters</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#StrainParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.StrainParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters defining the strain rate as a function of time.</p>
+<p>The strain rate changes linearly from <em>initial</em> to <em>final</em> over a
+period of <em>dt</em> seconds, starting at <em>tStart</em>.</p>
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.initial">
+<tt class="descname">initial</tt><em class="property"> = 400</em><a class="headerlink" href="#ember.input.StrainParameters.initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial strain rate [1/s]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.final">
+<tt class="descname">final</tt><em class="property"> = 400</em><a class="headerlink" href="#ember.input.StrainParameters.final" title="Permalink to this definition">¶</a></dt>
+<dd><p>final strain rate [1/s]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.tStart">
+<tt class="descname">tStart</tt><em class="property"> = 0.0</em><a class="headerlink" href="#ember.input.StrainParameters.tStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>time at which strain rate starts to change [s]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.dt">
+<tt class="descname">dt</tt><em class="property"> = 0.002</em><a class="headerlink" href="#ember.input.StrainParameters.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>time period over which strain rate changes [s]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.rates">
+<tt class="descname">rates</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.StrainParameters.rates" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of strain rates to use for a series of sequential
+integration periods (see <a class="reference internal" href="run-sim.html#ember.utils.multirun" title="ember.utils.multirun"><tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt></a>), with steady-state
+profiles generated for each strain rate before proceeding to the next.
+A typical list of strain rates to use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9216</span><span class="p">,</span> <span class="mi">7680</span><span class="p">,</span> <span class="mi">6144</span><span class="p">,</span> <span class="mi">4608</span><span class="p">,</span> <span class="mi">3840</span><span class="p">,</span> <span class="mi">3072</span><span class="p">,</span> <span class="mi">2304</span><span class="p">,</span> <span class="mi">1920</span><span class="p">,</span> <span class="mi">1536</span><span class="p">,</span>
+         <span class="mi">1152</span><span class="p">,</span> <span class="mi">960</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">576</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">384</span><span class="p">,</span> <span class="mi">288</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span>
+         <span class="mi">96</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.PositionControl">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">PositionControl</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#PositionControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.PositionControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters defining the position of the flame as a function of
+time (for twin / curved flames).</p>
+<p>These parameters are used to adjust the mass flux at r = 0 to move
+the flame toward the desired location. The flame moves from
+<em>xInitial</em> to <em>xFinal</em> over <em>dt</em> seconds, starting at <em>tStart</em>.</p>
+<p>The feedback controller which determines the mass flux uses the
+distance between the current flame location and the desired flame
+location with the gains specified by <em>proportionalGain</em> and
+<em>integralGain</em>.</p>
+<dl class="attribute">
+<dt id="ember.input.PositionControl.xInitial">
+<tt class="descname">xInitial</tt><em class="property"> = 0.0025</em><a class="headerlink" href="#ember.input.PositionControl.xInitial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.PositionControl.xFinal">
+<tt class="descname">xFinal</tt><em class="property"> = 0.0025</em><a class="headerlink" href="#ember.input.PositionControl.xFinal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.PositionControl.dt">
+<tt class="descname">dt</tt><em class="property"> = 0.01</em><a class="headerlink" href="#ember.input.PositionControl.dt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.PositionControl.tStart">
+<tt class="descname">tStart</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.PositionControl.tStart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.PositionControl.proportionalGain">
+<tt class="descname">proportionalGain</tt><em class="property"> = 10</em><a class="headerlink" href="#ember.input.PositionControl.proportionalGain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.PositionControl.integralGain">
+<tt class="descname">integralGain</tt><em class="property"> = 800</em><a class="headerlink" href="#ember.input.PositionControl.integralGain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Times">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Times</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paremeters controlling integrator timesteps and frequency of
+output profiles.</p>
+<dl class="attribute">
+<dt id="ember.input.Times.tStart">
+<tt class="descname">tStart</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.Times.tStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrator start time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.globalTimestep">
+<tt class="descname">globalTimestep</tt><em class="property"> = 2e-05</em><a class="headerlink" href="#ember.input.Times.globalTimestep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timestep used for operator splitting.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.diffusionTimestepMultiplier">
+<tt class="descname">diffusionTimestepMultiplier</tt><em class="property"> = 10</em><a class="headerlink" href="#ember.input.Times.diffusionTimestepMultiplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control for timestep used by the diffusion integrator.
+Actual timestep will be this multiplier times the stability
+limit an explicit integrator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.regridTimeInterval">
+<tt class="descname">regridTimeInterval</tt><em class="property"> = 100</em><a class="headerlink" href="#ember.input.Times.regridTimeInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum amount of time before regridding / adaptation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.regridStepInterval">
+<tt class="descname">regridStepInterval</tt><em class="property"> = 20</em><a class="headerlink" href="#ember.input.Times.regridStepInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of timesteps before regridding / adaptation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.outputStepInterval">
+<tt class="descname">outputStepInterval</tt><em class="property"> = 1</em><a class="headerlink" href="#ember.input.Times.outputStepInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of steps between storing integral flame properties.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.outputTimeInterval">
+<tt class="descname">outputTimeInterval</tt><em class="property"> = 1e-05</em><a class="headerlink" href="#ember.input.Times.outputTimeInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum time between storing integral flame properties.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.profileStepInterval">
+<tt class="descname">profileStepInterval</tt><em class="property"> = 1000</em><a class="headerlink" href="#ember.input.Times.profileStepInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of timesteps before writing flame profiles.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.profileTimeInterval">
+<tt class="descname">profileTimeInterval</tt><em class="property"> = 0.001</em><a class="headerlink" href="#ember.input.Times.profileTimeInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum time between writing flame profiles.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.currentStateStepInterval">
+<tt class="descname">currentStateStepInterval</tt><em class="property"> = 20</em><a class="headerlink" href="#ember.input.Times.currentStateStepInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of timesteps between writing profNow.h5</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Times.terminateStepInterval">
+<tt class="descname">terminateStepInterval</tt><em class="property"> = 10</em><a class="headerlink" href="#ember.input.Times.terminateStepInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of timesteps between checks of the steady-state
+termination conditions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.CvodeTolerances">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">CvodeTolerances</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#CvodeTolerances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.CvodeTolerances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tolerances for the CVODE chemistry integrator</p>
+<dl class="attribute">
+<dt id="ember.input.CvodeTolerances.relativeTolerance">
+<tt class="descname">relativeTolerance</tt><em class="property"> = 1e-06</em><a class="headerlink" href="#ember.input.CvodeTolerances.relativeTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative tolerance for each state variable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.CvodeTolerances.momentumAbsTol">
+<tt class="descname">momentumAbsTol</tt><em class="property"> = 1e-07</em><a class="headerlink" href="#ember.input.CvodeTolerances.momentumAbsTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute tolerance for U velocity</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.CvodeTolerances.energyAbsTol">
+<tt class="descname">energyAbsTol</tt><em class="property"> = 1e-08</em><a class="headerlink" href="#ember.input.CvodeTolerances.energyAbsTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute tolerance for T</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.CvodeTolerances.speciesAbsTol">
+<tt class="descname">speciesAbsTol</tt><em class="property"> = 1e-13</em><a class="headerlink" href="#ember.input.CvodeTolerances.speciesAbsTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute tolerance for species mass fractions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.CvodeTolerances.minimumTimestep">
+<tt class="descname">minimumTimestep</tt><em class="property"> = 1e-18</em><a class="headerlink" href="#ember.input.CvodeTolerances.minimumTimestep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum internal timestep</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.QssTolerances">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">QssTolerances</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#QssTolerances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.QssTolerances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tolerances for the QSS chemistry integrator</p>
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.epsmin">
+<tt class="descname">epsmin</tt><em class="property"> = 0.02</em><a class="headerlink" href="#ember.input.QssTolerances.epsmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accuracy parameter for determining the next timestep.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.epsmax">
+<tt class="descname">epsmax</tt><em class="property"> = 10.0</em><a class="headerlink" href="#ember.input.QssTolerances.epsmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accuracy parameter for repeating timesteps</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.dtmin">
+<tt class="descname">dtmin</tt><em class="property"> = 1e-16</em><a class="headerlink" href="#ember.input.QssTolerances.dtmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum internal timestep</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.dtmax">
+<tt class="descname">dtmax</tt><em class="property"> = 1e-06</em><a class="headerlink" href="#ember.input.QssTolerances.dtmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum internal timestep</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.iterationCount">
+<tt class="descname">iterationCount</tt><em class="property"> = 1</em><a class="headerlink" href="#ember.input.QssTolerances.iterationCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of corrector iterations per timestep.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.abstol">
+<tt class="descname">abstol</tt><em class="property"> = 1e-11</em><a class="headerlink" href="#ember.input.QssTolerances.abstol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute threshold for including each component in the accuracy
+tests.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.minval">
+<tt class="descname">minval</tt><em class="property"> = 1e-60</em><a class="headerlink" href="#ember.input.QssTolerances.minval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lower limit on the value of each state vector component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.QssTolerances.stabilityCheck">
+<tt class="descname">stabilityCheck</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.QssTolerances.stabilityCheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable convergence-based stability check on timestep. Not
+enabled unless <em>iterationCount</em> &gt;= 3.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Debug">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Debug</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control of verbose debugging output</p>
+<dl class="attribute">
+<dt id="ember.input.Debug.adaptation">
+<tt class="descname">adaptation</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.Debug.adaptation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Addition / removal of internal grid points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.regridding">
+<tt class="descname">regridding</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.Debug.regridding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Addition / removal of boundary grid points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.timesteps">
+<tt class="descname">timesteps</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.Debug.timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print current time after each global timestep.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.veryVerbose">
+<tt class="descname">veryVerbose</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.Debug.veryVerbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable extensive timestep debugging output. Automatically
+enabled for debug builds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.flameRadiusControl">
+<tt class="descname">flameRadiusControl</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.Debug.flameRadiusControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about the flame radius feedback controller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.sourcePoint">
+<tt class="descname">sourcePoint</tt><em class="property"> = -1</em><a class="headerlink" href="#ember.input.Debug.sourcePoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grid point to print debugging information about at <em>sourceTime</em>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.sourceTime">
+<tt class="descname">sourceTime</tt><em class="property"> = 0.0</em><a class="headerlink" href="#ember.input.Debug.sourceTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time at which to print extensive debugging information about
+the source term at j = <em>sourcePoint</em>, then terminate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.OutputFiles">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">OutputFiles</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#OutputFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.OutputFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control the contents of the periodic output files</p>
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.heatReleaseRate">
+<tt class="descname">heatReleaseRate</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.OutputFiles.heatReleaseRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include the heat release rate as a function of space</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.timeDerivatives">
+<tt class="descname">timeDerivatives</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.OutputFiles.timeDerivatives" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include the reaction / diffusion / convection contributions to
+the net time derivative of each state variable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.extraVariables">
+<tt class="descname">extraVariables</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.OutputFiles.extraVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include variables such as transport properties and grid
+parameters that can be recomputed from the state variables.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.auxiliaryVariables">
+<tt class="descname">auxiliaryVariables</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.OutputFiles.auxiliaryVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include other miscellaneous variables</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.firstFileNumber">
+<tt class="descname">firstFileNumber</tt><em class="property"> = 0</em><a class="headerlink" href="#ember.input.OutputFiles.firstFileNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to generate a continuous sequence of output files after
+restarting the code.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.saveProfiles">
+<tt class="descname">saveProfiles</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.OutputFiles.saveProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate <tt class="docutils literal"><span class="pre">profNNNNNN.h5</span></tt> files</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.debugIntegratorStages">
+<tt class="descname">debugIntegratorStages</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.OutputFiles.debugIntegratorStages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write profiles after each stage of the split integrator.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.TerminationCondition">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">TerminationCondition</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#TerminationCondition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.TerminationCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrate until either:</p>
+<ol class="arabic simple">
+<li><em>tEnd</em> is reached</li>
+<li>The heat release rate ( <em>measurement</em> ) reaches a steady-state
+value to within <em>tolerance</em> (RMS) over a time period of
+<em>steadyPeriod</em>, or the mean heat release rate over <em>steadyPeriod</em>
+is less than <em>abstol</em>.</li>
+</ol>
+<p>To disable steady-state check, set <tt class="docutils literal"><span class="pre">measurement</span> <span class="pre">=</span> <span class="pre">None</span></tt>, and give a
+sane value for <em>tEnd</em>.</p>
+<dl class="attribute">
+<dt id="ember.input.TerminationCondition.tEnd">
+<tt class="descname">tEnd</tt><em class="property"> = 0.8</em><a class="headerlink" href="#ember.input.TerminationCondition.tEnd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.TerminationCondition.measurement">
+<tt class="descname">measurement</tt><em class="property"> = 'Q'</em><a class="headerlink" href="#ember.input.TerminationCondition.measurement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.TerminationCondition.tolerance">
+<tt class="descname">tolerance</tt><em class="property"> = 0.0001</em><a class="headerlink" href="#ember.input.TerminationCondition.tolerance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.TerminationCondition.abstol">
+<tt class="descname">abstol</tt><em class="property"> = 0.5</em><a class="headerlink" href="#ember.input.TerminationCondition.abstol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.TerminationCondition.steadyPeriod">
+<tt class="descname">steadyPeriod</tt><em class="property"> = 0.002</em><a class="headerlink" href="#ember.input.TerminationCondition.steadyPeriod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="implementation-classes">
+<h2>Implementation Classes<a class="headerlink" href="#implementation-classes" title="Permalink to this headline">¶</a></h2>
+<p>These classes are used to define configurable options.</p>
+<dl class="class">
+<dt id="ember.input.Options">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Options</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for elements of <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Config">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Config</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object consisting of a set of Options objects which define a
+complete set of configuration options needed to run the flame
+solver.</p>
+<dl class="method">
+<dt id="ember.input.Config.evaluate">
+<tt class="descname">evaluate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace all of the <a class="reference internal" href="#ember.input.Option" title="ember.input.Option"><tt class="xref py py-class docutils literal"><span class="pre">Option</span></tt></a> objects with their values so that
+they can be used by the C++ extension, in
+<a class="reference internal" href="#ember.input.Config.generateInitialCondition" title="ember.input.Config.generateInitialCondition"><tt class="xref py py-meth docutils literal"><span class="pre">Config.generateInitialCondition()</span></tt></a>, etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ember.input.Config.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform any steps that need to be done before this object can be used
+to create a FlameSolver, such as generating initial reactant profiles.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ember.input.Config.checkRateConstants">
+<tt class="descname">checkRateConstants</tt><big>(</big><em>gas</em>, <em>T</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.checkRateConstants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.checkRateConstants" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function for finding reactions with suspiciously high
+rate constants at low temperatures.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ember.input.Config.generateInitialCondition">
+<tt class="descname">generateInitialCondition</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.generateInitialCondition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.generateInitialCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate initial profiles for temperature, species mass fractions, and
+velocity using the specified fuel and oxidizer compositions and flame
+configuration parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.Option">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Option</tt><big>(</big><em>default</em>, <em>choices=None</em>, <em>min=None</em>, <em>max=None</em>, <em>nullable=False</em>, <em>label=None</em>, <em>level=0</em>, <em>filter=None</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of this class are used as class members of descendants of class
+<a class="reference internal" href="#ember.input.Options" title="ember.input.Options"><tt class="xref py py-class docutils literal"><span class="pre">Options</span></tt></a> to represent a single configurable value. When a
+user-specified value for an option is specified (as a keyword argument to
+the constructor of a class derived from <a class="reference internal" href="#ember.input.Options" title="ember.input.Options"><tt class="xref py py-class docutils literal"><span class="pre">Options</span></tt></a>), that value is
+stored in this object and validated to make sure it satisfies any
+applicable constraints.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>default</strong> &#8211; The default value for this option</li>
+<li><strong>choices</strong> &#8211; A sequence of valid values for this option, e.g. <tt class="docutils literal"><span class="pre">['Mix',</span> <span class="pre">'Multi']</span></tt>.
+The <em>default</em> choice is automatically included in <em>choices</em>.</li>
+<li><strong>min</strong> &#8211; The minimum valid value for this option</li>
+<li><strong>max</strong> &#8211; The maximum valid value for this option</li>
+<li><strong>nullable</strong> &#8211; Set to <em>True</em> if <em>None</em> is a valid value for this option, regardless
+of any other restrictions. Automatically set to <em>True</em> if <em>default</em> is
+<em>None</em>.</li>
+<li><strong>label</strong> &#8211; A human readable label to be used in the GUI in place of the attribute
+name to which this Option is assigned.</li>
+<li><strong>level</strong> &#8211; A number from 0-3 indicating the obscurity level of this option. Used
+to selectively hide advanced options in the GUI. 0 is always shown.
+3 is never shown.</li>
+<li><strong>filter</strong> &#8211; A function that takes a <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a> object as an argument and
+returns <em>True</em> if this option should be enabled</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Requiring values of a particular type is done by using one of the derived
+classes: <a class="reference internal" href="#ember.input.StringOption" title="ember.input.StringOption"><tt class="xref py py-class docutils literal"><span class="pre">StringOption</span></tt></a>, <a class="reference internal" href="#ember.input.BoolOption" title="ember.input.BoolOption"><tt class="xref py py-class docutils literal"><span class="pre">BoolOption</span></tt></a>, <a class="reference internal" href="#ember.input.IntegerOption" title="ember.input.IntegerOption"><tt class="xref py py-class docutils literal"><span class="pre">IntegerOption</span></tt></a>,
+<a class="reference internal" href="#ember.input.FloatOption" title="ember.input.FloatOption"><tt class="xref py py-class docutils literal"><span class="pre">FloatOption</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.StringOption">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">StringOption</tt><big>(</big><em>default</em>, <em>choices=None</em>, <em>min=None</em>, <em>max=None</em>, <em>nullable=False</em>, <em>label=None</em>, <em>level=0</em>, <em>filter=None</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#StringOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.StringOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>An option whose value must be a string.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.BoolOption">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">BoolOption</tt><big>(</big><em>default</em>, <em>choices=None</em>, <em>min=None</em>, <em>max=None</em>, <em>nullable=False</em>, <em>label=None</em>, <em>level=0</em>, <em>filter=None</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#BoolOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.BoolOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>An option whose value must be a boolean value.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.IntegerOption">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">IntegerOption</tt><big>(</big><em>default</em>, <em>choices=None</em>, <em>min=None</em>, <em>max=None</em>, <em>nullable=False</em>, <em>label=None</em>, <em>level=0</em>, <em>filter=None</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#IntegerOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.IntegerOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>An option whose value must be a integer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ember.input.FloatOption">
+<em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">FloatOption</tt><big>(</big><em>default</em>, <em>choices=None</em>, <em>min=None</em>, <em>max=None</em>, <em>nullable=False</em>, <em>label=None</em>, <em>level=0</em>, <em>filter=None</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#FloatOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.FloatOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>An option whose value must be a floating point number.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="run-sim.html" title="Running Simulations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="flame-model.html" title="Flame Model"
+             >previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>C++ Implementation Docs &mdash; Ember 1.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.0b1 documentation" href="index.html" />
+    <link rel="prev" title="Post-Processing" href="postprocessing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="postprocessing.html" title="Post-Processing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="postprocessing.html"
+                        title="previous chapter">Post-Processing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/cxx-implementation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="c-implementation-docs">
+<h1>C++ Implementation Docs<a class="headerlink" href="#c-implementation-docs" title="Permalink to this headline">¶</a></h1>
+<p>The one-dimensonal flame model is primarily implemented by the following C++
+classes:</p>
+<ul class="simple">
+<li><a class="reference external" href="./../../doxygen/html/classFlameSolver.html">FlameSolver</a> - Main integrator driver</li>
+<li>Operator split systems of equations:<ul>
+<li><a class="reference external" href="./../../doxygen/html/classSourceSystem.html">SourceSystem</a> - chemical source (reaction) term<ul>
+<li><a class="reference external" href="./../../doxygen/html/classSourceSystemCVODE.html">SourceSystemCVODE</a> - used with <em>sundialsCVODE</em></li>
+<li><a class="reference external" href="./../../doxygen/html/classSourceSystemQSS.html">SourceSystemQSS</a> - used with <em>QSSIntegrator</em></li>
+</ul>
+</li>
+<li><a class="reference external" href="./../../doxygen/html/classDiffusionSystem.html">DiffusionSystem</a> - diffusion term for a single component</li>
+<li><a class="reference external" href="./../../doxygen/html/classConvectionSystemSplit.html">ConvectionSystemSplit</a> - Wrapper that integrates convection terms for
+all components<ul>
+<li><a class="reference external" href="./../../doxygen/html/classConvectionSystemY.html">ConvectionSystemY</a> - convection term for a single species</li>
+<li><a class="reference external" href="./../../doxygen/html/classConvectionSystemUTW.html">ConvectionSystemUTW</a> - convection term for velocity, temperature,
+and molecular weight</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Integrators:<ul>
+<li><a class="reference external" href="./../../doxygen/html/classsundialsCVODE.html">sundialsCVODE</a> - Integrator used for convection systems and
+<em>SourceSystemCVODE</em></li>
+<li><a class="reference external" href="./../../doxygen/html/classQSSIntegrator.html">QSSIntegrator</a> - Integrator used with <em>SourceSystemQSS</em></li>
+</ul>
+</li>
+<li>Other classes of interest:<ul>
+<li><a class="reference external" href="./../../doxygen/html/classoneDimGrid.html">oneDimGrid</a> - an adaptive, non-uniform one-dimensional grid</li>
+<li><a class="reference external" href="./../../doxygen/html/classGridBased.html">GridBased</a> - base class used with several other classes to provide
+access to the grid parameters</li>
+<li><a class="reference external" href="./../../doxygen/html/classconfigOptions.html">configOptions</a> - options used to set up the <em>FlameSolver</em></li>
+<li><a class="reference external" href="./../../doxygen/html/classCanteraGas.html">CanteraGas</a> - Wrapper around a set of Cantera objects used to compute
+thermodynamic, kinetic, and transport properties of an ideal gas mixture.</li>
+</ul>
+</li>
+</ul>
+<p>For the full list of classes, see the <a class="reference external" href="../../doxygen/html/annotated.html">C++ Class List</a>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="postprocessing.html" title="Post-Processing"
+             >previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
