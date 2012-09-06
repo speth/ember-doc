@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Governing Equations &mdash; Ember 1.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.0b1 documentation" href="index.html" />
+    <link rel="up" title="Flame Model" href="flame-model.html" />
+    <link rel="next" title="Boundary Conditions" href="boundary-conditions.html" />
+    <link rel="prev" title="Strained Flame Configurations" href="flame-configurations.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="boundary-conditions.html" title="Boundary Conditions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="flame-configurations.html" title="Strained Flame Configurations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li>
+          <li><a href="flame-model.html" accesskey="U">Flame Model</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Governing Equations</a><ul>
+<li><a class="reference internal" href="#momentum-equation">Momentum Equation</a></li>
+<li><a class="reference internal" href="#continuity-equation">Continuity Equation</a></li>
+<li><a class="reference internal" href="#species-equation">Species Equation</a></li>
+<li><a class="reference internal" href="#energy-equation">Energy Equation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="flame-configurations.html"
+                        title="previous chapter">Strained Flame Configurations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="boundary-conditions.html"
+                        title="next chapter">Boundary Conditions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/derivation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="governing-equations">
+<span id="sec-governing-equations"></span><h1>Governing Equations<a class="headerlink" href="#governing-equations" title="Permalink to this headline">¶</a></h1>
+<p>The one-dimensional governing equations for the elemental flame are derived
+here. We begin with the general 3D governing equations for reacting flow as
+given by Kee (Kee2003) and reduce them to a single dimension normal to the
+flame using a boundary layer approximation and solving along the stagnation
+streamline <span class="math">\(z=0\)</span>.</p>
+<p>Consider the coordinate system <span class="math">\((z, r, \theta)\)</span> with velocity components
+<span class="math">\((u,v,w)\)</span> and let <span class="math">\(\hat{r}\)</span> be the flame normal. We may allow this coordinate
+system to be either Cartesian or cylindrical through the introduction of a
+parameter <span class="math">\(\alpha\)</span>, where <span class="math">\(\alpha=1\)</span> for the cylindrical case and <span class="math">\(\alpha=0\)</span>
+for the Cartesian case. In making the boundary layer approximation, the
+tangential variations of all quantities except the pressure <span class="math">\(p\)</span> and tangential
+velocity <span class="math">\(u\)</span> are neglected. The velocity and all variations in the <span class="math">\(\theta\)</span>
+direction are zero. For an arbitrary scalar <span class="math">\(F\)</span>, the gradient and substantial
+derivative are defined as:</p>
+<div class="math" id="equation-gradient">
+<span class="eqno">(1)</span>\[     \nabla F\equiv\hat{z}\frac{\partial F}{\partial z}
+     + \hat{r}\frac{\partial F}{\partial r}\]</div>
+<div class="math" id="equation-subst-deriv">
+<span class="eqno">(2)</span>\[       \frac{DF}{Dt}=\frac{\partial F}{\partial t}+{\bf v}\cdot\nabla F
+           =\frac{\partial F}{\partial t}+u\frac{\partial F}{\partial z}
+           +v\frac{\partial F}{\partial r}\]</div>
+<p>The divergence of a vector <span class="math">\(\mathbf{F}\)</span> is defined as:</p>
+<div class="math" id="equation-divergence">
+<span class="eqno">(3)</span>\[\nabla\cdot\mathbf{F}\equiv\frac{\partial F_{z}}{\partial z}
++ \frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left(r^{\alpha}F_{r}\right)\]</div>
+<p>where <span class="math">\(F_{z}\)</span> and <span class="math">\(F_{r}\)</span> are respectively the <span class="math">\(z\)</span> and <span class="math">\(r\)</span> components of
+<span class="math">\(\mathbf{F}\)</span>.</p>
+<div class="section" id="momentum-equation">
+<h2>Momentum Equation<a class="headerlink" href="#momentum-equation" title="Permalink to this headline">¶</a></h2>
+<p>First, we will focus on the momentum equation. In general three-dimensional
+form, it is:</p>
+<div class="math">
+\[\rho\frac{D\mathbf{v}}{Dt}={\bf f}+\nabla\cdot\mathsf{T}\]</div>
+<p>where <span class="math">\(\mathsf{T}\)</span> is the stress tensor:</p>
+<div class="math">
+\[\begin{split}\mathsf{T}=\left(\begin{array}{ccc}
+   -p+2\mu\frac{\partial u}{\partial z}+\kappa\nabla\cdot\mathbf{v} &amp;
+   \mu\left(\frac{\partial u}{\partial r}+\frac{\partial v}{\partial z}\right) &amp;
+   \mu\left(\frac{1}{r^{\alpha}}\frac{\partial u}{\partial\theta}+\frac{\partial w}{\partial z}\right)\\
+   \mu\left(\frac{\partial u}{\partial r}+\frac{\partial v}{\partial z}\right) &amp;
+   -p+2\mu\frac{\partial v}{\partial r} +\kappa\nabla\cdot\mathbf{v} &amp;
+   \mu\left(\frac{\partial w}{\partial r}-\alpha\frac{w}{r}+\frac{1}{r^{\alpha}}\frac{\partial v}{\partial\theta}\right)\\
+   \mu\left(\frac{1}{r^{\alpha}}\frac{\partial u}{\partial\theta}+\frac{\partial w}{\partial z}\right) &amp;
+   \mu\left(\frac{\partial w}{\partial r}-\alpha\frac{w}{r}+\frac{1}{r^{\alpha}}\frac{\partial v}{\partial\theta}\right) &amp;
+   -p+2\mu\left(\frac{1}{r^{\alpha}}\frac{\partial w}{\partial\theta}+\alpha\frac{v}{r}\right)+\kappa\nabla\cdot\mathbf{v}
+\end{array}\right)\end{split}\]</div>
+<p>and the body force <span class="math">\(\mathbf{f}=\mathbf{0}\)</span>. Here, <span class="math">\(p\)</span> is the pressure and <span class="math">\(\mu\)</span>
+is the dynamic viscosity of the mixture. Setting velocities and derivatives in
+the <span class="math">\(\theta\)</span> direction to zero, the <span class="math">\(z\)</span>-momentum equation is:</p>
+<div class="math">
+\[\rho\frac{\partial u}{\partial t} +
+\rho u\frac{\partial u}{\partial z}+\rho v\frac{\partial u}{\partial r} =
+\frac{\partial}{\partial z}\left[-p+2\mu\frac{\partial u}{\partial z}
++\kappa\nabla\cdot\mathbf{v}\right]+
+\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\mu\left(\frac{\partial u}{\partial r}
++\frac{\partial v}{\partial z}\right)\right]\]</div>
+<p>The term containing the second coefficient of viscosity, <span class="math">\(\kappa\nabla\cdot\mathbf{v}\)</span>,
+is taken to be zero. Additionally, <span class="math">\(\partial v/\partial z\)</span> and <span class="math">\(\partial^{2}u/\partial z^{2}\)</span>
+are neglected by the boundary layer approximation, giving the simplified
+<span class="math">\(z\)</span>-momentum equation:</p>
+<div class="math">
+\[\rho\frac{\partial u}{\partial t} +
+\rho u\frac{\partial u}{\partial z} +
+\rho v\frac{\partial u}{\partial r}=
+-\frac{\partial p}{\partial z}
++\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\mu\frac{\partial u}{\partial r}\right]\]</div>
+<p>The pressure gradient outside the boundary layer may be obtained by substituting
+the potential flow solution for <span class="math">\(u\)</span> and <span class="math">\(v\)</span> into the momentum equation:</p>
+<div class="math">
+\[\rho_{\infty}z\frac{da}{dt}+\rho_{\infty}a^{2}z=
+-\frac{\partial p}{\partial z}\]</div>
+<p>where <span class="math">\(\rho_{\infty}\)</span> is the density of the reactants mixture. By the boundary
+layer approximation, this must be the pressure gradient inside the boundary
+layer as well.</p>
+<p>The <span class="math">\(z\)</span> dependence of <span class="math">\(u\)</span> may be found similarly:</p>
+<div class="math">
+\[\rho\frac{\partial u}{\partial t}+\rho u\frac{\partial u}{\partial z}+
+\rho v\frac{\partial u}{\partial r}=\rho_{\infty}z\frac{da}{dt}+
+\rho_{\infty}a^{2}z+\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\mu\frac{\partial u}{\partial r}\right]\]</div>
+<p>Now, introduce the notation <span class="math">\(U\equiv ua/u_{\infty}\)</span>. Using the potential flow
+velocity field, we can then write:</p>
+<div class="math">
+\[u=\frac{Uu_{\infty}}{a}=\frac{Uaz}{a}=Uz\]</div>
+<p>Substituting this into the momentum equation gives:</p>
+<div class="math">
+\[\rho z\frac{\partial U}{\partial t}
++\rho Uz\left(z\frac{\partial U}{\partial z}
++U\right)+\rho vz\frac{\partial U}{\partial r}
+=\rho_{\infty}z\frac{da}{dt}+\rho_{\infty}a^{2}z
++\frac{z}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\mu\frac{\partial U}{\partial r}\right]\]</div>
+<p>Dividing by <span class="math">\(z\)</span> and solving along the stagnation streamline <span class="math">\(z=0\)</span>, the momentum
+equation simplifies to:</p>
+<div class="math">
+\[\rho\frac{\partial U}{\partial t}+\rho U^{2}
++\rho v\frac{\partial U}{\partial r}=
+\rho_{\infty}\frac{da}{dt}+\rho_{\infty}a^{2}
++\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\mu\frac{\partial U}{\partial r}\right]\]</div>
+</div>
+<div class="section" id="continuity-equation">
+<h2>Continuity Equation<a class="headerlink" href="#continuity-equation" title="Permalink to this headline">¶</a></h2>
+<p>Now consider the mass conservation equation:</p>
+<div class="math">
+\[\frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho{\bf v}\right)=0\]</div>
+<p>Expanding the divergence using Equation <a href="#equation-divergence">(3)</a> gives:</p>
+<div class="math">
+\[\frac{\partial\rho}{\partial t}
++\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left(r^{\alpha}\rho v\right)
++\rho\frac{\partial u}{\partial z}=0\]</div>
+<p>Making the substitution for the similarity variable <span class="math">\(U\)</span>, the mass conservation
+equation becomes:</p>
+<div class="math">
+\[\frac{\partial\rho}{\partial t}
++\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left(r^{\alpha}\rho v\right)+\rho U=0\]</div>
+</div>
+<div class="section" id="species-equation">
+<h2>Species Equation<a class="headerlink" href="#species-equation" title="Permalink to this headline">¶</a></h2>
+<p>The general form of the species continuity equation is:</p>
+<div class="math">
+\[\rho\frac{DY_{k}}{Dt}=-\nabla\cdot\mathbf{j}_{k}+\dot{\omega}_{k}W_{k}\]</div>
+<p>where <span class="math">\(Y_{k}\)</span> is the mass fraction of species <span class="math">\(k\)</span>, <span class="math">\(\dot{\omega}_{k}\)</span> is the
+molar production rate of species <span class="math">\(k\)</span>, <span class="math">\(W_{k}\)</span> is the molecular weight of species
+<span class="math">\(k\)</span>, and the diffusion mass flux <span class="math">\(\mathbf{j}_{k}\)</span> is defined as:</p>
+<div class="math">
+\[\mathbf{j}_{k} =  -\frac{\rho W_{k}}{\bar{W}}D_{km}\nabla X_{k}
+   -\frac{D_{k}^{T}}{T}\nabla T+Y_{k}\mathbf{j}'
+=  -\rho D_{km}\left(\nabla Y_{k}+\frac{Y_{k}}{\bar{W}}\nabla\bar{W}\right)
+   -\frac{D_{k}^{T}}{T}\nabla T+Y_{k}\mathbf{j}'\]</div>
+<p>Here, <span class="math">\(T\)</span> is the temperature, <span class="math">\(X_{k}\)</span> are the species mole fractions, and
+<span class="math">\(D_{km}\)</span> and <span class="math">\(D_{k}^{T}\)</span> are respectively the mixture-averaged diffusion
+coefficient and the thermal diffusion coefficient of species <span class="math">\(k\)</span>. Note that
+this definition of the diffusion mass flux includes the thermal diffusion
+(Soret) effect. The final term introduces a correction, <span class="math">\(\mathbf{j}'\)</span>, which
+corrects for the inaccuracy of mixture-averaged model so that the requirement
+<span class="math">\(\sum\mathbf{j}_{k}=0\)</span> is satisfied. In order to calculate <span class="math">\(\mathbf{j}'\)</span>, we
+first calculate the diffusion mass fluxes ignoring its contribution:</p>
+<div class="math">
+\[\mathbf{j}_{k}^{*}=-\rho D_{km}\left(\nabla Y_{k}
++\frac{Y_{k}}{\bar{W}}\nabla\bar{W}\right)-\frac{D_{k}^{T}}{T}\nabla T\]</div>
+<p>Then, <span class="math">\(\mathbf{j}'\)</span> is calculated as:</p>
+<div class="math">
+\[\mathbf{j}'=-\sum_{k}\mathbf{j}_{k}^{*}\]</div>
+<p>Substituting the gradient, substantial derivative and divergence as defined in
+equations <a href="#equation-gradient">(1)</a>, <a href="#equation-subst-deriv">(2)</a> and <a href="#equation-divergence">(3)</a>, respectively,
+and setting the <span class="math">\(z\)</span>-derivatives to zero, the species equation becomes:</p>
+<div class="math" id="equation-species">
+<span class="eqno">(4)</span>\[  \rho\frac{\partial Y_{k}}{\partial t}+V\frac{\partial Y_{k}}{\partial r}=
+  -\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}j_{k}\right]
+  +\dot{\omega}_{k}W_{k}\]</div>
+<p>and the diffusion mass flux is:</p>
+<div class="math">
+\[j_{k}=-\rho D_{km}\left(\frac{\partial Y_{k}}{\partial r}+
+\frac{Y_{k}}{\bar{W}}\frac{\partial\bar{W}}{\partial r}\right)-
+\frac{D_{k}^{T}}{T}\frac{\partial T}{\partial r}+Y_{k}j'\]</div>
+</div>
+<div class="section" id="energy-equation">
+<h2>Energy Equation<a class="headerlink" href="#energy-equation" title="Permalink to this headline">¶</a></h2>
+<p>Finally we turn our attention to the energy conservation equation. The general
+form of the energy equation, expressed in terms of the enthalpy, is:</p>
+<div class="math">
+\[\rho\frac{Dh}{Dt}=\frac{Dp}{Dt}-\nabla\cdot\mathbf{q}+\Phi\]</div>
+<p>where <span class="math">\(h\)</span> is the enthalpy, <span class="math">\(q\)</span> is the heat flux and <span class="math">\(\Phi\)</span> is the viscous work.
+By the zero-Mach-number assumption, we neglect the effect of pressure variations,
+so <span class="math">\(Dp/Dt=0\)</span>. The viscous work term is also assumed to be much smaller than the
+energy released by chemical reactions and is therefore neglected. Expanding the
+substantial derivative of the enthalpy in terms of <span class="math">\(T\)</span>, <span class="math">\(Y_{k}\)</span> and specific
+heat capacity <span class="math">\(c_{p}\)</span> gives:</p>
+<div class="math">
+\[\frac{Dh}{Dt}=\sum_{k=1}^{K}\left(Y_{k}\frac{Dh_{k}}{Dt}+h_{k}\frac{DY_{k}}{Dt}\right)=
+c_{p}\frac{DT}{Dt}+\sum_{k=1}^{K}h_{k}\frac{DY_{k}}{Dt}\]</div>
+<p>The total number of species is <span class="math">\(K\)</span>. The substantial derivative of <span class="math">\(Y_{k}\)</span> is
+replaced using the species equation <a href="#equation-species">(4)</a>. With these substitutions,
+the energy equation then becomes:</p>
+<div class="math">
+\[\rho c_{p}\frac{DT}{Dt}
++\sum_{k=1}^{K}h_{k}\left(-\nabla\cdot{\bf j}_{k}
++\dot{\omega}_{k}W_{k}\right)=-\nabla\cdot\mathbf{q}\]</div>
+<p>The heat flux vector <span class="math">\(\mathbf{q}\)</span> is:</p>
+<div class="math">
+\[\mathbf{q}=-\lambda\nabla T+\sum_{k=1}^{K}h_{k}j_{k}+\mathbf{q}_{r}\]</div>
+<p>where <span class="math">\(\lambda\)</span> is the thermal conductivity of the mixture and the radiation
+heat flux <span class="math">\(\mathbf{q}_{r}\)</span> is neglected in the present model. Also neglected is
+the Dufour heat flux, proportional to the gradients in species concentrations,
+which is typically three orders of magnitude smaller than the Fourier heat flux,
+<span class="math">\(\lambda\nabla T\)</span>. Substituting the heat flux vector into the energy equation,
+and noting that <span class="math">\(\hat{h}_{k}=h_{k}W_{k}\)</span> where <span class="math">\(\hat{h}_{k}\)</span> is the molar
+enthalpy, we obtain:</p>
+<div class="math">
+\[\rho c_{p}\frac{DT}{Dt}+\sum_{k=1}^{K}\hat{h}_{k}\dot{\omega}_{k}-
+\sum_{k=1}^{K}h_{k}\nabla\cdot\mathbf{j}_{k}=
+-\nabla\cdot\left(-\lambda\nabla T+\sum_{k=1}^{K}h_{k}\mathbf{j}_{k}\right)\]</div>
+<p>By expanding the term <span class="math">\(\nabla\cdot\left(\sum_{k=1}^{K}h_{k}j_{k}\right)\)</span> and
+performing appropriate cancellations, the energy equation simplifies slightly
+to:</p>
+<div class="math">
+\[\rho c_{p}\frac{DT}{Dt}+\sum_{k=1}^{K}\hat{h}_{k}\dot{\omega}_{k}+
+\sum_{k=1}^{K}\mathbf{j}_{k}\nabla\cdot h_{k}=
+\nabla\cdot\left(\lambda\nabla T\right)\]</div>
+<p>Making the substitutions for the gradient, substantial derivative and
+divergence, and setting the <span class="math">\(z\)</span>-derivatives to zero, the one-dimensional form
+of the energy equation is:</p>
+<div class="math">
+\[\rho\frac{\partial T}{\partial t}+
+\rho v\frac{\partial T}{\partial r}+
+\frac{1}{c_{p}}\left(\sum_{k=1}^{K}\hat{h}_{k}\dot{\omega}_{k}+
+\sum_{k=1}^{K}j_{k}c_{p,k}\frac{\partial T}{\partial r}\right)=
+\frac{1}{c_{p}}\frac{1}{r^{\alpha}}\frac{\partial}{\partial r}\left[r^{\alpha}\lambda\frac{\partial T}{\partial r}\right]\]</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="boundary-conditions.html" title="Boundary Conditions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="flame-configurations.html" title="Strained Flame Configurations"
+             >previous</a> |</li>
+        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li>
+          <li><a href="flame-model.html" >Flame Model</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
