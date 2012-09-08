@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Base class used to integrate the chemical source term at a single point.  
+ <a href="classSourceSystem.html#details">More...</a></p>
+
 <p><code>#include &lt;sourceSystem.h&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for SourceSystem:</div>
@@ -101,34 +104,49 @@ Inheritance diagram for SourceSystem:</div>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classSourceSystem-members.html">List of all members.</a></p>
-<table class="memberdecls">
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>Base class used to integrate the chemical source term at a single point. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3724c27e112ba7c436d131a8dce839f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a3724c27e112ba7c436d131a8dce839f4">SourceSystem</a> ()</td></tr>
 <tr class="memitem:a361092eee5c909e7aab6ae1c970e17b0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a361092eee5c909e7aab6ae1c970e17b0">~SourceSystem</a> ()</td></tr>
 <tr class="memitem:a2adcd973cadd52f8774317c5021a9011"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a2adcd973cadd52f8774317c5021a9011">setState</a> (double tInitial, double uu, double tt, const <a class="el" href="mathUtils_8h.html#ad6ad392ddae0e9d3538a7a7a668b93c5">dvec</a> &amp;yy)=0</td></tr>
+<tr class="memdesc:a2adcd973cadd52f8774317c5021a9011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the initial condition for integrator.  <a href="#a2adcd973cadd52f8774317c5021a9011"></a><br/></td></tr>
 <tr class="memitem:ab20c8b9d6f6f4264cc20bb9ff95ca151"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#ab20c8b9d6f6f4264cc20bb9ff95ca151">integrateToTime</a> (double tf)=0</td></tr>
-<tr class="memdesc:ab20c8b9d6f6f4264cc20bb9ff95ca151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take as many steps as needed to reach tf. tf is relative to tStart.  <a href="#ab20c8b9d6f6f4264cc20bb9ff95ca151"></a><br/></td></tr>
+<tr class="memdesc:ab20c8b9d6f6f4264cc20bb9ff95ca151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take as many steps as needed to reach <code>tf</code>.  <a href="#ab20c8b9d6f6f4264cc20bb9ff95ca151"></a><br/></td></tr>
 <tr class="memitem:a8d1fe41e019fcb7e021a733c95361138"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a8d1fe41e019fcb7e021a733c95361138">integrateOneStep</a> (double tf)=0</td></tr>
-<tr class="memdesc:a8d1fe41e019fcb7e021a733c95361138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take one step toward tf without stepping past it. tf is relative to tStart.  <a href="#a8d1fe41e019fcb7e021a733c95361138"></a><br/></td></tr>
+<tr class="memdesc:a8d1fe41e019fcb7e021a733c95361138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take one step toward <code>tf</code> without stepping past it.  <a href="#a8d1fe41e019fcb7e021a733c95361138"></a><br/></td></tr>
 <tr class="memitem:a4b4c89fe5e4ba3a379f53a19f36c7b48"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a4b4c89fe5e4ba3a379f53a19f36c7b48">time</a> () const =0</td></tr>
-<tr class="memdesc:a4b4c89fe5e4ba3a379f53a19f36c7b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current integrator time, relative to tStart.  <a href="#a4b4c89fe5e4ba3a379f53a19f36c7b48"></a><br/></td></tr>
+<tr class="memdesc:a4b4c89fe5e4ba3a379f53a19f36c7b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current integrator time, relative to <code>tInitial</code>.  <a href="#a4b4c89fe5e4ba3a379f53a19f36c7b48"></a><br/></td></tr>
 <tr class="memitem:a0975cf1ff2864dfffc665496e6d23f31"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a0975cf1ff2864dfffc665496e6d23f31">unroll_y</a> ()=0</td></tr>
 <tr class="memdesc:a0975cf1ff2864dfffc665496e6d23f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract current internal integrator state into U, T, and Y.  <a href="#a0975cf1ff2864dfffc665496e6d23f31"></a><br/></td></tr>
 <tr class="memitem:ac39e50328723e6b29ed6ac7b018b0164"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#ac39e50328723e6b29ed6ac7b018b0164">setDebug</a> (bool debug)</td></tr>
 <tr class="memitem:a038ced7520784ca682037261a814e51f"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a038ced7520784ca682037261a814e51f">getStats</a> ()=0</td></tr>
+<tr class="memdesc:a038ced7520784ca682037261a814e51f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a string indicating the number of internal timesteps taken.  <a href="#a038ced7520784ca682037261a814e51f"></a><br/></td></tr>
 <tr class="memitem:aef9ca9588281cdd735ee7e60bf7ad93e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#aef9ca9588281cdd735ee7e60bf7ad93e">updateThermo</a> ()</td></tr>
+<tr class="memdesc:aef9ca9588281cdd735ee7e60bf7ad93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute thermodynamic properties (density, enthalpies, heat capacities) from the current state variables.  <a href="#aef9ca9588281cdd735ee7e60bf7ad93e"></a><br/></td></tr>
 <tr class="memitem:aae8ec57462c844a7682ca197dc12c53b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#aae8ec57462c844a7682ca197dc12c53b">getQdotIgniter</a> (double t)</td></tr>
+<tr class="memdesc:aae8ec57462c844a7682ca197dc12c53b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the heat release rate associated with a possible external ignition source.  <a href="#aae8ec57462c844a7682ca197dc12c53b"></a><br/></td></tr>
 <tr class="memitem:a55aace86ef95f34e2b29e6c0cb126976"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a55aace86ef95f34e2b29e6c0cb126976">setGas</a> (<a class="el" href="classCanteraGas.html">CanteraGas</a> *_gas)</td></tr>
+<tr class="memdesc:a55aace86ef95f34e2b29e6c0cb126976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classCanteraGas.html" title="A set of Cantera objects needed for calculating thermodynamic properties, transport properties...">CanteraGas</a> object to use for thermodynamic and kinetic property calculations.  <a href="#a55aace86ef95f34e2b29e6c0cb126976"></a><br/></td></tr>
 <tr class="memitem:a055498970bec9f71f45514d5db2889f8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a055498970bec9f71f45514d5db2889f8">initialize</a> (size_t <a class="el" href="classSourceSystem.html#adaaffb3c65accf549a84a5c4f7628ce4">nSpec</a>)</td></tr>
+<tr class="memdesc:a055498970bec9f71f45514d5db2889f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize internal arrays for a problem of the specified size (<code>nSpec+2</code>)  <a href="#a055498970bec9f71f45514d5db2889f8"></a><br/></td></tr>
 <tr class="memitem:abd9c9d57db2975b6419362f0233d486b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#abd9c9d57db2975b6419362f0233d486b">setOptions</a> (<a class="el" href="classconfigOptions.html">configOptions</a> &amp;options)</td></tr>
+<tr class="memdesc:abd9c9d57db2975b6419362f0233d486b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set integrator tolerances and other parameters.  <a href="#abd9c9d57db2975b6419362f0233d486b"></a><br/></td></tr>
 <tr class="memitem:ad0ce82ebcf4f007103e8f7ece69cd67c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#ad0ce82ebcf4f007103e8f7ece69cd67c">setTimers</a> (<a class="el" href="classPerfTimer.html">PerfTimer</a> *reactionRates, <a class="el" href="classPerfTimer.html">PerfTimer</a> *thermo, <a class="el" href="classPerfTimer.html">PerfTimer</a> *jacobian)</td></tr>
 <tr class="memitem:a123e387c119a55b045bc80f7b724cdd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a123e387c119a55b045bc80f7b724cdd6">setPosition</a> (size_t <a class="el" href="classSourceSystem.html#a4108e441911856f66a65fea46002bbc4">j</a>, double <a class="el" href="classSourceSystem.html#a38671a811980ca16055410402fb10c99">x</a>)</td></tr>
+<tr class="memdesc:a123e387c119a55b045bc80f7b724cdd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the index j and position x that are represented by this system.  <a href="#a123e387c119a55b045bc80f7b724cdd6"></a><br/></td></tr>
 <tr class="memitem:ad1e05925579964094be7f8609e351aaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#ad1e05925579964094be7f8609e351aaf">setStrainFunction</a> (<a class="el" href="classStrainFunction.html">StrainFunction</a> &amp;f)</td></tr>
+<tr class="memdesc:ad1e05925579964094be7f8609e351aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the function used to compute the strain rate as a function of time.  <a href="#ad1e05925579964094be7f8609e351aaf"></a><br/></td></tr>
 <tr class="memitem:aea8fde10512e39e126586aba12ca0eb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#aea8fde10512e39e126586aba12ca0eb6">setRhou</a> (double _rhou)</td></tr>
+<tr class="memdesc:aea8fde10512e39e126586aba12ca0eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the density of the unburned mixture.  <a href="#aea8fde10512e39e126586aba12ca0eb6"></a><br/></td></tr>
 <tr class="memitem:a552d66a95cb6205f0a928e6796da6ae5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#a552d66a95cb6205f0a928e6796da6ae5">resetSplitConstants</a> ()</td></tr>
+<tr class="memdesc:a552d66a95cb6205f0a928e6796da6ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all the balanced splitting constants to zero.  <a href="#a552d66a95cb6205f0a928e6796da6ae5"></a><br/></td></tr>
 <tr class="memitem:aa08cdb4ed959a969faf8fb848a1b7dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#aa08cdb4ed959a969faf8fb848a1b7dc4">setupQuasi2d</a> (boost::shared_ptr&lt; <a class="el" href="classBilinearInterpolator.html">BilinearInterpolator</a> &gt; vzInterp, boost::shared_ptr&lt; <a class="el" href="classBilinearInterpolator.html">BilinearInterpolator</a> &gt; TInterp)</td></tr>
+<tr class="memdesc:aa08cdb4ed959a969faf8fb848a1b7dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ASsign the interpolators used for solving quasi-2D problems.  <a href="#aa08cdb4ed959a969faf8fb848a1b7dc4"></a><br/></td></tr>
 <tr class="memitem:acb3281908f158b9424e544ac34962d31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#acb3281908f158b9424e544ac34962d31">writeState</a> (std::ostream &amp;out, bool init)</td></tr>
+<tr class="memdesc:acb3281908f158b9424e544ac34962d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the current values of the state variables, formatted to be read by Python, to the specified stream.  <a href="#acb3281908f158b9424e544ac34962d31"></a><br/></td></tr>
 <tr class="memitem:ab8d2dbc61d881c29bd4eea487abba15e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSourceSystem.html#ab8d2dbc61d881c29bd4eea487abba15e">writeJacobian</a> (std::ostream &amp;out)</td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
@@ -215,6 +233,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the initial condition for integrator. </p>
+<dl class="params"><dt>Parameters:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tInitial</td><td>integrator start time </td></tr>
+    <tr><td class="paramname">uu</td><td>tangential velocity </td></tr>
+    <tr><td class="paramname">tt</td><td>temperature </td></tr>
+    <tr><td class="paramname">yy</td><td>vector of species mass fractions </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p>Implemented in <a class="el" href="classSourceSystemQSS.html#a51403a0fe0fafaabdd73ce031a7767f7">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#af1a628642979a3aa7ce904b87e33dd72">SourceSystemCVODE</a>.</p>
 
 </div>
@@ -241,7 +270,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Take as many steps as needed to reach tf. tf is relative to tStart. </p>
+<p>Take as many steps as needed to reach <code>tf</code>. </p>
+<p><code>tf</code> is relative to <code>tInitial</code>. </p>
 
 <p>Implemented in <a class="el" href="classSourceSystemQSS.html#a233bf8ae56267886ebe978ebcd162721">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#aed6147e1da5fb314e837e0f0f016eda2">SourceSystemCVODE</a>.</p>
 
@@ -269,7 +299,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Take one step toward tf without stepping past it. tf is relative to tStart. </p>
+<p>Take one step toward <code>tf</code> without stepping past it. </p>
+<p><code>tf</code> is relative to <code>tInitial</code>. </p>
 
 <p>Implemented in <a class="el" href="classSourceSystemQSS.html#aa51f43db34e5e761cbb90e54b08bd470">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#afc408d50b04b248082c781b72389e6c6">SourceSystemCVODE</a>.</p>
 
@@ -296,7 +327,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Current integrator time, relative to tStart. </p>
+<p>Current integrator time, relative to <code>tInitial</code>. </p>
 
 <p>Implemented in <a class="el" href="classSourceSystemQSS.html#a9ada50585baf873445d0a37459b2167b">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#a75972df216917d6c8b7e711b834110ca">SourceSystemCVODE</a>.</p>
 
@@ -374,6 +405,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Return a string indicating the number of internal timesteps taken. </p>
+
 <p>Implemented in <a class="el" href="classSourceSystemQSS.html#aacba40e495b7ff84011fa1fbc9dccbc7">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#a4eb6bbb41e5ba00bc1883411e1dc027b">SourceSystemCVODE</a>.</p>
 
 </div>
@@ -391,6 +424,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compute thermodynamic properties (density, enthalpies, heat capacities) from the current state variables. </p>
+
 </div>
 </div>
 <a class="anchor" id="aae8ec57462c844a7682ca197dc12c53b"></a>
@@ -406,6 +441,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Calculate the heat release rate associated with a possible external ignition source. </p>
 
 </div>
 </div>
@@ -431,6 +468,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the <a class="el" href="classCanteraGas.html" title="A set of Cantera objects needed for calculating thermodynamic properties, transport properties...">CanteraGas</a> object to use for thermodynamic and kinetic property calculations. </p>
+
 </div>
 </div>
 <a class="anchor" id="a055498970bec9f71f45514d5db2889f8"></a>
@@ -454,6 +493,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resize internal arrays for a problem of the specified size (<code>nSpec+2</code>) </p>
 
 <p>Reimplemented in <a class="el" href="classSourceSystemQSS.html#ab33afcabce38eb6b5d93224d5822145c">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#ada2cac41d5bdd495a2f92951c29cc7db">SourceSystemCVODE</a>.</p>
 
@@ -480,6 +521,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Set integrator tolerances and other parameters. </p>
 
 <p>Reimplemented in <a class="el" href="classSourceSystemQSS.html#adc9f7be476c1881a32eefe26bab7d36a">SourceSystemQSS</a>, and <a class="el" href="classSourceSystemCVODE.html#a8d44fd13d206cd54104c80771819af06">SourceSystemCVODE</a>.</p>
 
@@ -541,6 +584,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Set the index j and position x that are represented by this system. </p>
+
 </div>
 </div>
 <a class="anchor" id="ad1e05925579964094be7f8609e351aaf"></a>
@@ -564,6 +609,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Set the function used to compute the strain rate as a function of time. </p>
 
 </div>
 </div>
@@ -589,6 +636,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the density of the unburned mixture. </p>
+<p>This value appears in the source term of the momentum equation. </p>
+
 </div>
 </div>
 <a class="anchor" id="a552d66a95cb6205f0a928e6796da6ae5"></a>
@@ -611,6 +661,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Set all the balanced splitting constants to zero. </p>
 
 </div>
 </div>
@@ -638,6 +690,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>ASsign the interpolators used for solving quasi-2D problems. </p>
+
 </div>
 </div>
 <a class="anchor" id="acb3281908f158b9424e544ac34962d31"></a>
@@ -663,6 +717,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Write the current values of the state variables, formatted to be read by Python, to the specified stream. </p>
+<p>Call with <code>init=true</code> when first called to include initializers for the variables. </p>
 
 </div>
 </div>
@@ -807,6 +864,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Cantera data. </p>
+
 </div>
 </div>
 <a class="anchor" id="a433d4d067f002d7173aa1c5a877d7e5e"></a>
@@ -826,6 +885,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Timer for time spent evaluating reaction rates. </p>
 
 </div>
 </div>
@@ -847,6 +908,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Timer for time spent evaluating thermodynamic properties. </p>
+
 </div>
 </div>
 <a class="anchor" id="aaa14c6c3ce8f5f4daf4960a72032698a"></a>
@@ -866,6 +929,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Timer for time spent evaluating and factorizing the Jacobian. </p>
 
 </div>
 </div>
@@ -887,6 +952,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A class that provides the strain rate and its time derivative. </p>
+
 </div>
 </div>
 <a class="anchor" id="adaaffb3c65accf549a84a5c4f7628ce4"></a>
@@ -906,6 +973,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>number of species </p>
 
 </div>
 </div>
@@ -993,6 +1062,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>heat release rate per unit volume [W/m^3] </p>
+
 </div>
 </div>
 <a class="anchor" id="af1594ac949258d9bfac2b52b2c8df34b"></a>
@@ -1012,6 +1083,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>density [kg/m^3] </p>
 
 </div>
 </div>
@@ -1033,6 +1106,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>specific heat capacity (average) [J/kg*K] </p>
+
 </div>
 </div>
 <a class="anchor" id="af70e27e481c7b22c3bf73abcb91e0678"></a>
@@ -1053,6 +1128,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>species specific heat capacity [J/mol*K] </p>
+
 </div>
 </div>
 <a class="anchor" id="aa1670b35197833bd342dd8a9a44b4cd4"></a>
@@ -1072,6 +1149,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>mixture molecular weight [kg/mol] </p>
 
 </div>
 </div>
@@ -1115,6 +1194,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>species enthalpies [J/kmol] </p>
+
 </div>
 </div>
 <a class="anchor" id="aaa4c533fb4397b5ba5f3c87ef5ed10c4"></a>
@@ -1134,6 +1215,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Flag set to 'true' when solving a quasi-2D problem with prescribed velocity and temperature fields. </p>
 
 </div>
 </div>
@@ -1155,6 +1238,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>An interpolator for computing the axial (z) velocity when solving a quasi-2D problem. </p>
+
 </div>
 </div>
 <a class="anchor" id="a50152e1a6d283664a621630e9f00e0b8"></a>
@@ -1175,6 +1260,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>An interpolator for computing the temperature when solving a quasi-2D problem. </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -1184,7 +1271,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 5 2012 23:01:10 for Ember by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 7 2012 19:57:59 for Ember by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

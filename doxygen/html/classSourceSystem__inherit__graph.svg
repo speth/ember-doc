@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="classSourceSystemCVODE.html" target="_top" xlink:title="SourceSystemCVODE">
+<a xlink:href="classSourceSystemCVODE.html" target="_top" xlink:title="Represents a system of equations used to integrate the (chemical) source term at a single point using...">
 <polygon fill="white" stroke="black" points="0,-0.5 0,-19.5 116,-19.5 116,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="58" y="-7.5" font-family="FreeSans" font-size="10.00">SourceSystemCVODE</text>
 </a>
@@ -28,7 +28,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="classSourceSystemQSS.html" target="_top" xlink:title="SourceSystemQSS">
+<a xlink:href="classSourceSystemQSS.html" target="_top" xlink:title="This is the system representing the (chemical) source term at a point, integrated with the QSSIntegra...">
 <polygon fill="white" stroke="black" points="134,-0.5 134,-19.5 238,-19.5 238,-0.5 134,-0.5"/>
 <text text-anchor="middle" x="186" y="-7.5" font-family="FreeSans" font-size="10.00">SourceSystemQSS</text>
 </a>
