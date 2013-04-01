@@ -28,7 +28,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Ember 1.0b1 documentation" href="index.html" />
     <link rel="next" title="Running Simulations" href="run-sim.html" />
-    <link rel="prev" title="Flame Model" href="flame-model.html" /> 
+    <link rel="prev" title="Boundary Conditions" href="boundary-conditions.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,7 +44,7 @@
           <a href="run-sim.html" title="Running Simulations"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="flame-model.html" title="Flame Model"
+          <a href="boundary-conditions.html" title="Boundary Conditions"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
       </ul>
@@ -61,8 +61,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="flame-model.html"
-                        title="previous chapter">Flame Model</a></p>
+  <p class="topless"><a href="boundary-conditions.html"
+                        title="previous chapter">Boundary Conditions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="run-sim.html"
                         title="next chapter">Running Simulations</a></p>
@@ -95,14 +95,13 @@
   <div class="section" id="module-ember.input">
 <span id="input-files"></span><h1>Input Files<a class="headerlink" href="#module-ember.input" title="Permalink to this headline">¶</a></h1>
 <p>A set of classes for specifying input parameters for the Ember solver.</p>
-<p>Create a <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a> object to be passed to <a class="reference internal" href="run-sim.html#ember.utils.run" title="ember.utils.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> or
-<a class="reference internal" href="run-sim.html#ember.utils.multirun" title="ember.utils.multirun"><tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt></a>.
+<p>Create a <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a> object to be passed to <tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt> or
+<tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt>.
 Sane defaults are given for most input parameters. Create a customized
 configuration by passing <a class="reference internal" href="#ember.input.Options" title="ember.input.Options"><tt class="xref py py-class docutils literal"><span class="pre">Options</span></tt></a> objects to the constructor for
 <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
-    <span class="n">Paths</span><span class="p">(</span><span class="n">inputDir</span><span class="o">=</span><span class="s">&quot;somewhere&quot;</span><span class="p">,</span>
-          <span class="n">outputDir</span><span class="o">=</span><span class="s">&quot;somewhereElse&quot;</span><span class="p">),</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="s">&quot;somewhere&quot;</span><span class="p">),</span>
     <span class="n">InitialCondition</span><span class="p">(</span><span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -113,17 +112,11 @@ configuration by passing <a class="reference internal" href="#ember.input.Option
 <em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Paths</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Directories for input and output files</p>
 <dl class="attribute">
-<dt id="ember.input.Paths.inputDir">
-<tt class="descname">inputDir</tt><em class="property"> = 'input'</em><a class="headerlink" href="#ember.input.Paths.inputDir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Relative path to the directory where input files (such as the
-Cantera mechanism file) are located.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="ember.input.Paths.outputDir">
 <tt class="descname">outputDir</tt><em class="property"> = 'run/test1'</em><a class="headerlink" href="#ember.input.Paths.outputDir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Relative path to the directory where output files
-(outNNNNNN.h5, profNNNNNN.h5) will be stored.</p>
+<dd><p>Relative path to the directory where output files (outNNNNNN.h5,
+profNNNNNN.h5) will be stored. Automatically created if it doesn&#8217;t
+already exist.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -245,19 +238,26 @@ integrator before aborting.</p>
 
 <dl class="attribute">
 <dt id="ember.input.Chemistry.phaseID">
-<tt class="descname">phaseID</tt><em class="property"> = 'gas'</em><a class="headerlink" href="#ember.input.Chemistry.phaseID" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">phaseID</tt><em class="property"> = ''</em><a class="headerlink" href="#ember.input.Chemistry.phaseID" title="Permalink to this definition">¶</a></dt>
 <dd><p>ID of the phase to use in the mechanism file.
 Found on a line that looks like:</p>
 <div class="highlight-python"><pre>&lt;phase dim="3" id="gas"&gt;</pre>
 </div>
-<p>in the mechanism file. This is always &#8220;gas&#8221; for mechanisms
-converted using ck2cti and cti2ctml.</p>
+<p>in the mechanism file. This is always &#8220;gas&#8221; for mechanisms converted
+using ck2cti and cti2ctml. This option only needs to be specified if
+the desired phase is not the first phase defined in the input file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ember.input.Chemistry.transportModel">
 <tt class="descname">transportModel</tt><em class="property"> = 'Mix'</em><a class="headerlink" href="#ember.input.Chemistry.transportModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transport model to use. Valid options are <tt class="docutils literal"><span class="pre">Mix</span></tt>, <tt class="docutils literal"><span class="pre">Multi</span></tt>, and <tt class="docutils literal"><span class="pre">Approx</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Chemistry.kineticsModel">
+<tt class="descname">kineticsModel</tt><em class="property"> = 'standard'</em><a class="headerlink" href="#ember.input.Chemistry.kineticsModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kinetics model to use. Valid options are <tt class="docutils literal"><span class="pre">standard</span></tt> and <tt class="docutils literal"><span class="pre">interp</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -384,12 +384,6 @@ boundaries of the domain.</p>
 <tt class="descname">restartFile</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.InitialCondition.restartFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read initial profiles from the specified file, or if &#8216;None&#8217;,
 create a new initial profile.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ember.input.InitialCondition.relativeRestartPath">
-<tt class="descname">relativeRestartPath</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.InitialCondition.relativeRestartPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the restart file path is relative to Paths.inputDir.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -581,7 +575,7 @@ period of <em>dt</em> seconds, starting at <em>tStart</em>.</p>
 <dt id="ember.input.StrainParameters.rates">
 <tt class="descname">rates</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.StrainParameters.rates" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of strain rates to use for a series of sequential
-integration periods (see <a class="reference internal" href="run-sim.html#ember.utils.multirun" title="ember.utils.multirun"><tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt></a>), with steady-state
+integration periods (see <tt class="xref py py-func docutils literal"><span class="pre">multirun()</span></tt>), with steady-state
 profiles generated for each strain rate before proceeding to the next.
 A typical list of strain rates to use:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">rates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9216</span><span class="p">,</span> <span class="mi">7680</span><span class="p">,</span> <span class="mi">6144</span><span class="p">,</span> <span class="mi">4608</span><span class="p">,</span> <span class="mi">3840</span><span class="p">,</span> <span class="mi">3072</span><span class="p">,</span> <span class="mi">2304</span><span class="p">,</span> <span class="mi">1920</span><span class="p">,</span> <span class="mi">1536</span><span class="p">,</span>
@@ -589,6 +583,19 @@ A typical list of strain rates to use:</p>
          <span class="mi">96</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.function">
+<tt class="descname">function</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.StrainParameters.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the strain rate as a function of time, using any callable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.StrainParameters.chebyshevOrder">
+<tt class="descname">chebyshevOrder</tt><em class="property"> = 5</em><a class="headerlink" href="#ember.input.StrainParameters.chebyshevOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Order of Chebyshev polynomial to use in approximating the strain rate
+function over a single global time step.</p>
 </dd></dl>
 
 </dd></dl>
@@ -853,6 +860,20 @@ enabled for debug builds.</p>
 the source term at j = <em>sourcePoint</em>, then terminate.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="ember.input.Debug.startTime">
+<tt class="descname">startTime</tt><em class="property"> = 0.0</em><a class="headerlink" href="#ember.input.Debug.startTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time at which to start saving intermediate integrator profiles when
+OutputFiles.debugIntegratorStages is True</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Debug.stopTime">
+<tt class="descname">stopTime</tt><em class="property"> = 100.0</em><a class="headerlink" href="#ember.input.Debug.stopTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time at which to stop saving intermediate integrator profiles when
+OutputFiles.debugIntegratorStages is True</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -963,21 +984,6 @@ sane value for <em>tEnd</em>.</p>
 complete set of configuration options needed to run the flame
 solver.</p>
 <dl class="method">
-<dt id="ember.input.Config.evaluate">
-<tt class="descname">evaluate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace all of the <a class="reference internal" href="#ember.input.Option" title="ember.input.Option"><tt class="xref py py-class docutils literal"><span class="pre">Option</span></tt></a> objects with their values so that
-they can be used by the C++ extension, in
-<a class="reference internal" href="#ember.input.Config.generateInitialCondition" title="ember.input.Config.generateInitialCondition"><tt class="xref py py-meth docutils literal"><span class="pre">Config.generateInitialCondition()</span></tt></a>, etc.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="ember.input.Config.setup">
-<tt class="descname">setup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform any steps that need to be done before this object can be used
-to create a FlameSolver, such as generating initial reactant profiles.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="ember.input.Config.checkRateConstants">
 <tt class="descname">checkRateConstants</tt><big>(</big><em>gas</em>, <em>T</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.checkRateConstants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.checkRateConstants" title="Permalink to this definition">¶</a></dt>
 <dd><p>A function for finding reactions with suspiciously high
@@ -985,11 +991,16 @@ rate constants at low temperatures.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ember.input.Config.generateInitialCondition">
-<tt class="descname">generateInitialCondition</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/ember/input.html#Config.generateInitialCondition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.generateInitialCondition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate initial profiles for temperature, species mass fractions, and
-velocity using the specified fuel and oxidizer compositions and flame
-configuration parameters.</p>
+<dt id="ember.input.Config.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#ember.input.Config.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the simulation using the parameters set in this Config.</p>
+<p>If a list strain rates is provided by the field
+<tt class="xref py py-attr docutils literal"><span class="pre">strainParameters.rates</span></tt>, a sequence of flame simulations at the
+given strain rates will be run. Otherwise, a single simulation will be
+run.</p>
+<p>If the script which calls this function is passed the argument
+<em>validate</em>, then the configuration will be checked for errors and the
+script will exit without running the simulation.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1079,7 +1090,7 @@ classes: <a class="reference internal" href="#ember.input.StringOption" title="e
           <a href="run-sim.html" title="Running Simulations"
              >next</a> |</li>
         <li class="right" >
-          <a href="flame-model.html" title="Flame Model"
+          <a href="boundary-conditions.html" title="Boundary Conditions"
              >previous</a> |</li>
         <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
       </ul>
