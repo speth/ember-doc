@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Ember 1.3.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
+    <link rel="next" title="Flame Model" href="flame-model.html" />
+    <link rel="prev" title="Welcome to Ember’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="flame-model.html" title="Flame Model"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Ember’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#download">Download</a><ul>
+<li><a class="reference internal" href="#releases">Releases</a></li>
+<li><a class="reference internal" href="#git-repository">Git Repository</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#binary-dependencies">Binary Dependencies</a></li>
+<li><a class="reference internal" href="#build-dependencies">Build Dependencies</a></li>
+<li><a class="reference internal" href="#compilation">Compilation</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Ember&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="flame-model.html"
+                        title="next chapter">Flame Model</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="releases">
+<h3>Releases<a class="headerlink" href="#releases" title="Permalink to this headline">¶</a></h3>
+<p>Source code and binaries for stable releases of Ember may be downloaded from
+Github: <a class="reference external" href="https://github.com/speth/ember/releases">https://github.com/speth/ember/releases</a></p>
+</div>
+<div class="section" id="git-repository">
+<h3>Git Repository<a class="headerlink" href="#git-repository" title="Permalink to this headline">¶</a></h3>
+<p>The current development version of Ember is available on Github:
+<a class="reference external" href="https://github.com/speth/ember">https://github.com/speth/ember</a>. You can check out the source code as
+follows on Unix-like systems:</p>
+<div class="highlight-python"><pre>$ mkdir -p ~/src
+$ cd ~/src
+$ git clone http://github.com/speth/ember.git
+$ cd ember</pre>
+</div>
+</div>
+</div>
+<div class="section" id="binary-dependencies">
+<h2>Binary Dependencies<a class="headerlink" href="#binary-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Binary releases of Ember are currently available for 64-bit Python 2.7 on
+Windows. To use the binary version of Ember, you must have the following
+installed:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><a class="reference external" href="https://www.python.org/downloads/">Python 2.7 (64-bit)</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy">Numpy</a> - version 1.8 or higher</p>
+</li>
+<li><p class="first"><a class="reference external" href="https://sourceforge.net/projects/cantera/files/cantera/">Cantera 2.1 Python module</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>For Ember 1.2.x, install Cantera 2.1 and the &#8220;Legacy&#8221; Cantera Python
+module</li>
+<li>For Ember 1.3 and higher, install the new Python module</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#h5py">h5py</a></p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="build-dependencies">
+<h2>Build Dependencies<a class="headerlink" href="#build-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The following software needs to be installed in order to compile Ember:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">A C++ compiler (g++, Clang, Intel C++, Visual Studio 2008)</p>
+</li>
+<li><p class="first">Python 2.6 or higher (2.7 recommended)</p>
+</li>
+<li><p class="first">Cython (&gt;= 0.18)</p>
+</li>
+<li><p class="first">Boost (&gt;= 1.40, including the compiled <tt class="docutils literal"><span class="pre">boost_thread</span></tt> library)</p>
+</li>
+<li><p class="first">SCons (&gt;= 2.1.0 recommended)</p>
+</li>
+<li><p class="first">Eigen (&gt;= 3.0)</p>
+</li>
+<li><p class="first">Cantera (&gt;= 2.1.0)</p>
+<blockquote>
+<div><ul class="simple">
+<li>For Ember 1.2.x, install Cantera with the &#8216;legacy&#8217; Python module</li>
+<li>For Ember 1.3 and higher, install the &#8216;new&#8217; Python module</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Sundials (2.4.0 or 2.5.0)</p>
+</li>
+<li><p class="first">Intel Threading Building Blocks (&gt;= 4.0)</p>
+</li>
+<li><p class="first">numpy (&gt;= 1.3.0)</p>
+</li>
+<li><p class="first">h5py (&gt;= 1.2.1)</p>
+</li>
+</ul>
+</div></blockquote>
+<p>In order to process the documentation, the following are also required:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Doxygen (&gt;= 1.8.0)</li>
+<li>Sphinx</li>
+<li>Pygments</li>
+<li>pyparsing</li>
+<li>doxylink (see <a class="reference external" href="http://pypi.python.org/pypi/sphinxcontrib-doxylink">http://pypi.python.org/pypi/sphinxcontrib-doxylink</a>)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>
+<p>First, check out a copy of the code as described above, or extract a release
+version of the code from the downloaded archive. If all the necessary libraries
+are installed in system   default locations, then the following should be
+sufficient:</p>
+<div class="highlight-python"><pre>$ scons build</pre>
+</div>
+<p>Otherwise, specify the necessary paths using the corresponding command-line
+options: &#8220;cantera&#8221;, &#8220;sundials&#8221;, &#8220;eigen&#8221;, &#8220;boost&#8221;, &#8220;tbb&#8221;. For example:</p>
+<div class="highlight-python"><pre>$ scons build cantera=/home/$USER/.local sundials=/opt/sundials-2.5.0</pre>
+</div>
+<p>If compilation succeeds, install the Ember Python module by running:</p>
+<div class="highlight-python"><pre>$ scons install</pre>
+</div>
+<p>By default, Ember will be installed to your <em>user</em> site-packages directory, e.g.
+<cite>~/.local/lib/python2.7/site-packages/ember</cite>. If you wish install to a different
+directory, use the <cite>install_args</cite> option to SCons to specify the appropriate
+command to be passed to <cite>python setup.py install</cite>.</p>
+<p>Alternatively, if you&#8217;re doing active development, you can just create a symlink
+into your user Python module path:</p>
+<div class="highlight-python"><pre>$ mkdir -p ~/.local/lib/pythonX.Y/site-packages
+$ ln -s ~/src/ember/build/python/ember ~/.local/lib/pythonX.Y/site-packages/ember</pre>
+</div>
+<p>where <em>X.Y</em> is your your installed version of Python, e.g 2.7.</p>
+<p>And similarly for Cantera, if it is not already on the Python path:</p>
+<div class="highlight-python"><pre>$ ln -s /path/to/cantera/lib/pythonX.Y/site-packages/cantera ~/.local/lib/pythonX.Y/site-packages/</pre>
+</div>
+<p>Or add parent directories of each of these modules to your <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>:</p>
+<div class="highlight-python"><pre>$ export PYTHONPATH=/path/to/cantera/lib/python2.7/site-packages:~/src/ember/build/python</pre>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>To build the Ember documentation, starting from the <tt class="docutils literal"><span class="pre">ember</span></tt> directory, run:</p>
+<div class="highlight-python"><pre>$ doxygen
+$ cd doc/sphinx
+$ make html</pre>
+</div>
+<p>To view the HTML docs, open <tt class="docutils literal"><span class="pre">doc/sphinx/html/index.html</span></tt> in your web browser.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="flame-model.html" title="Flame Model"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Ember’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

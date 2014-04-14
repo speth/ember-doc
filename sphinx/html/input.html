@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Input Files &mdash; Ember 1.0b1 documentation</title>
+    <title>Input Files &mdash; Ember 1.3.0b1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0b1',
+        VERSION:     '1.3.0b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.0b1 documentation" href="index.html" />
+    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
     <link rel="next" title="Running Simulations" href="run-sim.html" />
     <link rel="prev" title="Boundary Conditions" href="boundary-conditions.html" /> 
   </head>
@@ -46,7 +46,7 @@
         <li class="right" >
           <a href="boundary-conditions.html" title="Boundary Conditions"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -133,10 +133,11 @@ already exist.</p>
 <dd><p>High-level configuration options</p>
 <dl class="attribute">
 <dt id="ember.input.General.fixedBurnedVal">
-<tt class="descname">fixedBurnedVal</tt><em class="property"> = True</em><a class="headerlink" href="#ember.input.General.fixedBurnedVal" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">fixedBurnedVal</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.General.fixedBurnedVal" title="Permalink to this definition">¶</a></dt>
 <dd><p>True if the temperature and mass fractions on the burned gas
 side of the flame should be held constant. Applicable only to
-premixed flames.</p>
+premixed flames. The default is <em>True</em> for twin or curved flames with
+burned gas at x=0, and <em>False</em> otherwise.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -224,6 +225,13 @@ integrator before aborting.</p>
 <dd><p>Number of threads to use for evaluating terms in parallel</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="ember.input.General.chebyshevOrder">
+<tt class="descname">chebyshevOrder</tt><em class="property"> = 5</em><a class="headerlink" href="#ember.input.General.chebyshevOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Order of Chebyshev polynomial to use in approximating input
+functions over a single global time step.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -264,6 +272,12 @@ the desired phase is not the first phase defined in the input file.</p>
 <dt id="ember.input.Chemistry.threshold">
 <tt class="descname">threshold</tt><em class="property"> = 1e-05</em><a class="headerlink" href="#ember.input.Chemistry.threshold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mole fraction threshold for including species with <tt class="docutils literal"><span class="pre">transportModel</span> <span class="pre">=</span> <span class="pre">&quot;Approx&quot;</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.Chemistry.rateMultiplierFunction">
+<tt class="descname">rateMultiplierFunction</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.Chemistry.rateMultiplierFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a scalar multiplier for the reaction rate term as a function time</p>
 </dd></dl>
 
 </dd></dl>
@@ -429,6 +443,38 @@ create a new initial profile.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="ember.input.InitialCondition.reactants">
+<tt class="descname">reactants</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.InitialCondition.reactants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Molar composition of the fuel + oxidizer mixture. Specify as an alternative
+to providing fuel and oxidizer compositions and equivalence ratio.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.counterflow">
+<tt class="descname">counterflow</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.InitialCondition.counterflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Molar composition of the flow opposite the premixed reactant
+stream, if different from the equilibrium composition</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.Tcounterflow">
+<tt class="descname">Tcounterflow</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.InitialCondition.Tcounterflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature of the flow opposite the premixed reactant stream, if
+different from the equilibrium temperature</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.InitialCondition.equilibrateCounterflow">
+<tt class="descname">equilibrateCounterflow</tt><em class="property"> = 'TP'</em><a class="headerlink" href="#ember.input.InitialCondition.equilibrateCounterflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust the composition of the counterflow stream so that the components
+are at equilibrium. This option specifies the property pair to hold
+constant during equilibration, or <em>False</em> to skip equilibration. The
+boundary condition is not consistent if this mixture has reactions that
+are proceeding at finite rates. For diffusion flames, this option is applied
+to the state of the oxidizer stream.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="ember.input.InitialCondition.pressure">
 <tt class="descname">pressure</tt><em class="property"> = 101325</em><a class="headerlink" href="#ember.input.InitialCondition.pressure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thermodynamic pressure [Pa]</p>
@@ -481,7 +527,7 @@ filter before starting the simulation.</p>
 <dl class="attribute">
 <dt id="ember.input.InitialCondition.haveProfiles">
 <tt class="descname">haveProfiles</tt><em class="property"> = False</em><a class="headerlink" href="#ember.input.InitialCondition.haveProfiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if initial profiles for x,T,U and Y (as well as rVzero) are given</p>
+<dd><p>True if initial profiles for x,T,U,V and Y are given</p>
 </dd></dl>
 
 </dd></dl>
@@ -589,13 +635,6 @@ A typical list of strain rates to use:</p>
 <dt id="ember.input.StrainParameters.function">
 <tt class="descname">function</tt><em class="property"> = None</em><a class="headerlink" href="#ember.input.StrainParameters.function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify the strain rate as a function of time, using any callable</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ember.input.StrainParameters.chebyshevOrder">
-<tt class="descname">chebyshevOrder</tt><em class="property"> = 5</em><a class="headerlink" href="#ember.input.StrainParameters.chebyshevOrder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Order of Chebyshev polynomial to use in approximating the strain rate
-function over a single global time step.</p>
 </dd></dl>
 
 </dd></dl>
@@ -925,21 +964,35 @@ restarting the code.</p>
 <dd><p>Write profiles after each stage of the split integrator.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.stateWriter">
+<tt class="descname">stateWriter</tt><em class="property"> = &lt;class 'ember.output.StateWriter'&gt;</em><a class="headerlink" href="#ember.input.OutputFiles.stateWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to write periodic output files (e.g. profNNNNNN.h5)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ember.input.OutputFiles.timeSeriesWriter">
+<tt class="descname">timeSeriesWriter</tt><em class="property"> = &lt;class 'ember.output.TimeSeriesWriter'&gt;</em><a class="headerlink" href="#ember.input.OutputFiles.timeSeriesWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to write time-series files (e.g. out.h5)</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="ember.input.TerminationCondition">
 <em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">TerminationCondition</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#TerminationCondition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.TerminationCondition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Integrate until either:</p>
-<ol class="arabic simple">
-<li><em>tEnd</em> is reached</li>
-<li>The heat release rate ( <em>measurement</em> ) reaches a steady-state
-value to within <em>tolerance</em> (RMS) over a time period of
-<em>steadyPeriod</em>, or the mean heat release rate over <em>steadyPeriod</em>
-is less than <em>abstol</em>.</li>
-</ol>
-<p>To disable steady-state check, set <tt class="docutils literal"><span class="pre">measurement</span> <span class="pre">=</span> <span class="pre">None</span></tt>, and give a
-sane value for <em>tEnd</em>.</p>
+<dd><p>Integrate until either <em>tEnd</em> is reached or a criterion based on
+<em>measurement</em> is satisfied. The <em>measurement</em>-based check is not enabled
+until <em>tMin</em> is reached.</p>
+<ul class="simple">
+<li>If <span class="math">\(measurement == None\)</span>, integration will proceed to <em>tEnd</em>.</li>
+<li>If <span class="math">\(measurement == 'Q'\)</span>, integration will terminate when the the heat
+release rate reaches a steady-state value to within <em>tolerance</em> (RMS)
+over a time period of <em>steadyPeriod</em>, or the mean heat release rate over
+<em>steadyPeriod</em> is less than <em>abstol</em>.</li>
+<li>If <span class="math">\(measurement == 'dTdt', integration will terminate when
+`||1/T * dT/dt|| / sqrt(nPoints)\)</span>  is less than <span class="math">\(dTdt_tol\)</span>.</li>
+</ul>
 <dl class="attribute">
 <dt id="ember.input.TerminationCondition.tEnd">
 <tt class="descname">tEnd</tt><em class="property"> = 0.8</em><a class="headerlink" href="#ember.input.TerminationCondition.tEnd" title="Permalink to this definition">¶</a></dt>
@@ -975,6 +1028,12 @@ sane value for <em>tEnd</em>.</p>
 <dt id="ember.input.Options">
 <em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Options</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for elements of <a class="reference internal" href="#ember.input.Config" title="ember.input.Config"><tt class="xref py py-class docutils literal"><span class="pre">Config</span></tt></a></p>
+<dl class="method">
+<dt id="ember.input.Options.isSet">
+<tt class="descname">isSet</tt><big>(</big><em>option</em><big>)</big><a class="headerlink" href="#ember.input.Options.isSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the named option has a user-specified value</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1092,11 +1151,11 @@ classes: <a class="reference internal" href="#ember.input.StringOption" title="e
         <li class="right" >
           <a href="boundary-conditions.html" title="Boundary Conditions"
              >previous</a> |</li>
-        <li><a href="index.html">Ember 1.0b1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Raymond Speth.
+        &copy; Copyright 2008-2013, Raymond Speth.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
