@@ -28,7 +28,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
     <link rel="next" title="Flame Model" href="flame-model.html" />
-    <link rel="prev" title="Welcome to Ember’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Ember" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,7 +44,7 @@
           <a href="flame-model.html" title="Flame Model"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to Ember’s documentation!"
+          <a href="index.html" title="Ember"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>
@@ -71,7 +71,7 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to Ember&#8217;s documentation!</a></p>
+                        title="previous chapter">Ember</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="flame-model.html"
                         title="next chapter">Flame Model</a></p>
@@ -127,31 +127,21 @@ $ cd ember</pre>
 <p>Binary releases of Ember are currently available for 64-bit Python 2.7 on
 Windows. To use the binary version of Ember, you must have the following
 installed:</p>
-<blockquote>
-<div><ul>
-<li><p class="first"><a class="reference external" href="https://www.python.org/downloads/">Python 2.7 (64-bit)</a></p>
-</li>
-<li><p class="first"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy">Numpy</a> - version 1.8 or higher</p>
-</li>
-<li><p class="first"><a class="reference external" href="https://sourceforge.net/projects/cantera/files/cantera/">Cantera 2.1 Python module</a></p>
-<blockquote>
-<div><ul class="simple">
-<li>For Ember 1.2.x, install Cantera 2.1 and the &#8220;Legacy&#8221; Cantera Python
-module</li>
+<ul class="simple">
+<li><a class="reference external" href="https://www.python.org/downloads/">Python 2.7 (64-bit)</a></li>
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy">Numpy</a> - version 1.8 or higher</li>
+<li><a class="reference external" href="https://sourceforge.net/projects/cantera/files/cantera/">Cantera 2.1 Python module</a><ul>
+<li>For Ember 1.2.x, install Cantera 2.1 and the &#8220;Legacy&#8221; Cantera Python module</li>
 <li>For Ember 1.3 and higher, install the new Python module</li>
 </ul>
-</div></blockquote>
 </li>
-<li><p class="first"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#h5py">h5py</a></p>
-</li>
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#h5py">h5py</a></li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="build-dependencies">
 <h2>Build Dependencies<a class="headerlink" href="#build-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>The following software needs to be installed in order to compile Ember:</p>
-<blockquote>
-<div><ul>
+<ul>
 <li><p class="first">A C++ compiler (g++, Clang, Intel C++, Visual Studio 2008)</p>
 </li>
 <li><p class="first">Python 2.6 or higher (2.7 recommended)</p>
@@ -159,20 +149,34 @@ module</li>
 <li><p class="first">Cython (&gt;= 0.18)</p>
 </li>
 <li><p class="first">Boost (&gt;= 1.40, including the compiled <tt class="docutils literal"><span class="pre">boost_thread</span></tt> library)</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be sure to use the same version of Boost as the one that was used to
+compile Cantera.</p>
+</div>
 </li>
 <li><p class="first">SCons (&gt;= 2.1.0 recommended)</p>
 </li>
 <li><p class="first">Eigen (&gt;= 3.0)</p>
 </li>
 <li><p class="first">Cantera (&gt;= 2.1.0)</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>For Ember 1.2.x, install Cantera with the &#8216;legacy&#8217; Python module</li>
 <li>For Ember 1.3 and higher, install the &#8216;new&#8217; Python module</li>
 </ul>
-</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cantera must be compiled using the option <tt class="docutils literal"><span class="pre">build_thread_safe=y</span></tt>
+(passed as a command line arguement to <tt class="docutils literal"><span class="pre">scons</span> <span class="pre">build</span> <span class="pre">...</span></tt>)</p>
+</div>
 </li>
 <li><p class="first">Sundials (2.4.0 or 2.5.0)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">On Linux, Sundials must be compiled to use &#8220;position independent
+code&#8221;. For most compilers, this can be specified by using the option
+<tt class="docutils literal"><span class="pre">--with-cflags=-fPIC</span></tt> when running <tt class="docutils literal"><span class="pre">configure</span></tt>.</p>
+</div>
 </li>
 <li><p class="first">Intel Threading Building Blocks (&gt;= 4.0)</p>
 </li>
@@ -181,17 +185,14 @@ module</li>
 <li><p class="first">h5py (&gt;= 1.2.1)</p>
 </li>
 </ul>
-</div></blockquote>
 <p>In order to process the documentation, the following are also required:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>Doxygen (&gt;= 1.8.0)</li>
 <li>Sphinx</li>
 <li>Pygments</li>
 <li>pyparsing</li>
 <li>doxylink (see <a class="reference external" href="http://pypi.python.org/pypi/sphinxcontrib-doxylink">http://pypi.python.org/pypi/sphinxcontrib-doxylink</a>)</li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="compilation">
 <h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>
@@ -255,7 +256,7 @@ $ make html</pre>
           <a href="flame-model.html" title="Flame Model"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to Ember’s documentation!"
+          <a href="index.html" title="Ember"
              >previous</a> |</li>
         <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>

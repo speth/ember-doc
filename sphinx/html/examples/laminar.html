@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Laminar Flame &mdash; Ember 1.3.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Input Files" href="../input.html" />
+    <link rel="prev" title="Premixed Strained Flame" href="premixed.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../input.html" title="Input Files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="premixed.html" title="Premixed Strained Flame"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="premixed.html"
+                        title="previous chapter">Premixed Strained Flame</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../input.html"
+                        title="next chapter">Input Files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/examples/laminar.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="laminar-flame">
+<h1>Laminar Flame<a class="headerlink" href="#laminar-flame" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to simulate a freely-propagating, unstrained laminar
+flame.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
+<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="s">&#39;run/laminar-methane&#39;</span><span class="p">),</span>
+    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">fuel</span><span class="o">=</span><span class="s">&#39;CH4:1.0&#39;</span><span class="p">,</span>
+                     <span class="n">oxidizer</span><span class="o">=</span><span class="s">&#39;O2:1, N2:3.76&#39;</span><span class="p">,</span>
+                     <span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">xLeft</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                     <span class="n">xRight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">StrainParameters</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                     <span class="n">final</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">General</span><span class="p">(</span><span class="n">fixedLeftLocation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">fixedBurnedVal</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">nThreads</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">Grid</span><span class="p">(</span><span class="n">vtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dvtol</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">gridMin</span><span class="o">=</span><span class="mf">5e-6</span><span class="p">,</span> <span class="n">gridMax</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span>
+    <span class="n">PositionControl</span><span class="p">(</span><span class="n">proportionalGain</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">xInitial</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">xFinal</span><span class="o">=</span><span class="mf">0.005</span><span class="p">),</span>
+    <span class="n">TerminationCondition</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
+    <span class="n">Times</span><span class="p">(</span><span class="n">profileStepInterval</span><span class="o">=</span><span class="mi">50</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The following configuration parameters are particularly important for unstrained
+flames:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a> should have both <cite>initial</cite> and <cite>final</cite> set to 0.</li>
+<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><tt class="xref py py-class docutils literal"><span class="pre">General</span></tt></a> should have <cite>fixedLeftLocation</cite> set to <cite>True</cite>. Since the
+boundary condition on the burned side of the flame is an outflow condition,
+a zero-gradient boundary condition is appropriate, so we set
+<cite>fixedBurnedVal</cite> to <cite>False</cite>.</li>
+<li><a class="reference internal" href="../input.html#ember.input.PositionControl" title="ember.input.PositionControl"><tt class="xref py py-class docutils literal"><span class="pre">PositionControl</span></tt></a> - Since an unstrained flame propagating into a stagnant
+mixture has no steady-state solution in the fixed reference frame, we use
+this option to vary the inlet velocity to the domain so that we end up in a
+reference frame that follows the flame. The values of <cite>xInitial</cite> and
+<cite>xFinal</cite> should be equal, and set to a point within the initially specified
+domain. The <cite>proportionalGain</cite> value needs to be set high enough so that the
+flame doesn&#8217;t move too far within the domain, but low enough to avoid
+numerical instabilities.</li>
+</ul>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../input.html" title="Input Files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="premixed.html" title="Premixed Strained Flame"
+             >previous</a> |</li>
+        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

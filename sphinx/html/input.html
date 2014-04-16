@@ -28,7 +28,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
     <link rel="next" title="Running Simulations" href="run-sim.html" />
-    <link rel="prev" title="Boundary Conditions" href="boundary-conditions.html" /> 
+    <link rel="prev" title="Laminar Flame" href="examples/laminar.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,7 +44,7 @@
           <a href="run-sim.html" title="Running Simulations"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="boundary-conditions.html" title="Boundary Conditions"
+          <a href="examples/laminar.html" title="Laminar Flame"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>
@@ -61,8 +61,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="boundary-conditions.html"
-                        title="previous chapter">Boundary Conditions</a></p>
+  <p class="topless"><a href="examples/laminar.html"
+                        title="previous chapter">Laminar Flame</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="run-sim.html"
                         title="next chapter">Running Simulations</a></p>
@@ -106,7 +106,7 @@ configuration by passing <a class="reference internal" href="#ember.input.Option
 </pre></div>
 </div>
 <div class="section" id="configuration-options">
-<h2>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
+<span id="sec-conf-options"></span><h2>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="ember.input.Paths">
 <em class="property">class </em><tt class="descclassname">ember.input.</tt><tt class="descname">Paths</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/ember/input.html#Paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Paths" title="Permalink to this definition">¶</a></dt>
@@ -985,13 +985,13 @@ restarting the code.</p>
 <em>measurement</em> is satisfied. The <em>measurement</em>-based check is not enabled
 until <em>tMin</em> is reached.</p>
 <ul class="simple">
-<li>If <span class="math">\(measurement == None\)</span>, integration will proceed to <em>tEnd</em>.</li>
-<li>If <span class="math">\(measurement == 'Q'\)</span>, integration will terminate when the the heat
+<li>If <cite>measurement == None</cite>, integration will proceed to <em>tEnd</em>.</li>
+<li>If <cite>measurement == &#8216;Q&#8217;</cite>, integration will terminate when the the heat
 release rate reaches a steady-state value to within <em>tolerance</em> (RMS)
 over a time period of <em>steadyPeriod</em>, or the mean heat release rate over
 <em>steadyPeriod</em> is less than <em>abstol</em>.</li>
-<li>If <span class="math">\(measurement == 'dTdt', integration will terminate when
-`||1/T * dT/dt|| / sqrt(nPoints)\)</span>  is less than <span class="math">\(dTdt_tol\)</span>.</li>
+<li>If <cite>measurement == &#8216;dTdt&#8217;, integration will terminate when
+`||1/T * dT/dt|| / sqrt(nPoints)</cite>  is less than <cite>dTdt_tol</cite>.</li>
 </ul>
 <dl class="attribute">
 <dt id="ember.input.TerminationCondition.tEnd">
@@ -1149,7 +1149,7 @@ classes: <a class="reference internal" href="#ember.input.StringOption" title="e
           <a href="run-sim.html" title="Running Simulations"
              >next</a> |</li>
         <li class="right" >
-          <a href="boundary-conditions.html" title="Boundary Conditions"
+          <a href="examples/laminar.html" title="Laminar Flame"
              >previous</a> |</li>
         <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
       </ul>
