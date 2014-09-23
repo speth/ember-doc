@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -77,18 +75,23 @@
 <span class="sd">:class:`.Config`::</span>
 
 <span class="sd">    conf = Config(</span>
-<span class="sd">        Paths(inputDir=&quot;somewhere&quot;,</span>
-<span class="sd">              outputDir=&quot;somewhereElse&quot;),</span>
+<span class="sd">        Paths(outputDir=&quot;somewhere&quot;),</span>
 <span class="sd">        InitialCondition(equivalenceRatio=0.9))</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numbers</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">types</span>
-<span class="kn">import</span> <span class="nn">Cantera</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">cantera</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">utils</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">_ember</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">output</span>
 
 <div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../input.html#ember.input.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -127,7 +130,8 @@
 <span class="sd">    classes: :class:`StringOption`, :class:`BoolOption`, :class:`IntegerOption`,</span>
 <span class="sd">    :class:`FloatOption`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">counter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># used to preserve options in the order they are defined</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># used to preserve options in the order they are defined</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
@@ -153,10 +157,12 @@
             <span class="k">return</span> <span class="s">&#39;</span><span class="si">%r</span><span class="s"> not in </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">&#39;Value (</span><span class="si">%s</span><span class="s">) must be greater than or equal to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="s">&#39;Value (</span><span class="si">%s</span><span class="s">) must be greater than or equal to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">&#39;Value (</span><span class="si">%s</span><span class="s">) must be less than or equal to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="s">&#39;Value (</span><span class="si">%s</span><span class="s">) must be less than or equal to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
@@ -274,43 +280,55 @@
         <span class="n">allOpts</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sortValue</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">allOpts</span><span class="o">.</span><span class="n">__iter__</span><span class="p">()</span>
 
-<span class="c"># frequently-used filter predicates</span></div>
+<div class="viewcode-block" id="Options.isSet"><a class="viewcode-back" href="../../input.html#ember.input.Options.isSet">[docs]</a>    <span class="k">def</span> <span class="nf">isSet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the named option has a user-specified value &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span><span class="o">.</span><span class="n">isSet</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span><span class="o">.</span><span class="n">isSet</span>
+
+
+<span class="c"># frequently-used filter predicates</span></div></div>
 <span class="k">def</span> <span class="nf">_isPremixed</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">conf</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;premixed&#39;</span>
+
 
 <span class="k">def</span> <span class="nf">_isDiffusion</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">conf</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;diffusion&#39;</span>
 
+
 <span class="k">def</span> <span class="nf">_isSymmetric</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">conf</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">curvedFlame</span> <span class="ow">or</span> <span class="n">conf</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">twinFlame</span>
+
 
 <span class="k">def</span> <span class="nf">_usingCvode</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">conf</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">chemistryIntegrator</span> <span class="o">==</span> <span class="s">&#39;cvode&#39;</span>
 
+
 <span class="k">def</span> <span class="nf">_usingQss</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">conf</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">chemistryIntegrator</span> <span class="o">==</span> <span class="s">&#39;qss&#39;</span>
+
 
 <div class="viewcode-block" id="Paths"><a class="viewcode-back" href="../../input.html#ember.input.Paths">[docs]</a><span class="k">class</span> <span class="nc">Paths</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Directories for input and output files &quot;&quot;&quot;</span>
 
-    <span class="c">#: Relative path to the directory where input files (such as the</span>
-    <span class="c">#: Cantera mechanism file) are located.</span>
-    <span class="n">inputDir</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;input&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Input Directory&#39;</span><span class="p">)</span>
-
-    <span class="c">#: Relative path to the directory where output files</span>
-    <span class="c">#: (outNNNNNN.h5, profNNNNNN.h5) will be stored.</span>
+    <span class="c">#: Relative path to the directory where output files (outNNNNNN.h5,</span>
+    <span class="c">#: profNNNNNN.h5) will be stored. Automatically created if it doesn&#39;t</span>
+    <span class="c">#: already exist.</span>
     <span class="n">outputDir</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;run/test1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Output Directory&#39;</span><span class="p">)</span>
 
     <span class="c">#: File to use for log messages. If *None*, write output to stdout</span>
     <span class="n">logFile</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Log file&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="General"><a class="viewcode-back" href="../../input.html#ember.input.General">[docs]</a><span class="k">class</span> <span class="nc">General</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; High-level configuration options &quot;&quot;&quot;</span>
 
     <span class="c">#: True if the temperature and mass fractions on the burned gas</span>
     <span class="c">#: side of the flame should be held constant. Applicable only to</span>
-    <span class="c">#: premixed flames.</span>
-    <span class="n">fixedBurnedVal</span> <span class="o">=</span> <span class="n">BoolOption</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isPremixed</span><span class="p">)</span>
+    <span class="c">#: premixed flames. The default is *True* for twin or curved flames with</span>
+    <span class="c">#: burned gas at x=0, and *False* otherwise.</span>
+    <span class="n">fixedBurnedVal</span> <span class="o">=</span> <span class="n">BoolOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isPremixed</span><span class="p">)</span>
 
     <span class="c">#: True if the position of the leftmost grid point should be held</span>
     <span class="c">#: constant. Should usually be True for Twin and Curved flame</span>
@@ -370,6 +388,10 @@
     <span class="n">nThreads</span> <span class="o">=</span> <span class="n">IntegerOption</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                              <span class="n">label</span><span class="o">=</span><span class="s">&#39;Number of Processors&#39;</span><span class="p">)</span>
 
+    <span class="c">#: Order of Chebyshev polynomial to use in approximating input</span>
+    <span class="c">#: functions over a single global time step.</span>
+    <span class="n">chebyshevOrder</span> <span class="o">=</span> <span class="n">IntegerOption</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="Chemistry"><a class="viewcode-back" href="../../input.html#ember.input.Chemistry">[docs]</a><span class="k">class</span> <span class="nc">Chemistry</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Settings pertaining to the Cantera mechanism file &quot;&quot;&quot;</span>
@@ -382,16 +404,23 @@
     <span class="c">#:</span>
     <span class="c">#:     &lt;phase dim=&quot;3&quot; id=&quot;gas&quot;&gt;</span>
     <span class="c">#:</span>
-    <span class="c">#: in the mechanism file. This is always &quot;gas&quot; for mechanisms</span>
-    <span class="c">#: converted using ck2cti and cti2ctml.</span>
-    <span class="n">phaseID</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;gas&quot;</span><span class="p">)</span>
+    <span class="c">#: in the mechanism file. This is always &quot;gas&quot; for mechanisms converted</span>
+    <span class="c">#: using ck2cti and cti2ctml. This option only needs to be specified if</span>
+    <span class="c">#: the desired phase is not the first phase defined in the input file.</span>
+    <span class="n">phaseID</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c">#: Transport model to use. Valid options are ``Mix``, ``Multi``, and ``Approx``</span>
     <span class="n">transportModel</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;Mix&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;Multi&quot;</span><span class="p">,</span> <span class="s">&quot;Approx&quot;</span><span class="p">),</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
+    <span class="c">#: Kinetics model to use. Valid options are ``standard`` and ``interp``.</span>
+    <span class="n">kineticsModel</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;standard&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;interp&quot;</span><span class="p">,),</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
     <span class="c">#: Mole fraction threshold for including species with ``transportModel = &quot;Approx&quot;``</span>
     <span class="n">threshold</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Approx. transport threshold&#39;</span><span class="p">,</span>
         <span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">conf</span><span class="p">:</span> <span class="n">conf</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">transportModel</span> <span class="o">==</span> <span class="s">&#39;Approx&#39;</span><span class="p">)</span>
+
+    <span class="c">#: Set a scalar multiplier for the reaction rate term as a function time</span>
+    <span class="n">rateMultiplierFunction</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="Grid"><a class="viewcode-back" href="../../input.html#ember.input.Grid">[docs]</a><span class="k">class</span> <span class="nc">Grid</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
@@ -470,10 +499,6 @@
     <span class="c">#: create a new initial profile.</span>
     <span class="n">restartFile</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c">#: True if the restart file path is relative to Paths.inputDir.</span>
-    <span class="n">relativeRestartPath</span> <span class="o">=</span> <span class="n">BoolOption</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">conf</span><span class="p">:</span> <span class="n">conf</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="p">)</span>
-
     <span class="c">#: &quot;premixed&quot;, &quot;diffusion&quot;, or &quot;quasi2d&quot;</span>
     <span class="n">flameType</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&#39;premixed&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;diffusion&#39;</span><span class="p">,</span> <span class="s">&#39;quasi2d&#39;</span><span class="p">))</span>
 
@@ -487,14 +512,38 @@
     <span class="n">Toxidizer</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Oxidizer Temperature&#39;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isDiffusion</span><span class="p">)</span>
 
     <span class="c">#: Molar composition of the fuel mixture.</span>
-    <span class="n">fuel</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;CH4:1.0&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Molar Fuel Composition&#39;</span><span class="p">)</span>
+    <span class="n">fuel</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="s">&quot;CH4:1.0&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Molar Fuel Composition&#39;</span><span class="p">)</span>
 
     <span class="c">#: Molar composition of the oxidizer mixture.</span>
-    <span class="n">oxidizer</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="s">&quot;N2:3.76, O2:1.0&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Molar Oxidizer Composition&#39;</span><span class="p">)</span>
+    <span class="n">oxidizer</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="s">&quot;N2:3.76, O2:1.0&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Molar Oxidizer Composition&#39;</span><span class="p">)</span>
 
     <span class="c">#: Equivalence ratio of the fuel/air mixture for premixed flames.</span>
     <span class="n">equivalenceRatio</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Equivalence Ratio&#39;</span><span class="p">,</span>
         <span class="nb">filter</span><span class="o">=</span><span class="n">_isPremixed</span><span class="p">)</span>
+
+    <span class="c">#: Molar composition of the fuel + oxidizer mixture. Specify as an alternative</span>
+    <span class="c">#: to providing fuel and oxidizer compositions and equivalence ratio.</span>
+    <span class="n">reactants</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Molar Reactant Composition&#39;</span><span class="p">)</span>
+
+    <span class="c">#: Molar composition of the flow opposite the premixed reactant</span>
+    <span class="c">#: stream, if different from the equilibrium composition</span>
+    <span class="n">counterflow</span> <span class="o">=</span> <span class="n">StringOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Composition of counterflow&#39;</span><span class="p">,</span>
+                               <span class="nb">filter</span><span class="o">=</span><span class="n">_isPremixed</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c">#: Temperature of the flow opposite the premixed reactant stream, if</span>
+    <span class="c">#: different from the equilibrium temperature</span>
+    <span class="n">Tcounterflow</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Temperature of counteflow&#39;</span><span class="p">,</span>
+                               <span class="nb">filter</span><span class="o">=</span><span class="n">_isPremixed</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c">#: Adjust the composition of the counterflow stream so that the components</span>
+    <span class="c">#: are at equilibrium. This option specifies the property pair to hold</span>
+    <span class="c">#: constant during equilibration, or *False* to skip equilibration. The</span>
+    <span class="c">#: boundary condition is not consistent if this mixture has reactions that</span>
+    <span class="c">#: are proceeding at finite rates. For diffusion flames, this option is applied</span>
+    <span class="c">#: to the state of the oxidizer stream.</span>
+    <span class="n">equilibrateCounterflow</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="s">&#39;TP&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;HP&#39;</span><span class="p">,</span><span class="s">&#39;UV&#39;</span><span class="p">,</span><span class="s">&#39;SV&#39;</span><span class="p">,</span><span class="s">&#39;TV&#39;</span><span class="p">,</span><span class="s">&#39;SP&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">),</span>
+                                    <span class="n">label</span><span class="o">=</span><span class="s">&#39;Equilibrate specified counterflow mixture&#39;</span><span class="p">,</span>
+                                    <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c">#: Thermodynamic pressure [Pa]</span>
     <span class="n">pressure</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">101325</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -525,14 +574,14 @@
     <span class="c">#: filter before starting the simulation.</span>
     <span class="n">smoothCount</span> <span class="o">=</span> <span class="n">IntegerOption</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-    <span class="c">#: True if initial profiles for x,T,U and Y (as well as rVzero) are given</span>
+    <span class="c">#: True if initial profiles for x,T,U,V and Y are given</span>
     <span class="n">haveProfiles</span> <span class="o">=</span> <span class="n">BoolOption</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">T</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">U</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">Y</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">rVzero</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="WallFlux"><a class="viewcode-back" href="../../input.html#ember.input.WallFlux">[docs]</a><span class="k">class</span> <span class="nc">WallFlux</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
@@ -573,10 +622,10 @@
 <span class="sd">    The strain rate changes linearly from *initial* to *final* over a</span>
 <span class="sd">    period of *dt* seconds, starting at *tStart*.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">initial</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span> <span class="c">#: Initial strain rate [1/s]</span>
-    <span class="n">final</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span> <span class="c">#: final strain rate [1/s]</span>
-    <span class="n">tStart</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.000</span><span class="p">)</span> <span class="c">#: time at which strain rate starts to change [s]</span>
-    <span class="n">dt</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.002</span><span class="p">)</span> <span class="c">#: time period over which strain rate changes [s]</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>  <span class="c">#: Initial strain rate [1/s]</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>  <span class="c">#: final strain rate [1/s]</span>
+    <span class="n">tStart</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.000</span><span class="p">)</span>  <span class="c">#: time at which strain rate starts to change [s]</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.002</span><span class="p">)</span>  <span class="c">#: time period over which strain rate changes [s]</span>
 
     <span class="c">#: A list of strain rates to use for a series of sequential</span>
     <span class="c">#: integration periods (see :func:`~ember.utils.multirun`), with steady-state</span>
@@ -587,6 +636,10 @@
     <span class="c">#:              1152, 960, 768, 576, 480, 384, 288, 240, 192, 144, 120,</span>
     <span class="c">#:              96, 72, 60, 48, 36, 30, 24, 18, 15, 12]</span>
     <span class="n">rates</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c">#: Specify the strain rate as a function of time, using any callable</span>
+    <span class="c">#! Python object.</span>
+    <span class="n">function</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="PositionControl"><a class="viewcode-back" href="../../input.html#ember.input.PositionControl">[docs]</a><span class="k">class</span> <span class="nc">PositionControl</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
@@ -604,13 +657,13 @@
 <span class="sd">    *integralGain*.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">xInitial</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0025</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">xFinal</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0025</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">dt</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">tStart</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
+    <span class="n">xInitial</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0025</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">xFinal</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0025</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">tStart</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
 
-    <span class="n">proportionalGain</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">integralGain</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span> <span class="c">#:</span>
+    <span class="n">proportionalGain</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">integralGain</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">_isSymmetric</span><span class="p">)</span>  <span class="c">#:</span>
 
 </div>
 <div class="viewcode-block" id="Times"><a class="viewcode-back" href="../../input.html#ember.input.Times">[docs]</a><span class="k">class</span> <span class="nc">Times</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
@@ -731,6 +784,13 @@
     <span class="c">#: the source term at j = *sourcePoint*, then terminate.</span>
     <span class="n">sourceTime</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
+    <span class="c">#: Time at which to start saving intermediate integrator profiles when</span>
+    <span class="c">#: OutputFiles.debugIntegratorStages is True</span>
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c">#: Time at which to stop saving intermediate integrator profiles when</span>
+    <span class="c">#: OutputFiles.debugIntegratorStages is True</span>
+    <span class="n">stopTime</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="OutputFiles"><a class="viewcode-back" href="../../input.html#ember.input.OutputFiles">[docs]</a><span class="k">class</span> <span class="nc">OutputFiles</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Control the contents of the periodic output files &quot;&quot;&quot;</span>
@@ -759,27 +819,38 @@
     <span class="c">#: Write profiles after each stage of the split integrator.</span>
     <span class="n">debugIntegratorStages</span> <span class="o">=</span> <span class="n">BoolOption</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
+    <span class="c">#: Class used to write periodic output files (e.g. profNNNNNN.h5)</span>
+    <span class="n">stateWriter</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">StateWriter</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c">#: Class used to write time-series files (e.g. out.h5)</span>
+    <span class="n">timeSeriesWriter</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">TimeSeriesWriter</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="TerminationCondition"><a class="viewcode-back" href="../../input.html#ember.input.TerminationCondition">[docs]</a><span class="k">class</span> <span class="nc">TerminationCondition</span><span class="p">(</span><span class="n">Options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Integrate until either:</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Integrate until either *tEnd* is reached or a criterion based on</span>
+<span class="sd">    *measurement* is satisfied. The *measurement*-based check is not enabled</span>
+<span class="sd">    until *tMin* is reached.</span>
 
-<span class="sd">    (1) *tEnd* is reached</span>
-<span class="sd">    (2) The heat release rate ( *measurement* ) reaches a steady-state</span>
-<span class="sd">        value to within *tolerance* (RMS) over a time period of</span>
-<span class="sd">        *steadyPeriod*, or the mean heat release rate over *steadyPeriod*</span>
-<span class="sd">        is less than *abstol*.</span>
+<span class="sd">    - If `measurement == None`, integration will proceed to *tEnd*.</span>
 
-<span class="sd">    To disable steady-state check, set ``measurement = None``, and give a</span>
-<span class="sd">    sane value for *tEnd*.</span>
+<span class="sd">    - If `measurement == &#39;Q&#39;`, integration will terminate when the the heat</span>
+<span class="sd">      release rate reaches a steady-state value to within *tolerance* (RMS)</span>
+<span class="sd">      over a time period of *steadyPeriod*, or the mean heat release rate over</span>
+<span class="sd">      *steadyPeriod* is less than *abstol*.</span>
+
+<span class="sd">    - If `measurement == &#39;dTdt&#39;, integration will terminate when</span>
+<span class="sd">      `||1/T * dT/dt|| / sqrt(nPoints)`  is less than `dTdt_tol`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">tEnd</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span> <span class="c">#:</span>
+    <span class="n">tEnd</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>  <span class="c">#:</span>
 
-    <span class="n">measurement</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="s">&quot;Q&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">None</span><span class="p">,))</span> <span class="c">#:</span>
-    <span class="n">tolerance</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">abstol</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c">#:</span>
-    <span class="n">steadyPeriod</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.002</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c">#:</span>
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="s">&quot;Q&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="s">&#39;dTdt&#39;</span><span class="p">))</span>  <span class="c">#:</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">abstol</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">steadyPeriod</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.002</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c">#:</span>
+    <span class="n">tMin</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dTdtTol</span> <span class="o">=</span> <span class="n">FloatOption</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../input.html#ember.input.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -816,30 +887,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">outputFiles</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">OutputFiles</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">terminationCondition</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">TerminationCondition</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Config.evaluate"><a class="viewcode-back" href="../../input.html#ember.input.Config.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Replace all of the :class:`Option` objects with their values so that</span>
-<span class="sd">        they can be used by the C++ extension, in</span>
-<span class="sd">        :meth:`Config.generateInitialCondition`, etc.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">opts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">Options</span><span class="p">):</span>
-                <span class="k">continue</span>
-            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">opts</span><span class="p">):</span>
-                <span class="n">opt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">Option</span><span class="p">):</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Config.setup"><a class="viewcode-back" href="../../input.html#ember.input.Config.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform any steps that need to be done before this object can be used</span>
-<span class="sd">        to create a FlameSolver, such as generating initial reactant profiles.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">haveProfiles</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">generateInitialCondition</span><span class="p">()</span>
-</div>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ConcreteConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Options</span><span class="p">):</span>
@@ -882,18 +932,15 @@
             <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="k">print</span> <span class="s">&quot;Error: &#39;general.unburnedLeft&#39; should not be specified for diffusion flames.&quot;</span>
 
-        <span class="c"># Make sure the mechanism file is in the correct place</span>
-        <span class="n">mech</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">inputDir</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">mechanismFile</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mech</span><span class="p">):</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
-            <span class="k">print</span> <span class="s">&quot;Error: Couldn&#39;t find mechanism file </span><span class="si">%r</span><span class="s">.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mech</span>
-
         <span class="c"># Make sure that the mechanism file actually works and contains the</span>
         <span class="c"># specified fuel and oxidizer species</span>
-        <span class="n">gas</span> <span class="o">=</span> <span class="n">Cantera</span><span class="o">.</span><span class="n">IdealGasMix</span><span class="p">(</span><span class="n">mech</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">phaseID</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">fuel</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">oxidizer</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">gas</span> <span class="o">=</span> <span class="n">cantera</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">mechanismFile</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">phaseID</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">reactants</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">reactants</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">fuel</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">oxidizer</span><span class="o">.</span><span class="n">value</span>
 
         <span class="c"># Make sure that the mechanism file has sane rate coefficients</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;premixed&#39;</span><span class="p">:</span>
@@ -905,12 +952,7 @@
 
         <span class="c"># Make sure the restart file is in the correct place (if specified)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">relativeRestartPath</span><span class="p">:</span>
-                <span class="n">restart</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">inputDir</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                       <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">restart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="o">.</span><span class="n">value</span>
-
+            <span class="n">restart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="o">.</span><span class="n">value</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">restart</span><span class="p">):</span>
                 <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">print</span> <span class="s">&quot;Error: Couldn&#39;t find restart file </span><span class="si">%r</span><span class="s">.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">restart</span>
@@ -920,54 +962,214 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span> <span class="s">&#39;Validation completed successfully.&#39;</span>
 
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">error</span>
 
 <div class="viewcode-block" id="Config.checkRateConstants"><a class="viewcode-back" href="../../input.html#ember.input.Config.checkRateConstants">[docs]</a>    <span class="k">def</span> <span class="nf">checkRateConstants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A function for finding reactions with suspiciously high</span>
 <span class="sd">        rate constants at low temperatures.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">101325</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">()))</span>
-        <span class="n">Rf</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">fwdRateConstants</span><span class="p">()</span>
-        <span class="n">Rr</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">revRateConstants</span><span class="p">()</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="mi">101325</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)</span>
+        <span class="n">Rf</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">forward_rate_constants</span>
+        <span class="n">Rr</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">reverse_rate_constants</span>
         <span class="n">error</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Rf</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">Rf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e30</span><span class="p">:</span>
                 <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">print</span> <span class="p">(</span><span class="s">&#39;WARNING: Excessively high forward rate constant&#39;</span>
                        <span class="s">&#39; for reaction </span><span class="si">%i</span><span class="s"> at T = </span><span class="si">%6.2f</span><span class="s"> K&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">T</span><span class="p">))</span>
-                <span class="k">print</span> <span class="s">&#39;    Reaction equation: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">gas</span><span class="o">.</span><span class="n">reactionEqn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&#39;    Reaction equation: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">gas</span><span class="o">.</span><span class="n">reaction_equation</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                 <span class="k">print</span> <span class="s">&#39;    Forward rate constant: </span><span class="si">%e</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">Rf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">Rr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e30</span><span class="p">:</span>
                 <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">print</span> <span class="p">(</span><span class="s">&#39;WARNING: Excessively high reverse rate constant&#39;</span>
                        <span class="s">&#39; for reaction </span><span class="si">%i</span><span class="s"> at T = </span><span class="si">%6.2f</span><span class="s"> K&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">T</span><span class="p">))</span>
-                <span class="k">print</span> <span class="s">&#39;    Reaction equation: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">gas</span><span class="o">.</span><span class="n">reactionEqn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&#39;    Reaction equation: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">gas</span><span class="o">.</span><span class="n">reaction_equation</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                 <span class="k">print</span> <span class="s">&#39;    Reverse rate constant: </span><span class="si">%e</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">Rr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">error</span>
 </div>
-<div class="viewcode-block" id="Config.generateInitialCondition"><a class="viewcode-back" href="../../input.html#ember.input.Config.generateInitialCondition">[docs]</a>    <span class="k">def</span> <span class="nf">generateInitialCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.run"><a class="viewcode-back" href="../../run-sim.html#ember.input.Config.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the simulation using the parameters set in this Config.</span>
+
+<span class="sd">        If a list strain rates is provided by the field</span>
+<span class="sd">        :attr:`strainParameters.rates`, a sequence of flame simulations at the</span>
+<span class="sd">        given strain rates will be run. Otherwise, a single simulation will be</span>
+<span class="sd">        run.</span>
+
+<span class="sd">        If the script which calls this function is passed the argument</span>
+<span class="sd">        *validate*, then the configuration will be checked for errors and the</span>
+<span class="sd">        script will exit without running the simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span>
+            <span class="c"># Validate the configuration and exit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="n">concrete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">rates</span><span class="p">:</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">multirun</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+</div></div>
+<span class="k">class</span> <span class="nc">ConcreteConfig</span><span class="p">(</span><span class="n">_ember</span><span class="o">.</span><span class="n">ConfigOptions</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Same structure as class Config, but all the Option objects are replaced</span>
+<span class="sd">    with their actual values, and these values are propagated to an underlying</span>
+<span class="sd">    C++ object as necessary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConcreteConfig</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">opts</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">Options</span><span class="p">):</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">__class__</span><span class="p">()</span>
+                <span class="n">group</span><span class="o">.</span><span class="n">original</span> <span class="o">=</span> <span class="n">opts</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">opts</span><span class="p">):</span>
+                    <span class="n">opt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">Option</span><span class="p">):</span>
+                        <span class="nb">setattr</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opts</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gas</span> <span class="o">=</span> <span class="n">cantera</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">mechanismFile</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">phaseID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">fixedBurnedVal</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">twinFlame</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">curvedFlame</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">unburnedLeft</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">fixedBurnedVal</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">fixedBurnedVal</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;quasi2d&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setupQuasi2d</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readInitialCondition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">restartFile</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span><span class="o">.</span><span class="n">haveProfiles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generateInitialCondition</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_options</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">readInitialCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">restartFile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read the initial profiles for temperature, species mass fractions, and</span>
+<span class="sd">        velocity from the specified input file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">IC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">HDFStruct</span><span class="p">(</span><span class="n">restartFile</span><span class="p">)</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">U</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">V</span>
+
+        <span class="n">IC</span><span class="o">.</span><span class="n">haveProfiles</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">isSet</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;fuel&#39;</span><span class="p">,</span> <span class="s">&#39;oxidizer&#39;</span><span class="p">,</span> <span class="s">&#39;Tfuel&#39;</span><span class="p">,</span> <span class="s">&#39;Toxidizer&#39;</span><span class="p">,</span> <span class="s">&#39;reactants&#39;</span><span class="p">,</span>
+                              <span class="s">&#39;equivalenceRatio&#39;</span><span class="p">,</span> <span class="s">&#39;Tcounterflow&#39;</span><span class="p">,</span> <span class="s">&#39;counterflow&#39;</span><span class="p">))):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setBoundaryValues</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setBoundaryValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">IC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span>
+        <span class="n">jm</span> <span class="o">=</span> <span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">nPoints</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas</span>
+
+        <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;premixed&#39;</span><span class="p">:</span>
+            <span class="c"># Reactants</span>
+            <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">reactants</span><span class="p">:</span>
+                <span class="n">reactants</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">reactants</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reactants</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">calculateReactantMixture</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span><span class="p">,</span>
+                                                           <span class="n">IC</span><span class="o">.</span><span class="n">equivalenceRatio</span><span class="p">)</span>
+
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">reactants</span>
+            <span class="n">rhou</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span>
+            <span class="n">Yu</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+
+            <span class="c"># Products</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s">&#39;HP&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tcounterflow</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">Tb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Tb</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tcounterflow</span>
+            <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">counterflow</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">Yb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">counterflow</span>
+                <span class="n">Yb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+
+            <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">equilibrateCounterflow</span><span class="p">:</span>
+                <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">Yb</span>
+                <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">equilibrateCounterflow</span><span class="p">)</span>
+                <span class="n">Yb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+                <span class="n">Tb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">unburnedLeft</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yu</span>
+                <span class="k">if</span> <span class="n">V</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">V</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tb</span>
+                    <span class="n">Y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yb</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">V</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tb</span>
+                    <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yb</span>
+                <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yu</span>
+
+        <span class="k">elif</span> <span class="n">IC</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;diffusion&#39;</span><span class="p">:</span>
+            <span class="c"># Fuel</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">fuel</span>
+            <span class="n">Yfuel</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+
+            <span class="c"># Oxidizer</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span>
+            <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">equilibrateCounterflow</span><span class="p">:</span>
+                <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">equilibrateCounterflow</span><span class="p">)</span>
+
+            <span class="n">Yoxidizer</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+            <span class="n">Toxidizer</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">fuelLeft</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yfuel</span>
+                <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Toxidizer</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yoxidizer</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Toxidizer</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yoxidizer</span>
+                <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span>
+                <span class="n">Y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yfuel</span>
+
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">rhou</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span>  <span class="c"># arbitrary for diffusion flame</span>
+
+        <span class="k">return</span> <span class="n">rhou</span>
+
+    <span class="k">def</span> <span class="nf">generateInitialCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate initial profiles for temperature, species mass fractions, and</span>
 <span class="sd">        velocity using the specified fuel and oxidizer compositions and flame</span>
 <span class="sd">        configuration parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">gas</span> <span class="o">=</span> <span class="n">Cantera</span><span class="o">.</span><span class="n">IdealGasMix</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">inputDir</span><span class="p">,</span>
-                                               <span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">mechanismFile</span><span class="p">),</span>
-                                  <span class="bp">self</span><span class="o">.</span><span class="n">chemistry</span><span class="o">.</span><span class="n">phaseID</span><span class="p">)</span>
-
         <span class="n">IC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span>
         <span class="n">N</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">nPoints</span>
+        <span class="n">gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas</span>
 
         <span class="n">xLeft</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">twinFlame</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">curvedFlame</span>
                  <span class="k">else</span> <span class="n">IC</span><span class="o">.</span><span class="n">xLeft</span><span class="p">)</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xLeft</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">xRight</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
         <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gas</span><span class="o">.</span><span class="n">nSpecies</span><span class="p">(),</span> <span class="n">N</span><span class="p">))</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
 
-        <span class="n">jm</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">jm</span> <span class="o">=</span> <span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">nPoints</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
 
         <span class="c"># make sure the initial profile fits comfortably in the domain</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">centerWidth</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">IC</span><span class="o">.</span><span class="n">slopeWidth</span><span class="p">)</span>
@@ -984,77 +1186,24 @@
         <span class="n">jr1</span> <span class="o">=</span> <span class="n">jm</span> <span class="o">+</span> <span class="n">centerPointCount</span>
         <span class="n">jr2</span> <span class="o">=</span> <span class="n">jr1</span> <span class="o">+</span> <span class="n">slopePointCount</span>
 
+        <span class="n">rhou</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setBoundaryValues</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">IC</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;premixed&#39;</span><span class="p">:</span>
-            <span class="c"># Reactants</span>
-            <span class="n">reactants</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">calculateReactantMixture</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span><span class="p">,</span>
-                                                       <span class="n">IC</span><span class="o">.</span><span class="n">equivalenceRatio</span><span class="p">)</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">reactants</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">Tu</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">rhou</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
-            <span class="n">Yu</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-
-            <span class="c"># Products</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s">&#39;HP&#39;</span><span class="p">)</span>
-            <span class="n">Tb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
-            <span class="n">Yb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-
-            <span class="c"># Diluent in the middle</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">Tu</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">Y</span><span class="p">[:,</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">unburnedLeft</span><span class="p">:</span>
-                <span class="n">Tleft</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span>
-                <span class="n">Yleft</span> <span class="o">=</span> <span class="n">Yu</span>
-                <span class="n">Tright</span> <span class="o">=</span> <span class="n">Tb</span>
-                <span class="n">Yright</span> <span class="o">=</span> <span class="n">Yb</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">Tleft</span> <span class="o">=</span> <span class="n">Tb</span>
-                <span class="n">Yleft</span> <span class="o">=</span> <span class="n">Yb</span>
-                <span class="n">Tright</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span>
-                <span class="n">Yright</span> <span class="o">=</span> <span class="n">Yu</span>
-
-            <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tleft</span>
-            <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tright</span>
             <span class="n">T</span><span class="p">[</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span>
+            <span class="c"># Diluent in the middle</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tu</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span>
+            <span class="n">Y</span><span class="p">[:,</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
 
         <span class="k">elif</span> <span class="n">IC</span><span class="o">.</span><span class="n">flameType</span> <span class="o">==</span> <span class="s">&#39;diffusion&#39;</span><span class="p">:</span>
             <span class="c"># Stoichiometric mixture at the center</span>
             <span class="n">IC</span><span class="o">.</span><span class="n">equivalenceRatio</span> <span class="o">=</span> <span class="mf">1.0</span>
             <span class="n">products</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">calculateReactantMixture</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span><span class="p">,</span>
                                                       <span class="n">IC</span><span class="o">.</span><span class="n">equivalenceRatio</span><span class="p">)</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">products</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span><span class="o">+</span><span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span><span class="p">),</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span><span class="o">+</span><span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span><span class="p">),</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">products</span>
             <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s">&#39;HP&#39;</span><span class="p">)</span>
-            <span class="n">Tb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
-            <span class="n">Yb</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-            <span class="n">Y</span><span class="p">[:,</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yb</span>
+            <span class="n">T</span><span class="p">[</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">Y</span><span class="p">[:,</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
 
-            <span class="c"># Fuel</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">Yfuel</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-
-            <span class="c"># Oxidizer</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">oxidizer</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">Yoxidizer</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">massFractions</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">fuelLeft</span><span class="p">:</span>
-                <span class="n">Tleft</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span>
-                <span class="n">Yleft</span> <span class="o">=</span> <span class="n">Yfuel</span>
-                <span class="n">Tright</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span>
-                <span class="n">Yright</span> <span class="o">=</span> <span class="n">Yoxidizer</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">Tleft</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Toxidizer</span>
-                <span class="n">Yleft</span> <span class="o">=</span> <span class="n">Yoxidizer</span>
-                <span class="n">Tright</span> <span class="o">=</span> <span class="n">IC</span><span class="o">.</span><span class="n">Tfuel</span>
-                <span class="n">Yright</span> <span class="o">=</span> <span class="n">Yfuel</span>
-
-            <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tleft</span>
-            <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tright</span>
-            <span class="n">T</span><span class="p">[</span><span class="n">jm</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tb</span>
-
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Y</span><span class="o">=</span><span class="n">Yleft</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">Tleft</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">rhou</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span><span class="p">()</span> <span class="c"># arbitrary for diffusion flame</span>
-
-        <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yleft</span>
-        <span class="n">Y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Yright</span>
 
         <span class="n">newaxis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span>
         <span class="n">Y</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">jl1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="n">newaxis</span><span class="p">]</span>
@@ -1080,21 +1229,196 @@
             <span class="n">utils</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
         <span class="n">Y</span> <span class="o">=</span> <span class="n">YT</span><span class="o">.</span><span class="n">T</span>
 
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
         <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">function</span><span class="p">:</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">tStart</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-            <span class="n">gas</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">[:,</span><span class="n">j</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
-            <span class="n">rho</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
-            <span class="n">U</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rhou</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+            <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">IC</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span> <span class="n">Y</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">density</span>
+            <span class="n">U</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rhou</span><span class="o">/</span><span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
             <span class="n">utils</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">twinFlame</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">curvedFlame</span><span class="p">:</span>
+            <span class="c"># Stagnation point at x = 0</span>
+            <span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+                <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Put the stagnation point on the hot side of the flame</span>
+            <span class="k">if</span> <span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">jz</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">N</span> <span class="o">//</span> <span class="mi">4</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">jz</span> <span class="o">=</span> <span class="n">N</span> <span class="o">//</span> <span class="mi">4</span>
+            <span class="n">V</span><span class="p">[</span><span class="n">jz</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jz</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+                <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jz</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">IC</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="n">IC</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span>
         <span class="n">IC</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
         <span class="n">IC</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">U</span>
-        <span class="n">IC</span><span class="o">.</span><span class="n">rVzero</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c"># @todo: Better estimate? Is this currently used?</span>
-        <span class="n">IC</span><span class="o">.</span><span class="n">haveProfiles</span> <span class="o">=</span> <span class="bp">True</span></div></div>
+        <span class="n">IC</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">haveProfiles</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">setupQuasi2d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">IC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialCondition</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">HDFStruct</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">general</span><span class="o">.</span><span class="n">interpFile</span><span class="p">)</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">r</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">Y0</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">U</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">vz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">haveProfiles</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">IC</span><span class="o">.</span><span class="n">interpData</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a single flame simulation using the parameters set in this Config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">confString</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="o">.</span><span class="n">stringify</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+        <span class="n">confOutPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">)</span>
+        <span class="n">confOut</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">confOutPath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">confOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">confString</span><span class="p">)</span>
+
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">_ember</span><span class="o">.</span><span class="n">FlameSolver</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">solver</span>
+
+    <span class="k">def</span> <span class="nf">multirun</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a sequence of flame simulations at different strain rates using</span>
+<span class="sd">        the parameters set in this Config object. The list of strain rates is</span>
+<span class="sd">        defined by the configuration field :attr:`strainParameters.rates`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">confString</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="o">.</span><span class="n">stringify</span><span class="p">()</span>
+        <span class="n">strainRates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">rates</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">strainRates</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;No strain rate list specified&#39;</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">rates</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span><span class="p">:</span>
+            <span class="n">_logFile</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+                <span class="n">_logFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="n">_logFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+                <span class="n">_logFile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+                <span class="k">print</span> <span class="n">message</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">strainRates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">aSave</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Sc</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">xFlame</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">strainRates</span><span class="p">:</span>
+            <span class="n">aSave</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+            <span class="n">restartFile</span> <span class="o">=</span> <span class="s">&#39;prof_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+            <span class="n">historyFile</span> <span class="o">=</span> <span class="s">&#39;out_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+            <span class="n">configFile</span> <span class="o">=</span> <span class="s">&#39;conf_eps</span><span class="si">%04i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span>
+
+            <span class="n">restartPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">restartFile</span><span class="p">)</span>
+            <span class="n">historyPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">historyFile</span><span class="p">)</span>
+            <span class="n">configPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="n">configFile</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">restartPath</span> <span class="o">+</span> <span class="s">&#39;.h5&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">historyPath</span> <span class="o">+</span> <span class="s">&#39;.h5&#39;</span><span class="p">):</span>
+                <span class="c"># If the output files already exist, we simply retrieve the</span>
+                <span class="c"># integral flame properties from the existing profiles and</span>
+                <span class="c"># advance to the next strain rate.</span>
+
+                <span class="n">log</span><span class="p">(</span><span class="s">&#39;Skipping run at strain rate a = </span><span class="si">%g</span><span class="s">&#39;</span>
+                    <span class="s">&#39; because the output file &quot;</span><span class="si">%s</span><span class="s">&quot; already exists.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">restartFile</span><span class="p">))</span>
+
+                <span class="c"># Compute integral properties using points from the last half</span>
+                <span class="c"># of the termination-check period</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">HDFStruct</span><span class="p">(</span><span class="n">historyPath</span> <span class="o">+</span> <span class="s">&#39;.h5&#39;</span><span class="p">)</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">terminationCondition</span><span class="o">.</span><span class="n">steadyPeriod</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+                    <span class="n">log</span><span class="p">(</span><span class="s">&#39;Warning: old data file did not contain data&#39;</span>
+                        <span class="s">&#39; spanning the requested period.&#39;</span><span class="p">)</span>
+                    <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+                <span class="n">Sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Sc</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+                <span class="n">xFlame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">xFlame</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+                <span class="k">del</span> <span class="n">data</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Data is not already present, so run the flame solver for this strain rate</span>
+
+                <span class="n">log</span><span class="p">(</span><span class="s">&#39;Beginning run at strain rate a = </span><span class="si">%g</span><span class="s"> s^-1&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+                <span class="n">confOut</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">configPath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">confOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">confString</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">a</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">strainParameters</span><span class="o">.</span><span class="n">final</span> <span class="o">=</span> <span class="n">a</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&#39;log-eps</span><span class="si">%04i</span><span class="s">.txt&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+                <span class="n">log</span><span class="p">(</span><span class="s">&quot;Writing output file for run to &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">logFile</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">apply_options</span><span class="p">()</span>
+                <span class="n">solver</span> <span class="o">=</span> <span class="n">_ember</span><span class="o">.</span><span class="n">FlameSolver</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">solver</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+                <span class="n">done</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+                    <span class="n">done</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+                <span class="n">solver</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+                <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+                <span class="n">log</span><span class="p">(</span><span class="s">&#39;Completed run at strain rate a = </span><span class="si">%g</span><span class="s"> s^-1&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+                <span class="n">log</span><span class="p">(</span><span class="s">&#39;Integration took </span><span class="si">%.1f</span><span class="s"> seconds.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+                <span class="n">solver</span><span class="o">.</span><span class="n">writeStateFile</span><span class="p">(</span><span class="n">restartFile</span><span class="p">)</span>
+                <span class="n">solver</span><span class="o">.</span><span class="n">writeTimeseriesFile</span><span class="p">(</span><span class="n">historyFile</span><span class="p">)</span>
+                <span class="n">tRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">timeseriesWriter</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+                <span class="n">QRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">timeseriesWriter</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+                <span class="n">ScRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">timeseriesWriter</span><span class="o">.</span><span class="n">Sc</span><span class="p">)</span>
+                <span class="n">xFlameRun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">timeseriesWriter</span><span class="o">.</span><span class="n">xFlame</span><span class="p">)</span>
+
+                <span class="c"># Compute integral properties using points from the last half</span>
+                <span class="c"># of the termination-check period</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">tRun</span> <span class="o">&gt;</span> <span class="n">tRun</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">terminationCondition</span><span class="o">.</span><span class="n">steadyPeriod</span>
+                <span class="n">Q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">QRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+                <span class="n">Sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ScRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+                <span class="n">xFlame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xFlameRun</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">readInitialCondition</span><span class="p">(</span><span class="n">restartPath</span> <span class="o">+</span> <span class="s">&#39;.h5&#39;</span><span class="p">)</span>
+
+            <span class="c"># Sort by strain rate:</span>
+            <span class="n">aSave</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sc</span><span class="p">,</span> <span class="n">xFlame</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">aSave</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sc</span><span class="p">,</span> <span class="n">xFlame</span><span class="p">))))</span>
+
+            <span class="n">integralFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">outputDir</span><span class="p">,</span> <span class="s">&quot;integral.h5&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">integralFile</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">integralFile</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">integralFile</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aSave</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;Q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;Sc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sc</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;xFlame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xFlame</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
           </div>
@@ -1117,7 +1441,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

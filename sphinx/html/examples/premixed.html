@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -28,7 +26,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
     <link rel="up" title="Examples" href="index.html" />
-    <link rel="next" title="Laminar Flame" href="laminar.html" />
+    <link rel="next" title="Counterflow Diffusion Flame" href="diffusion.html" />
     <link rel="prev" title="Examples" href="index.html" /> 
   </head>
   <body>
@@ -42,7 +40,7 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="laminar.html" title="Laminar Flame"
+          <a href="diffusion.html" title="Counterflow Diffusion Flame"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Examples"
@@ -57,8 +55,8 @@
   <p class="topless"><a href="index.html"
                         title="previous chapter">Examples</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="laminar.html"
-                        title="next chapter">Laminar Flame</a></p>
+  <p class="topless"><a href="diffusion.html"
+                        title="next chapter">Counterflow Diffusion Flame</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/examples/premixed.txt"
@@ -111,8 +109,8 @@ configuration parameters is described in <a class="reference internal" href="../
 <ul class="simple">
 <li><a class="reference internal" href="../input.html#ember.input.Paths" title="ember.input.Paths"><tt class="xref py py-class docutils literal"><span class="pre">Paths</span></tt></a><ul>
 <li><tt class="docutils literal"><span class="pre">outputDir</span></tt> is the directory where periodic periodic
-output profiles (<cite>prof000000.h5</cite>, <cite>prof0000001.h5</cite>, etc.) and time series
-output files (<cite>out.h5</cite>) will be saved. If a relative path is given (as in
+output profiles (<tt class="docutils literal"><span class="pre">prof000000.h5</span></tt>, <tt class="docutils literal"><span class="pre">prof0000001.h5</span></tt>, etc.) and time series
+output files (<tt class="docutils literal"><span class="pre">out.h5</span></tt>) will be saved. If a relative path is given (as in
 this example), the path is relative to the directory from which the script
 is run.</li>
 </ul>
@@ -121,7 +119,7 @@ is run.</li>
 specified using the string format supported by Cantera. Alternatively, a
 vector of mole fractions can be supplied. Here, the oxidizer composition is
 left with at the default value, which corresponds to air, i.e.
-<cite>&#8220;N2:3.76, O2:1.0&#8221;</cite>.</li>
+<tt class="docutils literal"><span class="pre">&quot;N2:3.76,</span> <span class="pre">O2:1.0&quot;</span></tt>.</li>
 <li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a> specifies how the strain rate imposed on the flame
 varies as a function of time. In this case we specify a constant strain rate.</li>
 <li><a class="reference internal" href="../input.html#ember.input.TerminationCondition" title="ember.input.TerminationCondition"><tt class="xref py py-class docutils literal"><span class="pre">TerminationCondition</span></tt></a> specifies the conditions under which the time
@@ -129,11 +127,13 @@ integration will be terminated. Here, we specify integration until a specific
 time. Another option is to integrate until a steady-state solution is reached.</li>
 </ul>
 <p>To try this example, run the following command:</p>
-<div class="highlight-python"><pre>$ python -m ember.examples.example_premixed</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m ember.examples.example_premixed
+</pre></div>
 </div>
 <p>Or copy the <tt class="docutils literal"><span class="pre">example_premixed.py</span></tt> file to another directory, make any
 modifications you desire, then run:</p>
-<div class="highlight-python"><pre>$ python example_premixed.py</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ python example_premixed.py
+</pre></div>
 </div>
 </div>
 
@@ -153,7 +153,7 @@ modifications you desire, then run:</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="laminar.html" title="Laminar Flame"
+          <a href="diffusion.html" title="Counterflow Diffusion Flame"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Examples"
@@ -164,7 +164,7 @@ modifications you desire, then run:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

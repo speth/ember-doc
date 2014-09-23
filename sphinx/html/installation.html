@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.3.0b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -115,10 +113,11 @@ Github: <a class="reference external" href="https://github.com/speth/ember/relea
 <p>The current development version of Ember is available on Github:
 <a class="reference external" href="https://github.com/speth/ember">https://github.com/speth/ember</a>. You can check out the source code as
 follows on Unix-like systems:</p>
-<div class="highlight-python"><pre>$ mkdir -p ~/src
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p ~/src
 $ cd ~/src
 $ git clone http://github.com/speth/ember.git
-$ cd ember</pre>
+$ cd ember
+</pre></div>
 </div>
 </div>
 </div>
@@ -178,7 +177,9 @@ code&#8221;. For most compilers, this can be specified by using the option
 <tt class="docutils literal"><span class="pre">--with-cflags=-fPIC</span></tt> when running <tt class="docutils literal"><span class="pre">configure</span></tt>.</p>
 </div>
 </li>
-<li><p class="first">Intel Threading Building Blocks (&gt;= 4.0)</p>
+<li><p class="first">Intel Threading Building Blocks (&gt;= 4.0). TBB is optional, but strongly
+recommended. Without TBB, Ember will only run on a single processor. To
+compile Ember without TBB use the SCons option <tt class="docutils literal"><span class="pre">use_tbb=n</span></tt>.</p>
 </li>
 <li><p class="first">numpy (&gt;= 1.3.0)</p>
 </li>
@@ -200,37 +201,44 @@ code&#8221;. For most compilers, this can be specified by using the option
 version of the code from the downloaded archive. If all the necessary libraries
 are installed in system   default locations, then the following should be
 sufficient:</p>
-<div class="highlight-python"><pre>$ scons build</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ scons build
+</pre></div>
 </div>
 <p>Otherwise, specify the necessary paths using the corresponding command-line
 options: &#8220;cantera&#8221;, &#8220;sundials&#8221;, &#8220;eigen&#8221;, &#8220;boost&#8221;, &#8220;tbb&#8221;. For example:</p>
-<div class="highlight-python"><pre>$ scons build cantera=/home/$USER/.local sundials=/opt/sundials-2.5.0</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ scons build cantera=/home/$USER/.local sundials=/opt/sundials-2.5.0
+</pre></div>
 </div>
 <p>If compilation succeeds, install the Ember Python module by running:</p>
-<div class="highlight-python"><pre>$ scons install</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ scons install
+</pre></div>
 </div>
 <p>By default, Ember will be installed to your <em>user</em> site-packages directory, e.g.
-<cite>~/.local/lib/python2.7/site-packages/ember</cite>. If you wish install to a different
-directory, use the <cite>install_args</cite> option to SCons to specify the appropriate
-command to be passed to <cite>python setup.py install</cite>.</p>
+<tt class="docutils literal"><span class="pre">~/.local/lib/python2.7/site-packages/ember</span></tt>. If you wish install to a different
+directory, use the <tt class="docutils literal"><span class="pre">install_args</span></tt> option to SCons to specify the appropriate
+command to be passed to <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt>.</p>
 <p>Alternatively, if you&#8217;re doing active development, you can just create a symlink
 into your user Python module path:</p>
-<div class="highlight-python"><pre>$ mkdir -p ~/.local/lib/pythonX.Y/site-packages
-$ ln -s ~/src/ember/build/python/ember ~/.local/lib/pythonX.Y/site-packages/ember</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p ~/.local/lib/pythonX.Y/site-packages
+$ ln -s ~/src/ember/build/python/ember ~/.local/lib/pythonX.Y/site-packages/ember
+</pre></div>
 </div>
 <p>where <em>X.Y</em> is your your installed version of Python, e.g 2.7.</p>
 <p>And similarly for Cantera, if it is not already on the Python path:</p>
-<div class="highlight-python"><pre>$ ln -s /path/to/cantera/lib/pythonX.Y/site-packages/cantera ~/.local/lib/pythonX.Y/site-packages/</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ ln -s /path/to/cantera/lib/pythonX.Y/site-packages/cantera ~/.local/lib/pythonX.Y/site-packages/
+</pre></div>
 </div>
 <p>Or add parent directories of each of these modules to your <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>:</p>
-<div class="highlight-python"><pre>$ export PYTHONPATH=/path/to/cantera/lib/python2.7/site-packages:~/src/ember/build/python</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ export PYTHONPATH=/path/to/cantera/lib/python2.7/site-packages:~/src/ember/build/python
+</pre></div>
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <p>To build the Ember documentation, starting from the <tt class="docutils literal"><span class="pre">ember</span></tt> directory, run:</p>
-<div class="highlight-python"><pre>$ doxygen
+<div class="highlight-python"><div class="highlight"><pre>$ doxygen
 $ cd doc/sphinx
-$ make html</pre>
+$ make html
+</pre></div>
 </div>
 <p>To view the HTML docs, open <tt class="docutils literal"><span class="pre">doc/sphinx/html/index.html</span></tt> in your web browser.</p>
 </div>
@@ -263,7 +271,7 @@ $ make html</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

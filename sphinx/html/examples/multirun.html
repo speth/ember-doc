@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sequential Simulations (multirun) &mdash; Ember 1.3.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Batch Jobs" href="batch.html" />
+    <link rel="prev" title="Laminar Flame" href="laminar.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="batch.html" title="Batch Jobs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="laminar.html" title="Laminar Flame"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="laminar.html"
+                        title="previous chapter">Laminar Flame</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="batch.html"
+                        title="next chapter">Batch Jobs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/examples/multirun.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sequential-simulations-multirun">
+<h1>Sequential Simulations (multirun)<a class="headerlink" href="#sequential-simulations-multirun" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to simulate a sequence of steady flames at a range of
+strain rate values.</p>
+<p><tt class="docutils literal"><span class="pre">example_multirun.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
+<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">General</span><span class="p">(</span><span class="n">nThreads</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()),</span>
+    <span class="n">Chemistry</span><span class="p">(</span><span class="n">kineticsModel</span><span class="o">=</span><span class="s">&#39;interp&#39;</span><span class="p">,</span>
+              <span class="n">transportModel</span><span class="o">=</span><span class="s">&#39;Approx&#39;</span><span class="p">),</span>
+    <span class="n">Grid</span><span class="p">(</span><span class="n">addPointCount</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="s">&#39;run/multirunTest&#39;</span><span class="p">),</span>
+    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">fuel</span><span class="o">=</span><span class="s">&#39;CH4:1.0&#39;</span><span class="p">,</span>
+                     <span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.75</span><span class="p">),</span>
+    <span class="n">StrainParameters</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="p">[</span><span class="mi">4800</span><span class="p">,</span><span class="mi">2400</span><span class="p">,</span><span class="mi">1200</span><span class="p">,</span><span class="mi">600</span><span class="p">,</span><span class="mi">300</span><span class="p">]))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The given configuration parameters override default values. The full set of
+configuration parameters is described in <a class="reference internal" href="../input.html#sec-conf-options"><em>Configuration Options</em></a>. Specific
+parameters of interest in this example:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><tt class="xref py py-class docutils literal"><span class="pre">General</span></tt></a><ul>
+<li><tt class="docutils literal"><span class="pre">nThreads</span></tt> - By using the <tt class="docutils literal"><span class="pre">multiprocessing.cpu_count())</span></tt> function, we
+always use the maximum number of processors available. Note that for systems
+with hyperthreading enabled, this will use the total number of virtual
+cores, which may be less efficient than using the number of physical cores.</li>
+</ul>
+</li>
+<li><a class="reference internal" href="../input.html#ember.input.Chemistry" title="ember.input.Chemistry"><tt class="xref py py-class docutils literal"><span class="pre">Chemistry</span></tt></a> - these alternative kinetic and transport models achieve
+increases in speed at a small cost in accuracy.</li>
+<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a><ul>
+<li><tt class="docutils literal"><span class="pre">rates</span></tt> - A list of strain rates to step through. For the supported
+opposed flow flame (this example), stepping through strain rates from high
+to low is usually more computationally efficient. For the unsupported or
+axisymmetric flame, the strain rates should be specified in increasing
+order, as the flame will extinguish at a sufficiently strain rate. For each
+strain rate in this list, the solver will generate a steady-state solution.</li>
+</ul>
+</li>
+</ul>
+<p>The output files for this run, saved in the directory specified by
+<tt class="docutils literal"><span class="pre">Paths.outputDir</span></tt>, will contain the string <tt class="docutils literal"><span class="pre">epsNNNN</span></tt> where NNNN is the
+strain rate, e.g. a run at a strain rate of 480 1/s will produce
+<tt class="docutils literal"><span class="pre">conf_eps0480</span></tt>, <tt class="docutils literal"><span class="pre">log-eps0480.txt</span></tt>, <tt class="docutils literal"><span class="pre">out_eps0480.h5</span></tt>, and
+<tt class="docutils literal"><span class="pre">prof_eps0480.h5</span></tt>.</p>
+<p>Integral output data (strain rate, total heat release rate, flame consumption
+speed, and flame position) for each strain rate will be written to <tt class="docutils literal"><span class="pre">integral.h5</span></tt>.</p>
+<p>To try this example, run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m ember.examples.example_multirun
+</pre></div>
+</div>
+<p>Or copy the <tt class="docutils literal"><span class="pre">example_multirun.py</span></tt> file to another directory, make any
+modifications you desire, then run:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python example_multirun.py
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="batch.html" title="Batch Jobs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="laminar.html" title="Laminar Flame"
+             >previous</a> |</li>
+        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -28,8 +26,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
     <link rel="up" title="Examples" href="index.html" />
-    <link rel="next" title="Input Files" href="../input.html" />
-    <link rel="prev" title="Premixed Strained Flame" href="premixed.html" /> 
+    <link rel="next" title="Sequential Simulations (multirun)" href="multirun.html" />
+    <link rel="prev" title="Counterflow Diffusion Flame" href="diffusion.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +40,10 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../input.html" title="Input Files"
+          <a href="multirun.html" title="Sequential Simulations (multirun)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="premixed.html" title="Premixed Strained Flame"
+          <a href="diffusion.html" title="Counterflow Diffusion Flame"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
@@ -54,11 +52,11 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="premixed.html"
-                        title="previous chapter">Premixed Strained Flame</a></p>
+  <p class="topless"><a href="diffusion.html"
+                        title="previous chapter">Counterflow Diffusion Flame</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../input.html"
-                        title="next chapter">Input Files</a></p>
+  <p class="topless"><a href="multirun.html"
+                        title="next chapter">Sequential Simulations (multirun)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/examples/laminar.txt"
@@ -117,17 +115,17 @@ flame.</p>
 flames:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a> should have both <cite>initial</cite> and <cite>final</cite> set to 0.</li>
-<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><tt class="xref py py-class docutils literal"><span class="pre">General</span></tt></a> should have <cite>fixedLeftLocation</cite> set to <cite>True</cite>. Since the
+<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a> should have both <tt class="docutils literal"><span class="pre">initial</span></tt> and <tt class="docutils literal"><span class="pre">final</span></tt> set to 0.</li>
+<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><tt class="xref py py-class docutils literal"><span class="pre">General</span></tt></a> should have <tt class="docutils literal"><span class="pre">fixedLeftLocation</span></tt> set to <tt class="docutils literal"><span class="pre">True</span></tt>. Since the
 boundary condition on the burned side of the flame is an outflow condition,
 a zero-gradient boundary condition is appropriate, so we set
-<cite>fixedBurnedVal</cite> to <cite>False</cite>.</li>
+<tt class="docutils literal"><span class="pre">fixedBurnedVal</span></tt> to <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
 <li><a class="reference internal" href="../input.html#ember.input.PositionControl" title="ember.input.PositionControl"><tt class="xref py py-class docutils literal"><span class="pre">PositionControl</span></tt></a> - Since an unstrained flame propagating into a stagnant
 mixture has no steady-state solution in the fixed reference frame, we use
 this option to vary the inlet velocity to the domain so that we end up in a
-reference frame that follows the flame. The values of <cite>xInitial</cite> and
-<cite>xFinal</cite> should be equal, and set to a point within the initially specified
-domain. The <cite>proportionalGain</cite> value needs to be set high enough so that the
+reference frame that follows the flame. The values of <tt class="docutils literal"><span class="pre">xInitial</span></tt> and
+<tt class="docutils literal"><span class="pre">xFinal</span></tt> should be equal, and set to a point within the initially specified
+domain. The <tt class="docutils literal"><span class="pre">proportionalGain</span></tt> value needs to be set high enough so that the
 flame doesn&#8217;t move too far within the domain, but low enough to avoid
 numerical instabilities.</li>
 </ul>
@@ -150,10 +148,10 @@ numerical instabilities.</li>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../input.html" title="Input Files"
+          <a href="multirun.html" title="Sequential Simulations (multirun)"
              >next</a> |</li>
         <li class="right" >
-          <a href="premixed.html" title="Premixed Strained Flame"
+          <a href="diffusion.html" title="Counterflow Diffusion Flame"
              >previous</a> |</li>
         <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Examples</a> &raquo;</li> 
@@ -161,7 +159,7 @@ numerical instabilities.</li>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
