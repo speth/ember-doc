@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Batch Jobs &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Batch Jobs &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,14 +23,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="../index.html" />
     <link rel="up" title="Examples" href="index.html" />
     <link rel="next" title="Input Files" href="../input.html" />
     <link rel="prev" title="Sequential Simulations (multirun)" href="multirun.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +47,11 @@
         <li class="right" >
           <a href="multirun.html" title="Sequential Simulations (multirun)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Examples</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -67,22 +69,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="../input.html"
                         title="next chapter">Input Files</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/examples/batch.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/batch.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -91,24 +92,24 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="batch-jobs">
 <h1>Batch Jobs<a class="headerlink" href="#batch-jobs" title="Permalink to this headline">¶</a></h1>
 <p>This example demonstrates some features that are useful when running Ember on a
 shared multi-node cluster that uses a batch queueing system such as Grid Engine.</p>
-<p><tt class="docutils literal"><span class="pre">example_batch.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
-<span class="c">#$ -pe singlenode 8</span>
-<span class="c">#$ -l normal</span>
-<span class="c">#$ -l h_rt=120:00:00</span>
-<span class="c">#$ -j y</span>
-<span class="c">#$ -o job-output-example-parallel.txt</span>
+<p><code class="docutils literal"><span class="pre">example_batch.py</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#$ -pe singlenode 8</span>
+<span class="c1">#$ -l normal</span>
+<span class="c1">#$ -l h_rt=120:00:00</span>
+<span class="c1">#$ -j y</span>
+<span class="c1">#$ -o job-output-example-parallel.txt</span>
 
-<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ember</span> <span class="k">import</span> <span class="o">*</span>
 
-<span class="n">outputDir</span> <span class="o">=</span> <span class="s">&#39;run/example-parallel-phi</span><span class="si">%4.2f</span><span class="s">&#39;</span>
-<span class="n">logFile</span> <span class="o">=</span> <span class="s">&#39;out-example-parallel-phi</span><span class="si">%4.2f</span><span class="s">&#39;</span>
+<span class="n">outputDir</span> <span class="o">=</span> <span class="s1">&#39;run/example-parallel-phi</span><span class="si">%4.2f</span><span class="s1">&#39;</span>
+<span class="n">logFile</span> <span class="o">=</span> <span class="s1">&#39;out-example-parallel-phi</span><span class="si">%4.2f</span><span class="s1">&#39;</span>
 
 <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
     <span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
@@ -123,24 +124,24 @@ shared multi-node cluster that uses a batch queueing system such as Grid Engine.
 
     <span class="n">conf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">phi</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.90</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]:</span>
         <span class="n">start</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&#39;All done!&#39;</span>
+    <span class="nb">print</span> <span class="s1">&#39;All done!&#39;</span>
 </pre></div>
 </div>
 <div class="section" id="working-with-grid-engine">
 <h2>Working with Grid Engine<a class="headerlink" href="#working-with-grid-engine" title="Permalink to this headline">¶</a></h2>
-<p>The lines above starting with <tt class="docutils literal"><span class="pre">#$</span></tt> are directives for the Grid Engine batch
+<p>The lines above starting with <code class="docutils literal"><span class="pre">#$</span></code> are directives for the Grid Engine batch
 queueing system. Since this script is itself executable, it is not necessary to
 write a separate job submission script. The various resource requests need to be
 specified based on the configuration of the cluster you are using.</p>
 </div>
 <div class="section" id="running-in-parallel">
 <h2>Running in parallel<a class="headerlink" href="#running-in-parallel" title="Permalink to this headline">¶</a></h2>
-<p>The option <tt class="docutils literal"><span class="pre">nThreads=8</span></tt> means that Ember will use 8 processors simultaneously.
+<p>The option <code class="docutils literal"><span class="pre">nThreads=8</span></code> means that Ember will use 8 processors simultaneously.
 This mirrors the resource request to the queue manager for an 8 processor node,
-<tt class="docutils literal"><span class="pre">-pe</span> <span class="pre">singlenode</span> <span class="pre">8</span></tt>. The name of the &#8220;parallel environment&#8221;, <tt class="docutils literal"><span class="pre">singlenode</span></tt> in
+<code class="docutils literal"><span class="pre">-pe</span> <span class="pre">singlenode</span> <span class="pre">8</span></code>. The name of the &#8220;parallel environment&#8221;, <code class="docutils literal"><span class="pre">singlenode</span></code> in
 this case, will depend on the configuration of your cluster. Ember is written as
 a multithreaded parallel code, so all of the processors allocated to it need to
 be on the same node.</p>
@@ -149,11 +150,11 @@ be on the same node.</p>
 <h2>Running several cases sequentially<a class="headerlink" href="#running-several-cases-sequentially" title="Permalink to this headline">¶</a></h2>
 <p>In this script, we define a function that solves a case at a particular
 equivalence ratio, then call that function for each equivalence ratio of
-interest. Python&#8217;s string interpolation (using the <tt class="docutils literal"><span class="pre">%</span></tt> operator) is used to
+interest. Python&#8217;s string interpolation (using the <code class="docutils literal"><span class="pre">%</span></code> operator) is used to
 generate consistent names for the output files. This method can be used to set
 up parametric studies of various input variables.</p>
 <p>To submit this job to the queue, you might use the command:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ qsub example_batch.py
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ qsub example_batch.py
 </pre></div>
 </div>
 </div>
@@ -165,7 +166,7 @@ up parametric studies of various input variables.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -180,13 +181,13 @@ up parametric studies of various input variables.</p>
         <li class="right" >
           <a href="multirun.html" title="Sequential Simulations (multirun)"
              >previous</a> |</li>
-        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Examples</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

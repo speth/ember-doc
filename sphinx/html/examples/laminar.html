@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Laminar Flame &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Laminar Flame &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,14 +23,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="../index.html" />
     <link rel="up" title="Examples" href="index.html" />
     <link rel="next" title="Sequential Simulations (multirun)" href="multirun.html" />
     <link rel="prev" title="Counterflow Diffusion Flame" href="diffusion.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +47,11 @@
         <li class="right" >
           <a href="diffusion.html" title="Counterflow Diffusion Flame"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Examples</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="diffusion.html"
@@ -57,22 +59,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="multirun.html"
                         title="next chapter">Sequential Simulations (multirun)</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/examples/laminar.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/laminar.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -81,33 +82,33 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="laminar-flame">
 <h1>Laminar Flame<a class="headerlink" href="#laminar-flame" title="Permalink to this headline">¶</a></h1>
 <p>This example shows how to simulate a freely-propagating, unstrained laminar
 flame.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
-<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="kn">from</span> <span class="nn">ember</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
-    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="s">&#39;run/laminar-methane&#39;</span><span class="p">),</span>
-    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">fuel</span><span class="o">=</span><span class="s">&#39;CH4:1.0&#39;</span><span class="p">,</span>
-                     <span class="n">oxidizer</span><span class="o">=</span><span class="s">&#39;O2:1, N2:3.76&#39;</span><span class="p">,</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="s1">&#39;run/laminar-methane&#39;</span><span class="p">),</span>
+    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">fuel</span><span class="o">=</span><span class="s1">&#39;CH4:1.0&#39;</span><span class="p">,</span>
+                     <span class="n">oxidizer</span><span class="o">=</span><span class="s1">&#39;O2:1, N2:3.76&#39;</span><span class="p">,</span>
                      <span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
                      <span class="n">xLeft</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                      <span class="n">xRight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
     <span class="n">StrainParameters</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                      <span class="n">final</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">General</span><span class="p">(</span><span class="n">fixedLeftLocation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-            <span class="n">fixedBurnedVal</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+    <span class="n">General</span><span class="p">(</span><span class="n">fixedLeftLocation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fixedBurnedVal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">nThreads</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
     <span class="n">Grid</span><span class="p">(</span><span class="n">vtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dvtol</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">gridMin</span><span class="o">=</span><span class="mf">5e-6</span><span class="p">,</span> <span class="n">gridMax</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span>
     <span class="n">PositionControl</span><span class="p">(</span><span class="n">proportionalGain</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">xInitial</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">xFinal</span><span class="o">=</span><span class="mf">0.005</span><span class="p">),</span>
     <span class="n">TerminationCondition</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
     <span class="n">Times</span><span class="p">(</span><span class="n">profileStepInterval</span><span class="o">=</span><span class="mi">50</span><span class="p">))</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">conf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -115,17 +116,17 @@ flame.</p>
 flames:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><tt class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></tt></a> should have both <tt class="docutils literal"><span class="pre">initial</span></tt> and <tt class="docutils literal"><span class="pre">final</span></tt> set to 0.</li>
-<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><tt class="xref py py-class docutils literal"><span class="pre">General</span></tt></a> should have <tt class="docutils literal"><span class="pre">fixedLeftLocation</span></tt> set to <tt class="docutils literal"><span class="pre">True</span></tt>. Since the
+<li><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><code class="xref py py-class docutils literal"><span class="pre">StrainParameters</span></code></a> should have both <code class="docutils literal"><span class="pre">initial</span></code> and <code class="docutils literal"><span class="pre">final</span></code> set to 0.</li>
+<li><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><code class="xref py py-class docutils literal"><span class="pre">General</span></code></a> should have <code class="docutils literal"><span class="pre">fixedLeftLocation</span></code> set to <code class="docutils literal"><span class="pre">True</span></code>. Since the
 boundary condition on the burned side of the flame is an outflow condition,
 a zero-gradient boundary condition is appropriate, so we set
-<tt class="docutils literal"><span class="pre">fixedBurnedVal</span></tt> to <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
-<li><a class="reference internal" href="../input.html#ember.input.PositionControl" title="ember.input.PositionControl"><tt class="xref py py-class docutils literal"><span class="pre">PositionControl</span></tt></a> - Since an unstrained flame propagating into a stagnant
+<code class="docutils literal"><span class="pre">fixedBurnedVal</span></code> to <code class="docutils literal"><span class="pre">False</span></code>.</li>
+<li><a class="reference internal" href="../input.html#ember.input.PositionControl" title="ember.input.PositionControl"><code class="xref py py-class docutils literal"><span class="pre">PositionControl</span></code></a> - Since an unstrained flame propagating into a stagnant
 mixture has no steady-state solution in the fixed reference frame, we use
 this option to vary the inlet velocity to the domain so that we end up in a
-reference frame that follows the flame. The values of <tt class="docutils literal"><span class="pre">xInitial</span></tt> and
-<tt class="docutils literal"><span class="pre">xFinal</span></tt> should be equal, and set to a point within the initially specified
-domain. The <tt class="docutils literal"><span class="pre">proportionalGain</span></tt> value needs to be set high enough so that the
+reference frame that follows the flame. The values of <code class="docutils literal"><span class="pre">xInitial</span></code> and
+<code class="docutils literal"><span class="pre">xFinal</span></code> should be equal, and set to a point within the initially specified
+domain. The <code class="docutils literal"><span class="pre">proportionalGain</span></code> value needs to be set high enough so that the
 flame doesn&#8217;t move too far within the domain, but low enough to avoid
 numerical instabilities.</li>
 </ul>
@@ -138,7 +139,7 @@ numerical instabilities.</li>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -153,13 +154,13 @@ numerical instabilities.</li>
         <li class="right" >
           <a href="diffusion.html" title="Counterflow Diffusion Flame"
              >previous</a> |</li>
-        <li><a href="../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Examples</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ember.utils &mdash; Ember 1.3.0b1 documentation</title>
+    <title>ember.utils &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,14 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -37,23 +39,20 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -62,12 +61,11 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for ember.utils</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">cantera</span> <span class="kn">as</span> <span class="nn">ct</span>
-<span class="kn">import</span> <span class="nn">h5py</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">_ember</span>
@@ -98,7 +96,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="s">&#39;items&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="s1">&#39;items&#39;</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
 
@@ -106,7 +104,7 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -115,41 +113,57 @@
         <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="HDFStruct"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.HDFStruct">[docs]</a><span class="k">class</span> <span class="nc">HDFStruct</span><span class="p">(</span><span class="n">Struct</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Like :class:`Struct`, but converts HDF5 structs to numpy arrays.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">h5py</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;File not found: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="c"># We don&#39;t need to write to the file</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;File not found: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="c1"># We don&#39;t need to write to the file</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># I don&#39;t know if this is necessary, but it can&#39;t hurt</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># I don&#39;t know if this is necessary, but it can&#39;t hurt</span></div>
 
-</div>
+
+<span class="k">class</span> <span class="nc">NpzStruct</span><span class="p">(</span><span class="n">Struct</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Like :class:`Struct`, but loads data from NumPy &#39;npz&#39; data files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;File not found: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+
 <div class="viewcode-block" id="load"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate an :class:`HDFStruct` object from a saved profile.</span>
+<span class="sd">    Generate an :class:`Struct` object from a saved profile.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">HDFStruct</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;h5&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HDFStruct</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;npz&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NpzStruct</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_qdot"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.get_qdot">[docs]</a><span class="k">def</span> <span class="nf">get_qdot</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mi">101325</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the heat release rate along the flame coordinate.</span>
@@ -167,10 +181,10 @@
         <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">profile</span><span class="o">.</span><span class="n">Y</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
         <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">net_production_rates</span><span class="p">,</span> <span class="n">gas</span><span class="o">.</span><span class="n">partial_molar_enthalpies</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">)</span></div>
 
-</div>
-<div class="viewcode-block" id="expandProfile"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.expandProfile">[docs]</a><span class="k">def</span> <span class="nf">expandProfile</span><span class="p">(</span><span class="n">prof</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+
+<div class="viewcode-block" id="expandProfile"><a class="viewcode-back" href="../../postprocessing.html#ember.utils.expandProfile">[docs]</a><span class="k">def</span> <span class="nf">expandProfile</span><span class="p">(</span><span class="n">prof</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">diffusion</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reaction_rates</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reconstruct derived data associated with a flame profile.</span>
 
@@ -179,18 +193,27 @@
 <span class="sd">    :param gas:</span>
 <span class="sd">        A Cantera `Solution` object made using the same mechanism file used</span>
 <span class="sd">        for the simulation.</span>
+<span class="sd">    :param diffusion:</span>
+<span class="sd">        Set to `False` to disable calculating diffusion properties (which can</span>
+<span class="sd">        be slow for large mechanisms)</span>
+<span class="sd">    :param reaction_rates:</span>
+<span class="sd">        Set to `False` to disable detailed reaction rates (creation /</span>
+<span class="sd">        destruction / rates-of-progress)</span>
 
 <span class="sd">    Arrays which are reconstructed:</span>
 
 <span class="sd">        * grid properties: *hh*, *cfp*, *cf*, *cfm*, *rphalf*, *dlj*</span>
 <span class="sd">        * thermodynamic properties: *rho*, *cp*, *Wmx*, *W*</span>
-<span class="sd">        * kinetic properties: *wdot*, *q*</span>
+<span class="sd">        * kinetic properties: *wdot*, *q*, *creation_rates*, *destruction_rates*,</span>
+<span class="sd">          *forward_rates_of_progress*, *reverse_rates_of_progress*,</span>
+<span class="sd">          *net_rates_of_progress*</span>
 <span class="sd">        * transport properties: *rhoD*, *k*, *mu*, *Dkt*, *jFick*, *jSoret*, *jCorr*</span>
 <span class="sd">        * other: *X* (mole fractions)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">n_reactions</span>
 
-    <span class="c"># Grid properties</span>
+    <span class="c1"># Grid properties</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">gridAlpha</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">gridAlpha</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -214,7 +237,7 @@
         <span class="n">prof</span><span class="o">.</span><span class="n">cfm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">dlj</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">prof</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-    <span class="c"># Thermodynamic / Transport / Kinetic properties</span>
+    <span class="c1"># Thermodynamic / Transport / Kinetic properties</span>
     <span class="n">K</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">n_species</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -222,19 +245,28 @@
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">P</span> <span class="o">=</span> <span class="mi">101325</span>
 
+    <span class="k">if</span> <span class="n">diffusion</span><span class="p">:</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
     <span class="n">prof</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">wdot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-    <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">Wmx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-    <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-    <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-    <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-    <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">prof</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">reaction_rates</span><span class="p">:</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">creation_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">destruction_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">forward_rates_of_progress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">reverse_rates_of_progress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">net_rates_of_progress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">I</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
         <span class="n">gas</span><span class="o">.</span><span class="n">TPY</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">P</span><span class="p">,</span> <span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span>
@@ -242,66 +274,41 @@
         <span class="n">wdot</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">net_production_rates</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">wdot</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">wdot</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wdot</span><span class="p">,</span> <span class="n">gas</span><span class="o">.</span><span class="n">partial_molar_enthalpies</span><span class="p">)</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">creation_rates</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">creation_rates</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">destruction_rates</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">destruction_rates</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">forward_rates_of_progress</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">forward_rates_of_progress</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">reverse_rates_of_progress</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">reverse_rates_of_progress</span>
+        <span class="n">prof</span><span class="o">.</span><span class="n">net_rates_of_progress</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">net_rates_of_progress</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">X</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span>
-
-        <span class="n">Dbin</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">binary_diff_coeffs</span>
-        <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">thermal_diff_coeffs</span>
-
-        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-15</span><span class="p">;</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span>
-            <span class="n">Y</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
-            <span class="n">sum1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
-            <span class="n">sum2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="o">/</span><span class="n">K</span><span class="p">)</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
-            <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">sum1</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eps</span><span class="o">-</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">*</span><span class="n">sum2</span><span class="p">)</span>
 
         <span class="n">prof</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">thermal_conductivity</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">cp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">cp_mass</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">mu</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">viscosity</span>
         <span class="n">prof</span><span class="o">.</span><span class="n">Wmx</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">mean_molecular_weight</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-            <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
-                                      <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
-            <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span>
-                                        <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
-                                        <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
-            <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">diffusion</span><span class="p">:</span>
+            <span class="n">Dbin</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">binary_diff_coeffs</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">thermal_diff_coeffs</span>
 
-    <span class="n">prof</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">molecular_weights</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-15</span><span class="p">;</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span>
+                <span class="n">Y</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">Y</span>
+                <span class="n">sum1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">sum2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="o">/</span><span class="n">K</span><span class="p">)</span><span class="o">/</span><span class="n">Dbin</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">rho</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">sum1</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eps</span><span class="o">-</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">*</span><span class="n">sum2</span><span class="p">)</span>
 
-</div>
-<span class="k">def</span> <span class="nf">calculateReactantMixture</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">fuel</span><span class="p">,</span> <span class="n">oxidizer</span><span class="p">,</span> <span class="n">equivalenceRatio</span><span class="p">):</span>
-    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">101325</span><span class="p">,</span> <span class="n">fuel</span>
-    <span class="n">Xf</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span>
-    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">101325</span><span class="p">,</span> <span class="n">oxidizer</span>
-    <span class="n">Xo</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span>
+    <span class="k">if</span> <span class="n">diffusion</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">rhoD</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
+                                          <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span>
+                                            <span class="n">prof</span><span class="o">.</span><span class="n">Dkt</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span>
+                                            <span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">prof</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">prof</span><span class="o">.</span><span class="n">hh</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">prof</span><span class="o">.</span><span class="n">jCorr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prof</span><span class="o">.</span><span class="n">jFick</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">prof</span><span class="o">.</span><span class="n">jSoret</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
 
-    <span class="n">nO</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">n_atoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;O&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)])</span>
-
-    <span class="k">if</span> <span class="s">&#39;C&#39;</span> <span class="ow">in</span> <span class="n">gas</span><span class="o">.</span><span class="n">element_names</span><span class="p">:</span>
-        <span class="n">nC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">n_atoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">nC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="s">&#39;H&#39;</span> <span class="ow">in</span> <span class="n">gas</span><span class="o">.</span><span class="n">element_names</span><span class="p">:</span>
-        <span class="n">nH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gas</span><span class="o">.</span><span class="n">n_atoms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">nH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">n_species</span><span class="p">)</span>
-
-    <span class="n">Cf</span> <span class="o">=</span> <span class="p">(</span><span class="n">nC</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">Co</span> <span class="o">=</span> <span class="p">(</span><span class="n">nC</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">Of</span> <span class="o">=</span> <span class="p">(</span><span class="n">nO</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">Oo</span> <span class="o">=</span> <span class="p">(</span><span class="n">nO</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">Hf</span> <span class="o">=</span> <span class="p">(</span><span class="n">nH</span> <span class="o">*</span> <span class="n">Xf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">Ho</span> <span class="o">=</span> <span class="p">(</span><span class="n">nH</span> <span class="o">*</span> <span class="n">Xo</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
-    <span class="n">stoichAirFuelRatio</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">Of</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">Cf</span> <span class="o">-</span> <span class="n">Hf</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Oo</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">Co</span> <span class="o">-</span> <span class="n">Ho</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
-    <span class="n">Xr</span> <span class="o">=</span> <span class="n">Xf</span> <span class="o">*</span> <span class="n">equivalenceRatio</span> <span class="o">+</span> <span class="n">stoichAirFuelRatio</span> <span class="o">*</span> <span class="n">Xo</span>
-    <span class="n">Xr</span> <span class="o">/=</span> <span class="n">Xr</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">Xr</span>
+    <span class="n">prof</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">molecular_weights</span></div>
 
 
 <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
@@ -314,7 +321,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -323,13 +330,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

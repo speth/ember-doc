@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Installation &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,15 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="index.html" />
     <link rel="next" title="Flame Model" href="flame-model.html" />
     <link rel="prev" title="Ember" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,10 +46,10 @@
         <li class="right" >
           <a href="index.html" title="Ember"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -73,22 +75,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="flame-model.html"
                         title="next chapter">Flame Model</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/installation.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -97,7 +98,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
@@ -113,7 +114,7 @@ Github: <a class="reference external" href="https://github.com/speth/ember/relea
 <p>The current development version of Ember is available on Github:
 <a class="reference external" href="https://github.com/speth/ember">https://github.com/speth/ember</a>. You can check out the source code as
 follows on Unix-like systems:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p ~/src
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir -p ~/src
 $ cd ~/src
 $ git clone http://github.com/speth/ember.git
 $ cd ember
@@ -129,11 +130,10 @@ installed:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://www.python.org/downloads/">Python 2.7 (64-bit)</a></li>
 <li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy">Numpy</a> - version 1.8 or higher</li>
-<li><a class="reference external" href="https://sourceforge.net/projects/cantera/files/cantera/">Cantera 2.1 Python module</a><ul>
-<li>For Ember 1.2.x, install Cantera 2.1 and the &#8220;Legacy&#8221; Cantera Python module</li>
-<li>For Ember 1.3 and higher, install the new Python module</li>
+<li><a class="reference external" href="https://github.com/Cantera/cantera/releases">Cantera 2.2 Python module</a></li>
 </ul>
-</li>
+<p>And optionally, for generating portable output files:</p>
+<ul class="simple">
 <li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#h5py">h5py</a></li>
 </ul>
 </div>
@@ -141,13 +141,13 @@ installed:</p>
 <h2>Build Dependencies<a class="headerlink" href="#build-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>The following software needs to be installed in order to compile Ember:</p>
 <ul>
-<li><p class="first">A C++ compiler (g++, Clang, Intel C++, Visual Studio 2008)</p>
+<li><p class="first">A C++ compiler (g++, Clang, Intel C++, Visual Studio 2015)</p>
 </li>
-<li><p class="first">Python 2.6 or higher (2.7 recommended)</p>
+<li><p class="first">Python 2.7</p>
 </li>
 <li><p class="first">Cython (&gt;= 0.18)</p>
 </li>
-<li><p class="first">Boost (&gt;= 1.40, including the compiled <tt class="docutils literal"><span class="pre">boost_thread</span></tt> library)</p>
+<li><p class="first">Boost (&gt;= 1.40, including the compiled <code class="docutils literal"><span class="pre">boost_thread</span></code> library)</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Be sure to use the same version of Boost as the one that was used to
@@ -156,17 +156,13 @@ compile Cantera.</p>
 </li>
 <li><p class="first">SCons (&gt;= 2.1.0 recommended)</p>
 </li>
-<li><p class="first">Eigen (&gt;= 3.0)</p>
+<li><p class="first">Eigen (&gt;= 3.2)</p>
 </li>
-<li><p class="first">Cantera (&gt;= 2.1.0)</p>
-<ul class="simple">
-<li>For Ember 1.2.x, install Cantera with the &#8216;legacy&#8217; Python module</li>
-<li>For Ember 1.3 and higher, install the &#8216;new&#8217; Python module</li>
-</ul>
+<li><p class="first">Cantera (&gt;= 2.3.0)</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Cantera must be compiled using the option <tt class="docutils literal"><span class="pre">build_thread_safe=y</span></tt>
-(passed as a command line arguement to <tt class="docutils literal"><span class="pre">scons</span> <span class="pre">build</span> <span class="pre">...</span></tt>)</p>
+<p class="last">Cantera must be compiled using the option <code class="docutils literal"><span class="pre">build_thread_safe=y</span></code>
+(passed as a command line arguement to <code class="docutils literal"><span class="pre">scons</span> <span class="pre">build</span> <span class="pre">...</span></code>)</p>
 </div>
 </li>
 <li><p class="first">Sundials (2.4.0 or 2.5.0)</p>
@@ -174,16 +170,16 @@ compile Cantera.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">On Linux, Sundials must be compiled to use &#8220;position independent
 code&#8221;. For most compilers, this can be specified by using the option
-<tt class="docutils literal"><span class="pre">--with-cflags=-fPIC</span></tt> when running <tt class="docutils literal"><span class="pre">configure</span></tt>.</p>
+<code class="docutils literal"><span class="pre">--with-cflags=-fPIC</span></code> when running <code class="docutils literal"><span class="pre">configure</span></code>.</p>
 </div>
 </li>
 <li><p class="first">Intel Threading Building Blocks (&gt;= 4.0). TBB is optional, but strongly
 recommended. Without TBB, Ember will only run on a single processor. To
-compile Ember without TBB use the SCons option <tt class="docutils literal"><span class="pre">use_tbb=n</span></tt>.</p>
+compile Ember without TBB use the SCons option <code class="docutils literal"><span class="pre">use_tbb=n</span></code>.</p>
 </li>
 <li><p class="first">numpy (&gt;= 1.3.0)</p>
 </li>
-<li><p class="first">h5py (&gt;= 1.2.1)</p>
+<li><p class="first">h5py (&gt;= 1.2.1, optional)</p>
 </li>
 </ul>
 <p>In order to process the documentation, the following are also required:</p>
@@ -201,46 +197,46 @@ compile Ember without TBB use the SCons option <tt class="docutils literal"><spa
 version of the code from the downloaded archive. If all the necessary libraries
 are installed in system   default locations, then the following should be
 sufficient:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ scons build
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ scons build
 </pre></div>
 </div>
 <p>Otherwise, specify the necessary paths using the corresponding command-line
 options: &#8220;cantera&#8221;, &#8220;sundials&#8221;, &#8220;eigen&#8221;, &#8220;boost&#8221;, &#8220;tbb&#8221;. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ scons build cantera=/home/$USER/.local sundials=/opt/sundials-2.5.0
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ scons build cantera=/home/$USER/.local sundials=/opt/sundials-2.5.0
 </pre></div>
 </div>
 <p>If compilation succeeds, install the Ember Python module by running:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ scons install
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ scons install
 </pre></div>
 </div>
 <p>By default, Ember will be installed to your <em>user</em> site-packages directory, e.g.
-<tt class="docutils literal"><span class="pre">~/.local/lib/python2.7/site-packages/ember</span></tt>. If you wish install to a different
-directory, use the <tt class="docutils literal"><span class="pre">install_args</span></tt> option to SCons to specify the appropriate
-command to be passed to <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt>.</p>
+<code class="docutils literal"><span class="pre">~/.local/lib/python2.7/site-packages/ember</span></code>. If you wish install to a different
+directory, use the <code class="docutils literal"><span class="pre">install_args</span></code> option to SCons to specify the appropriate
+command to be passed to <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>.</p>
 <p>Alternatively, if you&#8217;re doing active development, you can just create a symlink
 into your user Python module path:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p ~/.local/lib/pythonX.Y/site-packages
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir -p ~/.local/lib/pythonX.Y/site-packages
 $ ln -s ~/src/ember/build/python/ember ~/.local/lib/pythonX.Y/site-packages/ember
 </pre></div>
 </div>
 <p>where <em>X.Y</em> is your your installed version of Python, e.g 2.7.</p>
 <p>And similarly for Cantera, if it is not already on the Python path:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ln -s /path/to/cantera/lib/pythonX.Y/site-packages/cantera ~/.local/lib/pythonX.Y/site-packages/
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ln -s /path/to/cantera/lib/pythonX.Y/site-packages/cantera ~/.local/lib/pythonX.Y/site-packages/
 </pre></div>
 </div>
-<p>Or add parent directories of each of these modules to your <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ export PYTHONPATH=/path/to/cantera/lib/python2.7/site-packages:~/src/ember/build/python
+<p>Or add parent directories of each of these modules to your <code class="docutils literal"><span class="pre">PYTHONPATH</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export PYTHONPATH=/path/to/cantera/lib/python2.7/site-packages:~/src/ember/build/python
 </pre></div>
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
-<p>To build the Ember documentation, starting from the <tt class="docutils literal"><span class="pre">ember</span></tt> directory, run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ doxygen
+<p>To build the Ember documentation, starting from the <code class="docutils literal"><span class="pre">ember</span></code> directory, run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ doxygen
 $ cd doc/sphinx
 $ make html
 </pre></div>
 </div>
-<p>To view the HTML docs, open <tt class="docutils literal"><span class="pre">doc/sphinx/html/index.html</span></tt> in your web browser.</p>
+<p>To view the HTML docs, open <code class="docutils literal"><span class="pre">doc/sphinx/html/index.html</span></code> in your web browser.</p>
 </div>
 </div>
 </div>
@@ -251,7 +247,7 @@ $ make html
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -266,12 +262,12 @@ $ make html
         <li class="right" >
           <a href="index.html" title="Ember"
              >previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

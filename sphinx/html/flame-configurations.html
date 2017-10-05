@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Strained Flame Configurations &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Strained Flame Configurations &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,14 +23,16 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="index.html" />
     <link rel="up" title="Flame Model" href="flame-model.html" />
     <link rel="next" title="Governing Equations" href="derivation.html" />
     <link rel="prev" title="Flame Model" href="flame-model.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +47,11 @@
         <li class="right" >
           <a href="flame-model.html" title="Flame Model"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" accesskey="U">Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -69,22 +71,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="derivation.html"
                         title="next chapter">Governing Equations</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/flame-configurations.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/flame-configurations.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -93,16 +94,16 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="strained-flame-configurations">
 <span id="sec-strained-flame-configurations"></span><h1>Strained Flame Configurations<a class="headerlink" href="#strained-flame-configurations" title="Permalink to this headline">¶</a></h1>
 <p>These are the models of strained flames implemented in Ember.</p>
 <div class="section" id="single-opposed-jet-flame">
 <span id="sec-opposed-jet"></span><h2>Single Opposed-Jet Flame<a class="headerlink" href="#single-opposed-jet-flame" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<div class="figure align-center" id="id1">
 <img alt="_images/planar-single.png" src="_images/planar-single.png" />
-<p class="caption"><strong>Schematic of the single opposed-jet flame</strong></p>
+<p class="caption"><span class="caption-text"><strong>Schematic of the single opposed-jet flame</strong></span></p>
 </div>
 <p>The simplest configuration for the elemental flame is that of the single
 opposed-jet flame [#Marzouk1999], [#Marzouk2003]. Fluid flows from
@@ -121,9 +122,9 @@ and products.</p>
 </div>
 <div class="section" id="twin-opposed-jet-flame">
 <span id="sec-twin-flame"></span><h2>Twin Opposed-Jet Flame<a class="headerlink" href="#twin-opposed-jet-flame" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<div class="figure align-center" id="id2">
 <img alt="_images/planar-twin.png" src="_images/planar-twin.png" />
-<p class="caption"><strong>Schematic of the twin opposed-jet flame</strong></p>
+<p class="caption"><span class="caption-text"><strong>Schematic of the twin opposed-jet flame</strong></span></p>
 </div>
 <p>The potential flow velocity field for the twin opposed-jet flame is identical
 to that of the single opposed jet flame, but with both inlet streams consisting
@@ -138,9 +139,9 @@ single flame with a symmetry boundary condition applied at the stagnation point.
 </div>
 <div class="section" id="tubular-flame-at-zero-stagnation-radius">
 <span id="sec-tubular0"></span><h2>Tubular Flame at Zero Stagnation Radius<a class="headerlink" href="#tubular-flame-at-zero-stagnation-radius" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<div class="figure align-center" id="id3">
 <img alt="_images/curved0.png" src="_images/curved0.png" />
-<p class="caption"><strong>Schematic of the tubular flame at zero stagnation radius</strong></p>
+<p class="caption"><span class="caption-text"><strong>Schematic of the tubular flame at zero stagnation radius</strong></span></p>
 </div>
 <p>The curved flame at zero stagnation radius is quite similar to the twin
 opposed-jet flame. Instead of the planar stagnation flow, we have an
@@ -201,7 +202,7 @@ configuration.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -216,13 +217,13 @@ configuration.</p>
         <li class="right" >
           <a href="flame-model.html" title="Flame Model"
              >previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" >Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Boundary Conditions &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Boundary Conditions &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,14 +23,16 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="index.html" />
     <link rel="up" title="Flame Model" href="flame-model.html" />
     <link rel="next" title="Examples" href="examples/index.html" />
     <link rel="prev" title="Governing Equations" href="derivation.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +47,11 @@
         <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" accesskey="U">Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -66,22 +68,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="examples/index.html"
                         title="next chapter">Examples</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/boundary-conditions.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/boundary-conditions.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -90,7 +91,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="boundary-conditions">
 <span id="sec-boundary-conditions"></span><h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
@@ -124,7 +125,7 @@ domain, where <span class="math">\(V\)</span> is held fixed.</p>
 <div class="section" id="central-control-volume">
 <h2>Central Control Volume<a class="headerlink" href="#central-control-volume" title="Permalink to this headline">¶</a></h2>
 <p>For curved flames at finite stagnation radius, or flames specified in terms of
-the unified formulation given in <a class="reference internal" href="flame-configurations.html#sec-unified-formulation"><em>Unified Formulation</em></a>, the <span class="math">\(r=\infty\)</span>
+the unified formulation given in <a class="reference internal" href="flame-configurations.html#sec-unified-formulation"><span class="std std-ref">Unified Formulation</span></a>, the <span class="math">\(r=\infty\)</span>
 boundary condition is the same as for the curved flame at zero stagnation
 radius. The boundary conditions at <span class="math">\(r=0\)</span>, however, require special attention.
 First, the mass flux at the center must be expressed in terms of <span class="math">\(rV\)</span> because
@@ -193,7 +194,7 @@ it in each of these boundary conditions is eliminated.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -208,13 +209,13 @@ it in each of these boundary conditions is eliminated.</p>
         <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              >previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" >Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

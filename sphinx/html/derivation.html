@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Governing Equations &mdash; Ember 1.3.0b1 documentation</title>
+    <title>Governing Equations &#8212; Ember 1.4.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.3.0b1',
+        VERSION:     '1.4.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,14 +23,16 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Ember 1.3.0b1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Ember 1.4.0a1 documentation" href="index.html" />
     <link rel="up" title="Flame Model" href="flame-model.html" />
     <link rel="next" title="Boundary Conditions" href="boundary-conditions.html" />
     <link rel="prev" title="Strained Flame Configurations" href="flame-configurations.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +47,11 @@
         <li class="right" >
           <a href="flame-configurations.html" title="Strained Flame Configurations"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" accesskey="U">Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -68,22 +70,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="boundary-conditions.html"
                         title="next chapter">Boundary Conditions</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/derivation.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/derivation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -92,7 +93,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="governing-equations">
 <span id="sec-governing-equations"></span><h1>Governing Equations<a class="headerlink" href="#governing-equations" title="Permalink to this headline">¶</a></h1>
@@ -219,21 +220,19 @@ equation becomes:</p>
 molar production rate of species <span class="math">\(k\)</span>, <span class="math">\(W_{k}\)</span> is the molecular weight of species
 <span class="math">\(k\)</span>, and the diffusion mass flux <span class="math">\(\mathbf{j}_{k}\)</span> is defined as:</p>
 <div class="math">
-\[\mathbf{j}_{k} =  -\frac{\rho W_{k}}{\bar{W}}D_{km}\nabla X_{k}
-   -\frac{D_{k}^{T}}{T}\nabla T+Y_{k}\mathbf{j}'
-=  -\rho D_{km}\left(\nabla Y_{k}+\frac{Y_{k}}{\bar{W}}\nabla\bar{W}\right)
-   -\frac{D_{k}^{T}}{T}\nabla T+Y_{k}\mathbf{j}'\]</div>
-<p>Here, <span class="math">\(T\)</span> is the temperature, <span class="math">\(X_{k}\)</span> are the species mole fractions, and
-<span class="math">\(D_{km}\)</span> and <span class="math">\(D_{k}^{T}\)</span> are respectively the mixture-averaged diffusion
-coefficient and the thermal diffusion coefficient of species <span class="math">\(k\)</span>. Note that
-this definition of the diffusion mass flux includes the thermal diffusion
-(Soret) effect. The final term introduces a correction, <span class="math">\(\mathbf{j}'\)</span>, which
-corrects for the inaccuracy of mixture-averaged model so that the requirement
-<span class="math">\(\sum\mathbf{j}_{k}=0\)</span> is satisfied. In order to calculate <span class="math">\(\mathbf{j}'\)</span>, we
-first calculate the diffusion mass fluxes ignoring its contribution:</p>
+\[\mathbf{j}_{k} =  -\rho D_{km} \nabla Y_{k}
+-\frac{D_{k}^{T}}{T}\nabla T+Y_{k}\mathbf{j}'\]</div>
+<p>Here, <span class="math">\(T\)</span> is the temperature and <span class="math">\(D_{km}\)</span> and <span class="math">\(D_{k}^{T}\)</span> are respectively
+the mass-based mixture-averaged diffusion coefficient and the thermal diffusion
+coefficient of species <span class="math">\(k\)</span>. Note that this definition of the diffusion mass flux
+includes the thermal diffusion (Soret) effect. The final term introduces a
+correction, <span class="math">\(\mathbf{j}'\)</span>, which corrects for the inaccuracy of mixture-averaged
+model so that the requirement <span class="math">\(\sum\mathbf{j}_{k}=0\)</span> is satisfied. In order to
+calculate <span class="math">\(\mathbf{j}'\)</span>, we first calculate the diffusion mass fluxes ignoring
+its contribution:</p>
 <div class="math">
-\[\mathbf{j}_{k}^{*}=-\rho D_{km}\left(\nabla Y_{k}
-+\frac{Y_{k}}{\bar{W}}\nabla\bar{W}\right)-\frac{D_{k}^{T}}{T}\nabla T\]</div>
+\[\mathbf{j}_{k}^{*}=-\rho D_{km} \nabla Y_{k}
+-\frac{D_{k}^{T}}{T}\nabla T\]</div>
 <p>Then, <span class="math">\(\mathbf{j}'\)</span> is calculated as:</p>
 <div class="math">
 \[\mathbf{j}'=-\sum_{k}\mathbf{j}_{k}^{*}\]</div>
@@ -246,8 +245,7 @@ and setting the <span class="math">\(z\)</span>-derivatives to zero, the species
   +\dot{\omega}_{k}W_{k}\]</div>
 <p>and the diffusion mass flux is:</p>
 <div class="math">
-\[j_{k}=-\rho D_{km}\left(\frac{\partial Y_{k}}{\partial r}+
-\frac{Y_{k}}{\bar{W}}\frac{\partial\bar{W}}{\partial r}\right)-
+\[j_{k}=-\rho D_{km}\frac{\partial Y_{k}}{\partial r} -
 \frac{D_{k}^{T}}{T}\frac{\partial T}{\partial r}+Y_{k}j'\]</div>
 </div>
 <div class="section" id="energy-equation">
@@ -311,7 +309,7 @@ of the energy equation is:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -326,13 +324,13 @@ of the energy equation is:</p>
         <li class="right" >
           <a href="flame-configurations.html" title="Strained Flame Configurations"
              >previous</a> |</li>
-        <li><a href="index.html">Ember 1.3.0b1 documentation</a> &raquo;</li>
-          <li><a href="flame-model.html" >Flame Model</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0a1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2013, Raymond Speth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>
