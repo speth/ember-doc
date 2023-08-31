@@ -1,37 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Boundary Conditions &#8212; Ember 1.4.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Boundary Conditions &#8212; Ember 1.5.0b1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=b7825e20"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Ember 1.4.0 documentation" href="index.html" />
-    <link rel="up" title="Flame Model" href="flame-model.html" />
     <link rel="next" title="Examples" href="examples/index.html" />
     <link rel="prev" title="Governing Equations" href="derivation.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -39,80 +24,42 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="examples/index.html" title="Examples"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Boundary Conditions</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Boundary Conditions</a><ul>
-<li><a class="reference internal" href="#single-opposed-jet">Single Opposed Jet</a></li>
-<li><a class="reference internal" href="#central-control-volume">Central Control Volume</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="derivation.html"
-                        title="previous chapter">Governing Equations</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="examples/index.html"
-                        title="next chapter">Examples</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/boundary-conditions.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="boundary-conditions">
-<span id="sec-boundary-conditions"></span><h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
+  <section id="boundary-conditions">
+<span id="sec-boundary-conditions"></span><h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading">¶</a></h1>
 <p>Establishing the boundary conditions for the elemental flame requires separate
 consideration of each of the flame configurations previously described.</p>
-<div class="section" id="single-opposed-jet">
-<h2>Single Opposed Jet<a class="headerlink" href="#single-opposed-jet" title="Permalink to this headline">¶</a></h2>
+<section id="single-opposed-jet">
+<h2>Single Opposed Jet<a class="headerlink" href="#single-opposed-jet" title="Link to this heading">¶</a></h2>
 <p>For the single opposed jet flame, the boundary conditions for the species and
 energy equations consist of defining the temperature and mass fraction of the
-two incoming streams. For the momentum equation, spatial gradients in <span class="math">\(U\)</span> must
+two incoming streams. For the momentum equation, spatial gradients in <span class="math notranslate nohighlight">\(U\)</span> must
 vanish on both sides of the flame, and we solve the simplified form of the
 momentum equation:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\rho\frac{\partial U}{\partial t}+
 \rho U^{2}-\rho_{\infty}\left(\frac{da}{dt}+a^{2}\right)=0\]</div>
 <p>for each boundary point. For steady strain rates, this equation requires that
-<span class="math">\(U=a\)</span> on the reactants side and <span class="math">\(U=a\sqrt{\rho_{u}/\rho_{b}}\)</span> on the products
+<span class="math notranslate nohighlight">\(U=a\)</span> on the reactants side and <span class="math notranslate nohighlight">\(U=a\sqrt{\rho_{u}/\rho_{b}}\)</span> on the products
 side.</p>
-<p>For a premixed flame with reactants supplied from <span class="math">\(-\infty\)</span>, the boundary
+<p>For a premixed flame with reactants supplied from <span class="math notranslate nohighlight">\(-\infty\)</span>, the boundary
 conditions for the species and energy equations are:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{ccc}
 r=-\infty: &amp; Y_{k}=Y_{k,u} &amp; T=T_{u}\\
 r=+\infty: &amp; Y_{k}=Y_{k,b} &amp; T=T_{b}
@@ -120,76 +67,119 @@ r=+\infty: &amp; Y_{k}=Y_{k,b} &amp; T=T_{b}
 <p>The burned gas temperature and composition correspond to the unburned mixture
 brought to equilibrum at constant enthalpy and pressure. The boundary condition
 for the continuity equationis taken at the left side of the computational
-domain, where <span class="math">\(V\)</span> is held fixed.</p>
-</div>
-<div class="section" id="central-control-volume">
-<h2>Central Control Volume<a class="headerlink" href="#central-control-volume" title="Permalink to this headline">¶</a></h2>
+domain, where <span class="math notranslate nohighlight">\(V\)</span> is held fixed.</p>
+</section>
+<section id="central-control-volume">
+<h2>Central Control Volume<a class="headerlink" href="#central-control-volume" title="Link to this heading">¶</a></h2>
 <p>For curved flames at finite stagnation radius, or flames specified in terms of
-the unified formulation given in <a class="reference internal" href="flame-configurations.html#sec-unified-formulation"><span class="std std-ref">Unified Formulation</span></a>, the <span class="math">\(r=\infty\)</span>
+the unified formulation given in <a class="reference internal" href="flame-configurations.html#sec-unified-formulation"><span class="std std-ref">Unified Formulation</span></a>, the <span class="math notranslate nohighlight">\(r=\infty\)</span>
 boundary condition is the same as for the curved flame at zero stagnation
-radius. The boundary conditions at <span class="math">\(r=0\)</span>, however, require special attention.
-First, the mass flux at the center must be expressed in terms of <span class="math">\(rV\)</span> because
-<span class="math">\(V\rightarrow\infty\)</span> as <span class="math">\(r\rightarrow0\)</span> in the potential flow solution. If we
-specify the non-reacting stagnation point radius <span class="math">\(R\)</span>, then the boundary
+radius. The boundary conditions at <span class="math notranslate nohighlight">\(r=0\)</span>, however, require special attention.
+First, the mass flux at the center must be expressed in terms of <span class="math notranslate nohighlight">\(rV\)</span> because
+<span class="math notranslate nohighlight">\(V\rightarrow\infty\)</span> as <span class="math notranslate nohighlight">\(r\rightarrow0\)</span> in the potential flow solution. If we
+specify the non-reacting stagnation point radius <span class="math notranslate nohighlight">\(R\)</span>, then the boundary
 condition for the continuity equation is:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[r=0:\quad rV=\frac{1}{\alpha+1}\rho a\left|R\right|R\]</div>
-<p>If the boundary mass flux <span class="math">\(\left(rV\right)_{0}\)</span> is positive, indicating the
+<p>If the boundary mass flux <span class="math notranslate nohighlight">\(\left(rV\right)_{0}\)</span> is positive, indicating the
 presence of source at the boundary, special care must be taken in specifying
 the boundary conditions for the energy, species and momentum equations. While
 the zero-gradient condition must still hold because of the symmetry at that
 boundary, it is important to retain the effect of the mixture being introduced,
-which may not be at the same state as the mixture in the vicinity of <span class="math">\(r=0\)</span>. To
-this end, we consider an integral, control volume approach to the <span class="math">\(r=0\)</span>
+which may not be at the same state as the mixture in the vicinity of <span class="math notranslate nohighlight">\(r=0\)</span>. To
+this end, we consider an integral, control volume approach to the <span class="math notranslate nohighlight">\(r=0\)</span>
 boundary condition. Beginning with the species conservation equation, we
-multiply through by <span class="math">\(r^{\alpha}\)</span> and integrate from 0 to some small radius
-<span class="math">\(R_{i}\)</span>:</p>
-<div class="math">
+multiply through by <span class="math notranslate nohighlight">\(r^{\alpha}\)</span> and integrate from 0 to some small radius
+<span class="math notranslate nohighlight">\(R_{i}\)</span>:</p>
+<div class="math notranslate nohighlight">
 \[\int_{0}^{R_{i}}r^{\alpha}\rho\frac{\partial Y_{k}}{\partial t}
 +r^{\alpha}V\frac{\partial Y_{k}}{\partial r}+
 \frac{\partial}{\partial r}\left[r^{\alpha}j_{k}\right]
 -r^{\alpha}\dot{\omega}_{k}W_{k}\, dr=0\]</div>
-<p>Because this volume is small, we assume that variations of <span class="math">\(Y_{k}\)</span>, <span class="math">\(\rho\)</span> and
-<span class="math">\(\dot{\omega}_{k}\)</span> are negligible, so the unsteady term and the production term
+<p>Because this volume is small, we assume that variations of <span class="math notranslate nohighlight">\(Y_{k}\)</span>, <span class="math notranslate nohighlight">\(\rho\)</span> and
+<span class="math notranslate nohighlight">\(\dot{\omega}_{k}\)</span> are negligible, so the unsteady term and the production term
 may be taken out of the integral:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\frac{R_{i}^{\alpha+1}}{\alpha+1}\left(\rho\frac{\partial Y_{k}}{\partial t}-\dot{\omega}_{k}W_{k}\right)+
 \int_{0}^{R_{i}}r^{\alpha}V\frac{\partial Y_{k}}{\partial r}+\frac{\partial}{\partial r}\left[r^{\alpha}j_{k}\right]\, dr=0\]</div>
 <p>The convection term may be integrated by noting that variations in
-<span class="math">\(r^{\alpha}V\)</span> are negligible across this small distance. Furthermore, we
-recognize that <span class="math">\(Y_{k}|_{r=0}=Y_{k,left}\)</span> is the mass fraction corresponding to
+<span class="math notranslate nohighlight">\(r^{\alpha}V\)</span> are negligible across this small distance. Furthermore, we
+recognize that <span class="math notranslate nohighlight">\(Y_{k}|_{r=0}=Y_{k,left}\)</span> is the mass fraction corresponding to
 the inlet mixture (either reactants or products). The diffusion term may also
-be integrated, noting that <span class="math">\(j_{k}|_{r=0}=0\)</span> by the symmetry condition. We now
-have an ODE for the mass fraction of species <span class="math">\(k\)</span> in the vicinity of the
+be integrated, noting that <span class="math notranslate nohighlight">\(j_{k}|_{r=0}=0\)</span> by the symmetry condition. We now
+have an ODE for the mass fraction of species <span class="math notranslate nohighlight">\(k\)</span> in the vicinity of the
 symmetry boundary:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\frac{R_{i}^{\alpha+1}}{\alpha+1}\left(\rho\frac{\partial Y_{k}}{\partial t}-\dot{\omega}_{k}W_{k}\right)+
 \left(r^{\alpha}V\right)_{0}\left(Y_{k}-Y_{k,left}\right)+R_{i}^{\alpha}j_{k}=0\]</div>
 <p>Finally, we divide by the leading coefficient so that this equation scales
 similarly to the species equation in the rest of the domain:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\rho\frac{\partial Y_{k}}{\partial t}
 -\dot{\omega}_{k}W_{k}+\frac{\alpha+1}{R_{i}^{\alpha+1}}\left(r^{\alpha}V\right)_{0}\left(Y_{k}-Y_{k,left}\right)
 +\frac{\alpha+1}{R_{i}}j_{k}=0\]</div>
 <p>A similar analysis for the energy equation yields:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\rho\frac{\partial T}{\partial t}
 +\frac{1}{c_{p}}\sum_{k=1}^{K}\hat{h}_{k}\dot{\omega}_{k}
 +\frac{\alpha+1}{R_{i}^{\alpha+1}}\left(r^{\alpha}V\right)_{0}\left(T-T_{left}\right)
 -\frac{\alpha+1}{R_{i}c_{p}}\left(\lambda\frac{\partial T}{\partial r}\right)=0\]</div>
 <p>In the case of the momentum equation, we neglect the term associated with the
 boundary mass flux, and obtain:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\rho\frac{\partial U}{\partial t}+\rho U^{2}
 -\rho_{\infty}\left(\frac{\partial a}{\partial t}+a^{2}\right)
 -\frac{\alpha+1}{R_{i}}\mu\frac{\partial U}{\partial r}=0\]</div>
-<p>If the boundary mass flux <span class="math">\(\left(rV\right)_{0}\)</span> is negative, the term including
+<p>If the boundary mass flux <span class="math notranslate nohighlight">\(\left(rV\right)_{0}\)</span> is negative, the term including
 it in each of these boundary conditions is eliminated.</p>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Boundary Conditions</a><ul>
+<li><a class="reference internal" href="#single-opposed-jet">Single Opposed Jet</a></li>
+<li><a class="reference internal" href="#central-control-volume">Central Control Volume</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="derivation.html"
+                          title="previous chapter">Governing Equations</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="examples/index.html"
+                          title="next chapter">Examples</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/boundary-conditions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -201,21 +191,19 @@ it in each of these boundary conditions is eliminated.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="examples/index.html" title="Examples"
              >next</a> |</li>
         <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Boundary Conditions</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    &#169; Copyright 2008-2023, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

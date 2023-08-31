@@ -1,36 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Running Simulations &#8212; Ember 1.4.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Running Simulations &#8212; Ember 1.5.0b1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=b7825e20"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Ember 1.4.0 documentation" href="index.html" />
     <link rel="next" title="Post-Processing" href="postprocessing.html" />
     <link rel="prev" title="Input Files" href="input.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -46,50 +31,24 @@
         <li class="right" >
           <a href="input.html" title="Input Files"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Running Simulations</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="input.html"
-                        title="previous chapter">Input Files</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="postprocessing.html"
-                        title="next chapter">Post-Processing</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/run-sim.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="running-simulations">
-<h1>Running Simulations<a class="headerlink" href="#running-simulations" title="Permalink to this headline">¶</a></h1>
-<dl class="method">
-<dt id="ember.input.Config.run">
-<code class="descclassname">Config.</code><code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/input.html#Config.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.input.Config.run" title="Permalink to this definition">¶</a></dt>
+  <section id="running-simulations">
+<h1>Running Simulations<a class="headerlink" href="#running-simulations" title="Link to this heading">¶</a></h1>
+<dl class="py method">
+<dt class="sig sig-object py" id="ember.input.Config.run">
+<span class="sig-prename descclassname"><span class="pre">Config.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/input.html#Config.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.input.Config.run" title="Link to this definition">¶</a></dt>
 <dd><p>Run the simulation using the parameters set in this Config.</p>
 <p>If a list strain rates is provided by the field
-<code class="xref py py-attr docutils literal"><span class="pre">strainParameters.rates</span></code>, a sequence of flame simulations at the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">strainParameters.rates</span></code>, a sequence of flame simulations at the
 given strain rates will be run. Otherwise, a single simulation will be
 run.</p>
 <p>If the script which calls this function is passed the argument
@@ -97,10 +56,52 @@ run.</p>
 script will exit without running the simulation.</p>
 </dd></dl>
 
-</div>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Running Simulations</a><ul>
+<li><a class="reference internal" href="#ember.input.Config.run"><code class="docutils literal notranslate"><span class="pre">Config.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="input.html"
+                          title="previous chapter">Input Files</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="postprocessing.html"
+                          title="next chapter">Post-Processing</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/run-sim.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -120,12 +121,13 @@ script will exit without running the simulation.</p>
         <li class="right" >
           <a href="input.html" title="Input Files"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Running Simulations</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    &#169; Copyright 2008-2023, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

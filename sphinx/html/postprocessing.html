@@ -1,36 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Post-Processing &#8212; Ember 1.4.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Post-Processing &#8212; Ember 1.5.0b1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=b7825e20"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Ember 1.4.0 documentation" href="index.html" />
     <link rel="next" title="C++ Implementation Docs" href="cxx-implementation.html" />
     <link rel="prev" title="Running Simulations" href="run-sim.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -46,50 +31,24 @@
         <li class="right" >
           <a href="run-sim.html" title="Running Simulations"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Post-Processing</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="run-sim.html"
-                        title="previous chapter">Running Simulations</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="cxx-implementation.html"
-                        title="next chapter">C++ Implementation Docs</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/postprocessing.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="post-processing">
-<h1>Post-Processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="ember.utils.Struct">
-<em class="property">class </em><code class="descclassname">ember.utils.</code><code class="descname">Struct</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#Struct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.utils.Struct" title="Permalink to this definition">¶</a></dt>
+  <section id="post-processing">
+<h1>Post-Processing<a class="headerlink" href="#post-processing" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ember.utils.Struct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ember.utils.</span></span><span class="sig-name descname"><span class="pre">Struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#Struct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.utils.Struct" title="Link to this definition">¶</a></dt>
 <dd><p>A dictionary-like data structure where fields are accessible as both
 attributes and dictionary keys:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">foo</span>
 <span class="go">6</span>
@@ -103,83 +62,121 @@ attributes and dictionary keys:</p>
 </pre></div>
 </div>
 <p>Valid methods of initialization, equivalent to the above:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">({</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
-<dt id="ember.utils.HDFStruct">
-<em class="property">class </em><code class="descclassname">ember.utils.</code><code class="descname">HDFStruct</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#HDFStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.utils.HDFStruct" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like <a class="reference internal" href="#ember.utils.Struct" title="ember.utils.Struct"><code class="xref py py-class docutils literal"><span class="pre">Struct</span></code></a>, but converts HDF5 structs to numpy arrays.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ember.utils.HDFStruct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ember.utils.</span></span><span class="sig-name descname"><span class="pre">HDFStruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#HDFStruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.utils.HDFStruct" title="Link to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#ember.utils.Struct" title="ember.utils.Struct"><code class="xref py py-class docutils literal notranslate"><span class="pre">Struct</span></code></a>, but converts HDF5 structs to numpy arrays.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="ember.utils.load">
-<code class="descclassname">ember.utils.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.utils.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate an <a class="reference internal" href="#ember.utils.Struct" title="ember.utils.Struct"><code class="xref py py-class docutils literal"><span class="pre">Struct</span></code></a> object from a saved profile.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="ember.utils.load">
+<span class="sig-prename descclassname"><span class="pre">ember.utils.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.utils.load" title="Link to this definition">¶</a></dt>
+<dd><p>Generate an <a class="reference internal" href="#ember.utils.Struct" title="ember.utils.Struct"><code class="xref py py-class docutils literal notranslate"><span class="pre">Struct</span></code></a> object from a saved profile.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="ember.utils.get_qdot">
-<code class="descclassname">ember.utils.</code><code class="descname">get_qdot</code><span class="sig-paren">(</span><em>gas</em>, <em>profile</em>, <em>pressure=101325</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#get_qdot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.utils.get_qdot" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="ember.utils.get_qdot">
+<span class="sig-prename descclassname"><span class="pre">ember.utils.</span></span><span class="sig-name descname"><span class="pre">get_qdot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pressure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">101325</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#get_qdot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.utils.get_qdot" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the heat release rate along the flame coordinate.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>gas</strong> &#8211; A Cantera <code class="docutils literal"><span class="pre">Solution</span></code> object made using the same mechanism file used
-for the simulation.</li>
-<li><strong>profile</strong> &#8211; An <a class="reference internal" href="#ember.utils.HDFStruct" title="ember.utils.HDFStruct"><code class="xref py py-class docutils literal"><span class="pre">HDFStruct</span></code></a> object created by loading a <code class="docutils literal"><span class="pre">profNNNNNN.h5</span></code> file.</li>
-<li><strong>pressure</strong> &#8211; The pressure at which the simulation was run.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gas</strong> – A Cantera <code class="docutils literal notranslate"><span class="pre">Solution</span></code> object made using the same mechanism file used
+for the simulation.</p></li>
+<li><p><strong>profile</strong> – An <a class="reference internal" href="#ember.utils.HDFStruct" title="ember.utils.HDFStruct"><code class="xref py py-class docutils literal notranslate"><span class="pre">HDFStruct</span></code></a> object created by loading a <code class="docutils literal notranslate"><span class="pre">profNNNNNN.h5</span></code> file.</p></li>
+<li><p><strong>pressure</strong> – The pressure at which the simulation was run.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="ember.utils.expandProfile">
-<code class="descclassname">ember.utils.</code><code class="descname">expandProfile</code><span class="sig-paren">(</span><em>prof</em>, <em>gas</em>, <em>diffusion=True</em>, <em>reaction_rates=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#expandProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ember.utils.expandProfile" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="ember.utils.expandProfile">
+<span class="sig-prename descclassname"><span class="pre">ember.utils.</span></span><span class="sig-name descname"><span class="pre">expandProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prof</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reaction_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ember/utils.html#expandProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ember.utils.expandProfile" title="Link to this definition">¶</a></dt>
 <dd><p>Reconstruct derived data associated with a flame profile.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>prof</strong> &#8211; An <a class="reference internal" href="#ember.utils.HDFStruct" title="ember.utils.HDFStruct"><code class="xref py py-class docutils literal"><span class="pre">HDFStruct</span></code></a> object created by loading a <code class="docutils literal"><span class="pre">profNNNNNN.h5</span></code> file</li>
-<li><strong>gas</strong> &#8211; A Cantera <code class="docutils literal"><span class="pre">Solution</span></code> object made using the same mechanism file used
-for the simulation.</li>
-<li><strong>diffusion</strong> &#8211; Set to <code class="docutils literal"><span class="pre">False</span></code> to disable calculating diffusion properties (which can
-be slow for large mechanisms)</li>
-<li><strong>reaction_rates</strong> &#8211; Set to <code class="docutils literal"><span class="pre">False</span></code> to disable detailed reaction rates (creation /
-destruction / rates-of-progress)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prof</strong> – An <a class="reference internal" href="#ember.utils.HDFStruct" title="ember.utils.HDFStruct"><code class="xref py py-class docutils literal notranslate"><span class="pre">HDFStruct</span></code></a> object created by loading a <code class="docutils literal notranslate"><span class="pre">profNNNNNN.h5</span></code> file</p></li>
+<li><p><strong>gas</strong> – A Cantera <code class="docutils literal notranslate"><span class="pre">Solution</span></code> object made using the same mechanism file used
+for the simulation.</p></li>
+<li><p><strong>diffusion</strong> – Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable calculating diffusion properties (which can
+be slow for large mechanisms)</p></li>
+<li><p><strong>reaction_rates</strong> – Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable detailed reaction rates (creation /
+destruction / rates-of-progress)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Arrays which are reconstructed:</p>
 <blockquote>
 <div><ul class="simple">
-<li>grid properties: <em>hh</em>, <em>cfp</em>, <em>cf</em>, <em>cfm</em>, <em>rphalf</em>, <em>dlj</em></li>
-<li>thermodynamic properties: <em>rho</em>, <em>cp</em>, <em>Wmx</em>, <em>W</em></li>
-<li>kinetic properties: <em>wdot</em>, <em>q</em>, <em>creation_rates</em>, <em>destruction_rates</em>,
+<li><p>grid properties: <em>hh</em>, <em>cfp</em>, <em>cf</em>, <em>cfm</em>, <em>rphalf</em>, <em>dlj</em></p></li>
+<li><p>thermodynamic properties: <em>rho</em>, <em>cp</em>, <em>Wmx</em>, <em>W</em></p></li>
+<li><p>kinetic properties: <em>wdot</em>, <em>q</em>, <em>creation_rates</em>, <em>destruction_rates</em>,
 <em>forward_rates_of_progress</em>, <em>reverse_rates_of_progress</em>,
-<em>net_rates_of_progress</em></li>
-<li>transport properties: <em>rhoD</em>, <em>k</em>, <em>mu</em>, <em>Dkt</em>, <em>jFick</em>, <em>jSoret</em>, <em>jCorr</em></li>
-<li>other: <em>X</em> (mole fractions)</li>
+<em>net_rates_of_progress</em></p></li>
+<li><p>transport properties: <em>rhoD</em>, <em>k</em>, <em>mu</em>, <em>Dkt</em>, <em>jFick</em>, <em>jSoret</em>, <em>jCorr</em></p></li>
+<li><p>other: <em>X</em> (mole fractions)</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
-</div>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Post-Processing</a><ul>
+<li><a class="reference internal" href="#ember.utils.Struct"><code class="docutils literal notranslate"><span class="pre">Struct</span></code></a></li>
+<li><a class="reference internal" href="#ember.utils.HDFStruct"><code class="docutils literal notranslate"><span class="pre">HDFStruct</span></code></a></li>
+<li><a class="reference internal" href="#ember.utils.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li><a class="reference internal" href="#ember.utils.get_qdot"><code class="docutils literal notranslate"><span class="pre">get_qdot()</span></code></a></li>
+<li><a class="reference internal" href="#ember.utils.expandProfile"><code class="docutils literal notranslate"><span class="pre">expandProfile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="run-sim.html"
+                          title="previous chapter">Running Simulations</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cxx-implementation.html"
+                          title="next chapter">C++ Implementation Docs</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/postprocessing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -199,12 +196,13 @@ destruction / rates-of-progress)</li>
         <li class="right" >
           <a href="run-sim.html" title="Running Simulations"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Post-Processing</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    &#169; Copyright 2008-2023, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

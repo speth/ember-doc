@@ -1,37 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Strained Flame Configurations &#8212; Ember 1.4.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Strained Flame Configurations &#8212; Ember 1.5.0b1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=b7825e20"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Ember 1.4.0 documentation" href="index.html" />
-    <link rel="up" title="Flame Model" href="flame-model.html" />
     <link rel="next" title="Governing Equations" href="derivation.html" />
     <link rel="prev" title="Flame Model" href="flame-model.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -39,22 +24,138 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="flame-model.html" title="Flame Model"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" accesskey="U">Flame Model</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Strained Flame Configurations</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="strained-flame-configurations">
+<span id="sec-strained-flame-configurations"></span><h1>Strained Flame Configurations<a class="headerlink" href="#strained-flame-configurations" title="Link to this heading">¶</a></h1>
+<p>These are the models of strained flames implemented in Ember.</p>
+<section id="single-opposed-jet-flame">
+<span id="sec-opposed-jet"></span><h2>Single Opposed-Jet Flame<a class="headerlink" href="#single-opposed-jet-flame" title="Link to this heading">¶</a></h2>
+<figure class="align-center" id="id1">
+<img alt="_images/planar-single.png" src="_images/planar-single.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Schematic of the single opposed-jet flame</strong></span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The simplest configuration for the elemental flame is that of the single
+opposed-jet flame [#Marzouk1999], [#Marzouk2003]. Fluid flows from
+<span class="math notranslate nohighlight">\(x=\pm\infty\)</span> toward the stagnation point at <span class="math notranslate nohighlight">\(x=0\)</span>. The potential flow velocity
+field for the non-reacting flow is</p>
+<div class="math notranslate nohighlight">
+\[u = a(t)z \quad\quad v = -a(t) x\]</div>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are the velocity components in the <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(x\)</span> directions,
+respectively, and <span class="math notranslate nohighlight">\(a(t)\)</span> is the time varying strain rate parameter. If we take
+the mixture coming from <span class="math notranslate nohighlight">\(x=-\infty\)</span> to be premixed reactants and the mixture
+coming from <span class="math notranslate nohighlight">\(x=+\infty\)</span> to be the reaction products, a flame will be established
+at some point <span class="math notranslate nohighlight">\(x&lt;0\)</span> where the consumption speed balances the local fluid
+velocity. Note that a flame in this configuration can never be completely
+extinguished because there will always be a region of contact between reactants
+and products.</p>
+</section>
+<section id="twin-opposed-jet-flame">
+<span id="sec-twin-flame"></span><h2>Twin Opposed-Jet Flame<a class="headerlink" href="#twin-opposed-jet-flame" title="Link to this heading">¶</a></h2>
+<figure class="align-center" id="id2">
+<img alt="_images/planar-twin.png" src="_images/planar-twin.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Schematic of the twin opposed-jet flame</strong></span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The potential flow velocity field for the twin opposed-jet flame is identical
+to that of the single opposed jet flame, but with both inlet streams consisting
+of premixed reactants. As depicted above, two flames are established, one on
+each side of the stagnation point, propagating away from one another.
+Combustion products exist in the region between the two flames. Because the
+composition of the products mixture is not imposed externally, this
+configuration allows flame extinction to occur when the flames are pushed close
+together (at high strain rates). The domain is symmetric about the stagnation
+plane <span class="math notranslate nohighlight">\(x=0\)</span>, allowing this configuration to be simulated numerically as a
+single flame with a symmetry boundary condition applied at the stagnation point.</p>
+</section>
+<section id="tubular-flame-at-zero-stagnation-radius">
+<span id="sec-tubular0"></span><h2>Tubular Flame at Zero Stagnation Radius<a class="headerlink" href="#tubular-flame-at-zero-stagnation-radius" title="Link to this heading">¶</a></h2>
+<figure class="align-center" id="id3">
+<img alt="_images/curved0.png" src="_images/curved0.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Schematic of the tubular flame at zero stagnation radius</strong></span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The curved flame at zero stagnation radius is quite similar to the twin
+opposed-jet flame. Instead of the planar stagnation flow, we have an
+axisymmetric stagnation flow, with reactants flowing inward from
+<span class="math notranslate nohighlight">\(r=\infty\)</span> toward the stagnation point at <span class="math notranslate nohighlight">\(r=0\)</span>, establishing a cylindrical
+flame propagating away from the centerline.  The potential flow velocity field
+is:</p>
+<div class="math notranslate nohighlight">
+\[u = a(t) z \quad\quad v = -\frac{1}{2} a(t) r\]</div>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are the velocity components in the <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(r\)</span> directions,
+respectively. As in the twin opposed jet flame, a symmetry boundary condition
+applies at <span class="math notranslate nohighlight">\(r=0\)</span>, and flame extinction occurs when the flame is pushed too
+close to the centerline.</p>
+</section>
+<section id="tubular-flame-at-finite-stagnation-radius">
+<span id="sec-tubular-finite"></span><h2>Tubular Flame at Finite Stagnation Radius<a class="headerlink" href="#tubular-flame-at-finite-stagnation-radius" title="Link to this heading">¶</a></h2>
+<figure class="align-default">
+<img alt="_images/curved-finite.png" src="_images/curved-finite.png" />
+</figure>
+<p>The tubular flame at zero stagnation radius can be modified by introducing a
+line source at <span class="math notranslate nohighlight">\(r=0\)</span>. This produces a potential flow where the stagnation
+surface is a cylinder of radius <span class="math notranslate nohighlight">\(R\)</span>, as shown above. Since the composition of
+the flow coming from <span class="math notranslate nohighlight">\(r=0\)</span> may be freely specified, this configuration permits
+both positively and negatively curved flames. The resulting potential flow
+velocity field is:</p>
+<div class="math notranslate nohighlight">
+\[u=az\quad\quad v=\frac{a}{2}\left(\frac{R^{2}-r^{2}}{r}\right)\]</div>
+<p>The boundary condition at <span class="math notranslate nohighlight">\(r=0\)</span> requires special attention in order to capture
+both the symmetry condition and the effect of the mass flux at the centerline.</p>
+</section>
+<section id="unified-formulation">
+<span id="sec-unified-formulation"></span><h2>Unified Formulation<a class="headerlink" href="#unified-formulation" title="Link to this heading">¶</a></h2>
+<p>The stagnation point flow configurations discussed above can be rewritten in a
+unified form, permitting both planar and curved geometry through the
+introduction of the parameter <span class="math notranslate nohighlight">\(\alpha\)</span> where <span class="math notranslate nohighlight">\(\alpha=0\)</span> for planar geometry and
+<span class="math notranslate nohighlight">\(\alpha=1\)</span> for curved geometry. We introduce the coordinate system <span class="math notranslate nohighlight">\((r, z)\)</span>
+where <span class="math notranslate nohighlight">\(r\)</span> is the coordinate normal to the flame (regardless of whether the
+coordinate system is curved or planar) and the <span class="math notranslate nohighlight">\(z\)</span> coordinate is tangential to
+the flame. The potential flow velocity field is then:</p>
+<div class="math notranslate nohighlight">
+\[u = az \quad\quad
+v=\frac{a}{\alpha+1} \left(\frac{\left|R\right|R^{\alpha}
+                           -r^{\alpha+1}}{r^{\alpha}}\right)\]</div>
+<p>This formulation permits the use of a fictitious negative stagnation point
+radius <span class="math notranslate nohighlight">\(R\)</span>, with the centerline acting as a sink rather than a source.</p>
+<p>The stretch rate <span class="math notranslate nohighlight">\(\kappa\)</span> for a flame at radius <span class="math notranslate nohighlight">\(R_{f}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\kappa=a+\frac{\alpha}{R_{f}}\frac{dR_{f}}{dt}\]</div>
+<p>When the flame is stationary, the stretch rate reduces to <span class="math notranslate nohighlight">\(\kappa=a\)</span> and thus
+curvature does not contribute to flame stretch for stationary flames in this
+configuration.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Strained Flame Configurations</a><ul>
 <li><a class="reference internal" href="#single-opposed-jet-flame">Single Opposed-Jet Flame</a></li>
 <li><a class="reference internal" href="#twin-opposed-jet-flame">Twin Opposed-Jet Flame</a></li>
@@ -65,139 +166,34 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="flame-model.html"
-                        title="previous chapter">Flame Model</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="derivation.html"
-                        title="next chapter">Governing Equations</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="flame-model.html"
+                          title="previous chapter">Flame Model</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="derivation.html"
+                          title="next chapter">Governing Equations</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/flame-configurations.txt"
+      <li><a href="_sources/flame-configurations.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="strained-flame-configurations">
-<span id="sec-strained-flame-configurations"></span><h1>Strained Flame Configurations<a class="headerlink" href="#strained-flame-configurations" title="Permalink to this headline">¶</a></h1>
-<p>These are the models of strained flames implemented in Ember.</p>
-<div class="section" id="single-opposed-jet-flame">
-<span id="sec-opposed-jet"></span><h2>Single Opposed-Jet Flame<a class="headerlink" href="#single-opposed-jet-flame" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center" id="id1">
-<img alt="_images/planar-single.png" src="_images/planar-single.png" />
-<p class="caption"><span class="caption-text"><strong>Schematic of the single opposed-jet flame</strong></span></p>
-</div>
-<p>The simplest configuration for the elemental flame is that of the single
-opposed-jet flame [#Marzouk1999], [#Marzouk2003]. Fluid flows from
-<span class="math">\(x=\pm\infty\)</span> toward the stagnation point at <span class="math">\(x=0\)</span>. The potential flow velocity
-field for the non-reacting flow is</p>
-<div class="math">
-\[u = a(t)z \quad\quad v = -a(t) x\]</div>
-<p>where <span class="math">\(u\)</span> and <span class="math">\(v\)</span> are the velocity components in the <span class="math">\(z\)</span> and <span class="math">\(x\)</span> directions,
-respectively, and <span class="math">\(a(t)\)</span> is the time varying strain rate parameter. If we take
-the mixture coming from <span class="math">\(x=-\infty\)</span> to be premixed reactants and the mixture
-coming from <span class="math">\(x=+\infty\)</span> to be the reaction products, a flame will be established
-at some point <span class="math">\(x&lt;0\)</span> where the consumption speed balances the local fluid
-velocity. Note that a flame in this configuration can never be completely
-extinguished because there will always be a region of contact between reactants
-and products.</p>
-</div>
-<div class="section" id="twin-opposed-jet-flame">
-<span id="sec-twin-flame"></span><h2>Twin Opposed-Jet Flame<a class="headerlink" href="#twin-opposed-jet-flame" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center" id="id2">
-<img alt="_images/planar-twin.png" src="_images/planar-twin.png" />
-<p class="caption"><span class="caption-text"><strong>Schematic of the twin opposed-jet flame</strong></span></p>
-</div>
-<p>The potential flow velocity field for the twin opposed-jet flame is identical
-to that of the single opposed jet flame, but with both inlet streams consisting
-of premixed reactants. As depicted above, two flames are established, one on
-each side of the stagnation point, propagating away from one another.
-Combustion products exist in the region between the two flames. Because the
-composition of the products mixture is not imposed externally, this
-configuration allows flame extinction to occur when the flames are pushed close
-together (at high strain rates). The domain is symmetric about the stagnation
-plane <span class="math">\(x=0\)</span>, allowing this configuration to be simulated numerically as a
-single flame with a symmetry boundary condition applied at the stagnation point.</p>
-</div>
-<div class="section" id="tubular-flame-at-zero-stagnation-radius">
-<span id="sec-tubular0"></span><h2>Tubular Flame at Zero Stagnation Radius<a class="headerlink" href="#tubular-flame-at-zero-stagnation-radius" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center" id="id3">
-<img alt="_images/curved0.png" src="_images/curved0.png" />
-<p class="caption"><span class="caption-text"><strong>Schematic of the tubular flame at zero stagnation radius</strong></span></p>
-</div>
-<p>The curved flame at zero stagnation radius is quite similar to the twin
-opposed-jet flame. Instead of the planar stagnation flow, we have an
-axisymmetric stagnation flow, with reactants flowing inward from
-<span class="math">\(r=\infty\)</span> toward the stagnation point at <span class="math">\(r=0\)</span>, establishing a cylindrical
-flame propagating away from the centerline.  The potential flow velocity field
-is:</p>
-<div class="math">
-\[u = a(t) z \quad\quad v = -\frac{1}{2} a(t) r\]</div>
-<p>where <span class="math">\(u\)</span> and <span class="math">\(v\)</span> are the velocity components in the <span class="math">\(z\)</span> and <span class="math">\(r\)</span> directions,
-respectively. As in the twin opposed jet flame, a symmetry boundary condition
-applies at <span class="math">\(r=0\)</span>, and flame extinction occurs when the flame is pushed too
-close to the centerline.</p>
-</div>
-<div class="section" id="tubular-flame-at-finite-stagnation-radius">
-<span id="sec-tubular-finite"></span><h2>Tubular Flame at Finite Stagnation Radius<a class="headerlink" href="#tubular-flame-at-finite-stagnation-radius" title="Permalink to this headline">¶</a></h2>
-<div class="figure">
-<img alt="_images/curved-finite.png" src="_images/curved-finite.png" />
-</div>
-<p>The tubular flame at zero stagnation radius can be modified by introducing a
-line source at <span class="math">\(r=0\)</span>. This produces a potential flow where the stagnation
-surface is a cylinder of radius <span class="math">\(R\)</span>, as shown above. Since the composition of
-the flow coming from <span class="math">\(r=0\)</span> may be freely specified, this configuration permits
-both positively and negatively curved flames. The resulting potential flow
-velocity field is:</p>
-<div class="math">
-\[u=az\quad\quad v=\frac{a}{2}\left(\frac{R^{2}-r^{2}}{r}\right)\]</div>
-<p>The boundary condition at <span class="math">\(r=0\)</span> requires special attention in order to capture
-both the symmetry condition and the effect of the mass flux at the centerline.</p>
-</div>
-<div class="section" id="unified-formulation">
-<span id="sec-unified-formulation"></span><h2>Unified Formulation<a class="headerlink" href="#unified-formulation" title="Permalink to this headline">¶</a></h2>
-<p>The stagnation point flow configurations discussed above can be rewritten in a
-unified form, permitting both planar and curved geometry through the
-introduction of the parameter <span class="math">\(\alpha\)</span> where <span class="math">\(\alpha=0\)</span> for planar geometry and
-<span class="math">\(\alpha=1\)</span> for curved geometry. We introduce the coordinate system <span class="math">\((r, z)\)</span>
-where <span class="math">\(r\)</span> is the coordinate normal to the flame (regardless of whether the
-coordinate system is curved or planar) and the <span class="math">\(z\)</span> coordinate is tangential to
-the flame. The potential flow velocity field is then:</p>
-<div class="math">
-\[u = az \quad\quad
-v=\frac{a}{\alpha+1} \left(\frac{\left|R\right|R^{\alpha}
-                           -r^{\alpha+1}}{r^{\alpha}}\right)\]</div>
-<p>This formulation permits the use of a fictitious negative stagnation point
-radius <span class="math">\(R\)</span>, with the centerline acting as a sink rather than a source.</p>
-<p>The stretch rate <span class="math">\(\kappa\)</span> for a flame at radius <span class="math">\(R_{f}\)</span> is:</p>
-<div class="math">
-\[\kappa=a+\frac{\alpha}{R_{f}}\frac{dR_{f}}{dt}\]</div>
-<p>When the flame is stationary, the stretch rate reduces to <span class="math">\(\kappa=a\)</span> and thus
-curvature does not contribute to flame stretch for stationary flames in this
-configuration.</p>
-</div>
-</div>
-
-
-          </div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -209,21 +205,19 @@ configuration.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="derivation.html" title="Governing Equations"
              >next</a> |</li>
         <li class="right" >
           <a href="flame-model.html" title="Flame Model"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.4.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="flame-model.html" >Flame Model</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Strained Flame Configurations</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    &#169; Copyright 2008-2023, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

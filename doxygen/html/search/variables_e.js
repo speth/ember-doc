@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['n_0',['N',['../classIntegrator.html#a28ddff1d1449b70e46cf7966d08acd57',1,'Integrator::N'],['../classTridiagonalIntegrator.html#aac28b8ce8984447bd7d965ee7da184a5',1,'TridiagonalIntegrator::N'],['../classQssIntegrator.html#aaacf89bb1dd861087f3998a31d1efaf4',1,'QssIntegrator::N']]],
+  ['n_1',['n',['../classsdVector.html#afe689bff4201cff3781e5e33f85afd4b',1,'sdVector']]],
+  ['n_2',['N',['../classDiffusionSystem.html#a09a7a6b858b7d41aeb62ebfd8dae08b3',1,'DiffusionSystem']]],
+  ['nadapt_3',['nAdapt',['../classOneDimGrid.html#aea36e3ee9e9ac8357bb611fea63ad9e0',1,'OneDimGrid']]],
+  ['nan_4',['NaN',['../mathUtils_8h.html#ab4ff070ea4fc5d50ffe530252867dc44',1,'NaN:&#160;mathUtils.cpp'],['../mathUtils_8cpp.html#ab4ff070ea4fc5d50ffe530252867dc44',1,'NaN:&#160;mathUtils.cpp']]],
+  ['ncurrentstate_5',['nCurrentState',['../classFlameSolver.html#a6d35c81f1595203d0b2feddc8c86c743',1,'FlameSolver']]],
+  ['neq_6',['nEq',['../classSundialsCvode.html#a900fa732020bddbd8f7b04455b2eca78',1,'SundialsCvode']]],
+  ['noutput_7',['nOutput',['../classFlameSolver.html#ae55f7a55e1ff6148de6fd144c89390dc',1,'FlameSolver']]],
+  ['npoints_8',['nPoints',['../classOneDimGrid.html#a1a7a4f1b7fa2ea0b03c9194d8e3342c8',1,'OneDimGrid::nPoints'],['../classGridBased.html#a6ed8b395e76859e558184297cdf54b5d',1,'GridBased::nPoints']]],
+  ['nprofile_9',['nProfile',['../classFlameSolver.html#afb10076ea0d95cb043360b8639d6d99c',1,'FlameSolver']]],
+  ['nregrid_10',['nRegrid',['../classFlameSolver.html#aee5301007c0fa22723b3dea6063fc93c',1,'FlameSolver']]],
+  ['nroots_11',['nRoots',['../classSundialsCvode.html#aa36d32a1d563731150c833dd45e22da7',1,'SundialsCvode']]],
+  ['nspec_12',['nSpec',['../classCanteraGas.html#af1c3c20697dbf544f8fe86d1c9d45892',1,'CanteraGas::nSpec'],['../classConvectionSystemSplit.html#a9504789ef8af93dd6c038c277f69d5a3',1,'ConvectionSystemSplit::nSpec'],['../classFlameSolver.html#a18e422e37a270be9a4c3660635bbf5f7',1,'FlameSolver::nSpec'],['../classSourceSystem.html#adaaffb3c65accf549a84a5c4f7628ce4',1,'SourceSystem::nSpec']]],
+  ['nterminate_13',['nTerminate',['../classFlameSolver.html#a7521e534a93bb93cccffe8e03b4f8666',1,'FlameSolver']]],
+  ['nthreads_14',['nThreads',['../classConfigOptions.html#a0afecbaea450ce5eb6f0548e9c681760',1,'ConfigOptions']]],
+  ['ntotal_15',['nTotal',['../classFlameSolver.html#a5c9ac637de27c0229c505b192a5eb29f',1,'FlameSolver']]],
+  ['nvars_16',['nVars',['../classConvectionSystemUTW.html#a2bc9da4cfe080cd5f52f1b732500b97b',1,'ConvectionSystemUTW::nVars'],['../classConvectionSystemSplit.html#a4dd7f8997843337a4c92de7b432cf421',1,'ConvectionSystemSplit::nVars'],['../classFlameSolver.html#a79894ead72de5ca724105d3152ea4f81',1,'FlameSolver::nVars'],['../classOneDimGrid.html#a3e21e886bfbc8e1ef1ae21c78dced251',1,'OneDimGrid::nVars']]]
+];

@@ -1,35 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Ember &#8212; Ember 1.4.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ember &#8212; Ember 1.5.0b1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=b7825e20"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Ember 1.4.0 documentation" href="#" />
     <link rel="next" title="Installation" href="installation.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -42,50 +27,18 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Ember</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Ember</a><ul>
-<li><a class="reference internal" href="#contents">Contents</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Next topic</h4>
-  <p class="topless"><a href="installation.html"
-                        title="next chapter">Installation</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ember">
-<h1>Ember<a class="headerlink" href="#ember" title="Permalink to this headline">¶</a></h1>
+  <section id="ember">
+<h1>Ember<a class="headerlink" href="#ember" title="Link to this heading">¶</a></h1>
 <p>Ember is a quasi-one-dimensional, unsteady reacting flow solver. It can be used
 to simulate a number of fundamental flame configurations, including premixed
 laminar flames, opposed flow strained flames (premixed or diffusion),
@@ -94,19 +47,18 @@ flames in a prescribed velocity field (using the method of lines).</p>
 <p>Ember integrates the governing equations using a variant on the standard Strang
 splitting method called <em>rebalanced splitting</em>, which eliminates steady-state
 errors.</p>
-<p>Ember&#8217;s solver is implemented primarily in C++, which is made accessible to the
+<p>Ember’s solver is implemented primarily in C++, which is made accessible to the
 user as a Python module to enable script-driven input files and provide
 extensibility through user-supplied functions. Ember is parallelized using the
 Intel TBB library to take advantage of modern multi-core processors.</p>
 <p>This site contains documentation for the current development version of Ember,
 which may differ slightly from the most recent stable release.</p>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#download">Download</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#binary-dependencies">Binary Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#build-dependencies">Build Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#compilation">Compilation</a></li>
 </ul>
@@ -130,24 +82,72 @@ which may differ slightly from the most recent stable release.</p>
 <li class="toctree-l2"><a class="reference internal" href="input.html#implementation-classes">Implementation Classes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="run-sim.html">Running Simulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="postprocessing.html">Post-Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-sim.html">Running Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="run-sim.html#ember.input.Config.run"><code class="docutils literal notranslate"><span class="pre">Config.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="postprocessing.html">Post-Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#ember.utils.Struct"><code class="docutils literal notranslate"><span class="pre">Struct</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#ember.utils.HDFStruct"><code class="docutils literal notranslate"><span class="pre">HDFStruct</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#ember.utils.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#ember.utils.get_qdot"><code class="docutils literal notranslate"><span class="pre">get_qdot()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#ember.utils.expandProfile"><code class="docutils literal notranslate"><span class="pre">expandProfile()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="cxx-implementation.html">C++ Implementation Docs</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Ember</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="installation.html"
+                          title="next chapter">Installation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -164,12 +164,13 @@ which may differ slightly from the most recent stable release.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Ember 1.4.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Ember</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2013, Raymond Speth.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    &#169; Copyright 2008-2023, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>
