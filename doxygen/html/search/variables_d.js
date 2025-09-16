@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['m_0',['M',['../classsdBandMatrix.html#a1c234b13fd1998ae6344dc7b29b2a904',1,'sdBandMatrix::M'],['../classsdMatrix.html#aa160edf29b841b04adde3b81f6a1ad0f',1,'sdMatrix::M']]],
+  ['m_0',['M',['../classsdMatrix.html#aa160edf29b841b04adde3b81f6a1ad0f',1,'sdMatrix::M'],['../classsdBandMatrix.html#a1c234b13fd1998ae6344dc7b29b2a904',1,'sdBandMatrix::M']]],
   ['m_5fbase_1',['m_base',['../classMultiArrheniusInterp.html#a5948e42197e3344e83d690ca75af262c',1,'MultiArrheniusInterp']]],
   ['m_5fcontext_2',['m_context',['../classSundialsContext.html#ac7c71739d65e5e5940bcdfa943dbb326',1,'SundialsContext']]],
   ['m_5fdg0_5fconst_3',['m_dg0_const',['../classInterpKinetics.html#a950c6ef6775be11918dbce831764edd5',1,'InterpKinetics']]],

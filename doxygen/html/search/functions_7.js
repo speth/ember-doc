@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['g_0',['g',['../classSundialsCvode.html#a68e166850c0f5e30c5d451f13980c6cb',1,'SundialsCvode::g()'],['../classsdODE.html#ab045c5f5ae76bc1ff8cb5d497a74a9a4',1,'sdODE::g()']]],
-  ['get_1',['get',['../classSundialsContext.html#aa0b219ee7a4cc07a1018d4e8aed38c7b',1,'SundialsContext::get()'],['../classBilinearInterpolator.html#ab2df01d3d60f05d2771f5ae13a1f4e2b',1,'BilinearInterpolator::get()']]],
+  ['g_0',['g',['../classsdODE.html#ab045c5f5ae76bc1ff8cb5d497a74a9a4',1,'sdODE::g()'],['../classSundialsCvode.html#a68e166850c0f5e30c5d451f13980c6cb',1,'SundialsCvode::g()']]],
+  ['get_1',['get',['../classBilinearInterpolator.html#ab2df01d3d60f05d2771f5ae13a1f4e2b',1,'BilinearInterpolator::get()'],['../classSundialsContext.html#aa0b219ee7a4cc07a1018d4e8aed38c7b',1,'SundialsContext::get()']]],
   ['get_5fa_2',['get_A',['../classDiffusionSystem.html#a0d139fb386e41360522ab3957cabf7b0',1,'DiffusionSystem::get_A()'],['../classTridiagonalODE.html#ac306c98242e2bbca34166cd199c7c496',1,'TridiagonalODE::get_A()']]],
   ['get_5fh_3',['get_h',['../classIntegrator.html#a2c15828d41167e3b6148eb150fe32b58',1,'Integrator']]],
   ['get_5fk_4',['get_k',['../classDiffusionSystem.html#a522286166b9f3e5dff069439f3bb2956',1,'DiffusionSystem::get_k()'],['../classTridiagonalODE.html#a36ecc2bc0aa361fe67b6b22750dba1bc',1,'TridiagonalODE::get_k()']]],
@@ -10,7 +10,7 @@ var searchData=
   ['get_5fydot_7',['get_ydot',['../classIntegrator.html#a7515dae0ff1380a346822a4fa1951972',1,'Integrator::get_ydot()'],['../classExplicitIntegrator.html#ac420625350efc661e89a6aaebb99aba7',1,'ExplicitIntegrator::get_ydot()'],['../classTridiagonalIntegrator.html#a2b5d9e70bb3667690d639d15910473c9',1,'TridiagonalIntegrator::get_ydot()']]],
   ['getcallcount_8',['getCallCount',['../classPerfTimer.html#a5f32d15287f93d44f7c885a932698223',1,'PerfTimer']]],
   ['getconsumptionspeed_9',['getConsumptionSpeed',['../classFlameSolver.html#a062ed395e6f6c5fe9ce349fdbe108d38',1,'FlameSolver']]],
-  ['getcreationrates_10',['getCreationRates',['../classCanteraGas.html#ae48b553719de39cf9c3912bd1026704b',1,'CanteraGas::getCreationRates(double *wDot) const'],['../classCanteraGas.html#a4bb90a52f278332facdd753917aee073',1,'CanteraGas::getCreationRates(dvec &amp;wDot) const']]],
+  ['getcreationrates_10',['getCreationRates',['../classCanteraGas.html#a4bb90a52f278332facdd753917aee073',1,'CanteraGas::getCreationRates(dvec &amp;wDot) const'],['../classCanteraGas.html#ae48b553719de39cf9c3912bd1026704b',1,'CanteraGas::getCreationRates(double *wDot) const']]],
   ['getdensity_11',['getDensity',['../classCanteraGas.html#a9a27ed25bf7ef47f7e2167da7af12d31',1,'CanteraGas']]],
   ['getdestructionrates_12',['getDestructionRates',['../classCanteraGas.html#a148c2ee29f4e9a35b551d6de165108bd',1,'CanteraGas::getDestructionRates(dvec &amp;wDot) const'],['../classCanteraGas.html#aa3569a14ef81ddef71aae3aa0b8509cc',1,'CanteraGas::getDestructionRates(double *wDot) const']]],
   ['getdiffusioncoefficientsmole_13',['getDiffusionCoefficientsMole',['../classCanteraGas.html#aae622d26ac72fb3d448d41c53042c923',1,'CanteraGas::getDiffusionCoefficientsMole(dvec &amp;Dkm) const'],['../classCanteraGas.html#a85b769a1e07e1b6d462501959d039f7c',1,'CanteraGas::getDiffusionCoefficientsMole(double *Dkm) const']]],
@@ -32,7 +32,7 @@ var searchData=
   ['getrateconstants_29',['getRateConstants',['../classMultiArrheniusInterp.html#ae7eba6df51b79557ce7f86ac9cbcd852',1,'MultiArrheniusInterp']]],
   ['getreactionrates_30',['getReactionRates',['../classCanteraGas.html#ab4695ebc7b2c18e2076855fef0883d8f',1,'CanteraGas::getReactionRates(dvec &amp;wDot) const'],['../classCanteraGas.html#a95e107f544d1c861f2e3ecdac30d717d',1,'CanteraGas::getReactionRates(double *wDot) const']]],
   ['getrootinfo_31',['getRootInfo',['../classSundialsCvode.html#ad9c903228ebb307e68ab9a6a090ccb48',1,'SundialsCvode']]],
-  ['getspecificheatcapacities_32',['getSpecificHeatCapacities',['../classCanteraGas.html#a952bf1d600aea850d906bf474d4841af',1,'CanteraGas::getSpecificHeatCapacities(double *cpSpec) const'],['../classCanteraGas.html#a184ab2931f4652ea3d22aec5cfbb75f3',1,'CanteraGas::getSpecificHeatCapacities(dvec &amp;cpSpec) const']]],
+  ['getspecificheatcapacities_32',['getSpecificHeatCapacities',['../classCanteraGas.html#a184ab2931f4652ea3d22aec5cfbb75f3',1,'CanteraGas::getSpecificHeatCapacities(dvec &amp;cpSpec) const'],['../classCanteraGas.html#a952bf1d600aea850d906bf474d4841af',1,'CanteraGas::getSpecificHeatCapacities(double *cpSpec) const']]],
   ['getspecificheatcapacity_33',['getSpecificHeatCapacity',['../classCanteraGas.html#a7173015267de02e3b20ebdaee2a69e90',1,'CanteraGas']]],
   ['getstats_34',['getStats',['../classSourceSystem.html#a038ced7520784ca682037261a814e51f',1,'SourceSystem::getStats()'],['../classSourceSystemCVODE.html#a4eb6bbb41e5ba00bc1883411e1dc027b',1,'SourceSystemCVODE::getStats()'],['../classSourceSystemQSS.html#aacba40e495b7ff84011fa1fbc9dccbc7',1,'SourceSystemQSS::getStats()']]],
   ['getthermalconductivity_35',['getThermalConductivity',['../classCanteraGas.html#ac221f59331ced85647e8868f59dd3de5',1,'CanteraGas']]],

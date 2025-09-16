@@ -33,12 +33,12 @@ var searchData=
   ['maxloc_30',['maxloc',['../namespacemathUtils.html#aee018a6d6e909b22a0ecff4b6d72767d',1,'mathUtils']]],
   ['maxnumsteps_31',['maxNumSteps',['../classSundialsCvode.html#a8fbf70b8730b396980f92a629e0d345e',1,'SundialsCvode']]],
   ['maxval_32',['maxval',['../namespacemathUtils.html#acfe9f53c60bbbd924ae256e3fd84a207',1,'mathUtils::maxval(const dvector &amp;v)'],['../namespacemathUtils.html#a1cc69eff957d47916e533bd5ba4d490f',1,'mathUtils::maxval(const dvector &amp;v, size_t iStart, size_t iEnd)']]],
-  ['mean_33',['mean',['../namespacemathUtils.html#a0f21f6e8f94a797e9d7b0125b24462c3',1,'mathUtils::mean(const dvector &amp;v, size_t iStart, size_t iEnd)'],['../namespacemathUtils.html#a25741ace16220d98ee6de6af9253a9bf',1,'mathUtils::mean(const dvector &amp;v)']]],
+  ['mean_33',['mean',['../namespacemathUtils.html#a25741ace16220d98ee6de6af9253a9bf',1,'mathUtils::mean(const dvector &amp;v)'],['../namespacemathUtils.html#a0f21f6e8f94a797e9d7b0125b24462c3',1,'mathUtils::mean(const dvector &amp;v, size_t iStart, size_t iEnd)']]],
   ['mechanismfile_34',['mechanismFile',['../classCanteraGas.html#af97b5dfd2d3200f16971e05fae98b82c',1,'CanteraGas']]],
   ['minloc_35',['minloc',['../namespacemathUtils.html#ad41a5f685f24f900b31a7366b5d37696',1,'mathUtils']]],
   ['minstep_36',['minStep',['../classSundialsCvode.html#ad686cb1e450e41ea1cc02015befa3b55',1,'SundialsCvode']]],
-  ['minval_37',['minval',['../namespacemathUtils.html#a368edad9f2634fa645ddbc101cfdb403',1,'mathUtils::minval(const dvector &amp;v, size_t iStart, size_t iEnd)'],['../namespacemathUtils.html#a739c97c184ac7c324feb5fa368107db6',1,'mathUtils::minval(const dvector &amp;v)']]],
+  ['minval_37',['minval',['../namespacemathUtils.html#a739c97c184ac7c324feb5fa368107db6',1,'mathUtils::minval(const dvector &amp;v)'],['../namespacemathUtils.html#a368edad9f2634fa645ddbc101cfdb403',1,'mathUtils::minval(const dvector &amp;v, size_t iStart, size_t iEnd)']]],
   ['mu_38',['mu',['../classFlameSolver.html#ac430f5162c46cce76cb553c4316c57a5',1,'FlameSolver']]],
   ['multiarrheniusinterp_39',['MultiArrheniusInterp',['../classMultiArrheniusInterp.html',1,'']]],
-  ['myode_40',['myODE',['../classTridiagonalIntegrator.html#a3341bbfd885dec04441b50a65357e7cc',1,'TridiagonalIntegrator::myODE'],['../classExplicitIntegrator.html#a7d05174bbb7f6376b70505685de7deee',1,'ExplicitIntegrator::myODE']]]
+  ['myode_40',['myODE',['../classExplicitIntegrator.html#a7d05174bbb7f6376b70505685de7deee',1,'ExplicitIntegrator::myODE'],['../classTridiagonalIntegrator.html#a3341bbfd885dec04441b50a65357e7cc',1,'TridiagonalIntegrator::myODE']]]
 ];

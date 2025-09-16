@@ -5,30 +5,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Counterflow Diffusion Flame &#8212; Ember 1.5.0b1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=d59dc883" />
-    <script src="../_static/documentation_options.js?v=b7825e20"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <title>Counterflow Diffusion Flame &#8212; Ember 1.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=34905f61" />
+    <script src="../_static/documentation_options.js?v=e0a75244"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Laminar Flame" href="laminar.html" />
     <link rel="prev" title="Premixed Strained Flame" href="premixed.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="laminar.html" title="Laminar Flame"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="premixed.html" title="Premixed Strained Flame"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Counterflow Diffusion Flame</a></li> 
       </ul>
@@ -49,10 +52,10 @@
 <span class="sd">for a low strain rate. The converged axial velocity profile is plotted.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ember</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;run/ex_diffusion&#39;</span>
 
@@ -91,7 +94,7 @@
 <p>The given configuration parameters override default values. The full set of
 configuration parameters is described in <a class="reference internal" href="../input.html#sec-conf-options"><span class="std std-ref">Configuration Options</span></a>.</p>
 <ul class="simple">
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Paths</span></code></p>
+<li><p><a class="reference internal" href="../input.html#ember.input.Paths" title="ember.input.Paths"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paths</span></code></a></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">outputDir</span></code> is the directory where periodic periodic
 output profiles (<code class="docutils literal notranslate"><span class="pre">prof000000.h5</span></code>, <code class="docutils literal notranslate"><span class="pre">prof0000001.h5</span></code>, etc.) and time series
@@ -104,7 +107,7 @@ is not necessarily placed in <code class="docutils literal notranslate"><span cl
 this option, the log output is written to the screen via <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialCondition</span></code> - For the diffusion flame, properties need to be
+<li><p><a class="reference internal" href="../input.html#ember.input.InitialCondition" title="ember.input.InitialCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialCondition</span></code></a> - For the diffusion flame, properties need to be
 for the separate fuel and oxidizer streams.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">flameType='diffusion'</span></code> specifies that this is a diffusion flame and that
@@ -126,15 +129,15 @@ time it takes to reach a steady-state flame. Making this too wide may result
 in integration difficulties.</p></li>
 </ul>
 </li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">StrainParameters</span></code> specifies how the strain rate imposed on the flame
+<li><p><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrainParameters</span></code></a> specifies how the strain rate imposed on the flame
 varies as a function of time. In this case we specify a constant strain rate.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">General</span></code></p>
+<li><p><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><code class="xref py py-class docutils literal notranslate"><span class="pre">General</span></code></a></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">nThreads</span></code> - Set the number of parallel threads to use when solving. This
 can be set to any value up to the number of processors in the computer.</p></li>
 </ul>
 </li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Times</span></code></p>
+<li><p><a class="reference internal" href="../input.html#ember.input.Times" title="ember.input.Times"><code class="xref py py-class docutils literal notranslate"><span class="pre">Times</span></code></a></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">globalTimestep</span></code> - sets the timestep size used by the operator-split
 integrator. Decreasing this value may help in cases where numerical
@@ -144,7 +147,7 @@ trouble.</p></li>
 (<code class="docutils literal notranslate"><span class="pre">prof000001.h5</span></code> etc.) should be produced every 20 global timesteps.</p></li>
 </ul>
 </li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminationCondition</span></code> specifies the conditions under which the time
+<li><p><a class="reference internal" href="../input.html#ember.input.TerminationCondition" title="ember.input.TerminationCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminationCondition</span></code></a> specifies the conditions under which the time
 integration will be terminated. Here, we specify integration until a specific
 time. Another option is to integrate until a steady-state solution is reached.</p></li>
 </ul>
@@ -164,7 +167,7 @@ modifications you desire, then run:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>Previous topic</h4>
@@ -183,7 +186,7 @@ modifications you desire, then run:</p>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -191,32 +194,35 @@ modifications you desire, then run:</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="laminar.html" title="Laminar Flame"
              >next</a> |</li>
         <li class="right" >
           <a href="premixed.html" title="Premixed Strained Flame"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Counterflow Diffusion Flame</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2008-2023, Raymond Speth.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; Copyright 2008-2025, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

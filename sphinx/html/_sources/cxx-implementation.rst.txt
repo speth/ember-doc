@@ -24,7 +24,7 @@ classes:
 
 * Integrators:
 
-  * :cxx:`sundialsCVODE` - Integrator used for convection systems and
+  * :cxx:`SundialsCvode` - Integrator used for convection systems and
     *SourceSystemCVODE*
 
   * :cxx:`QssIntegrator` - Integrator used with *SourceSystemQSS*
@@ -36,7 +36,7 @@ classes:
   * :cxx:`GridBased` - base class used with several other classes to provide
     access to the grid parameters
 
-  * :cxx:`configOptions` - options used to set up the *FlameSolver*
+  * :cxx:`ConfigOptions` - options used to set up the *FlameSolver*
 
   * :cxx:`CanteraGas` - Wrapper around a set of Cantera objects used to compute
     thermodynamic, kinetic, and transport properties of an ideal gas mixture.

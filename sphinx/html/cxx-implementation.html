@@ -5,26 +5,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>C++ Implementation Docs &#8212; Ember 1.5.0b1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
-    <script src="_static/documentation_options.js?v=b7825e20"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <title>C++ Implementation Docs &#8212; Ember 1.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <script src="_static/documentation_options.js?v=e0a75244"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Post-Processing" href="postprocessing.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="postprocessing.html" title="Post-Processing"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">C++ Implementation Docs</a></li> 
       </ul>
     </div>  
@@ -39,21 +42,21 @@
 <p>The one-dimensonal flame model is primarily implemented by the following C++
 classes:</p>
 <ul class="simple">
-<li><p><span>FlameSolver</span> - Main integrator driver</p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classFlameSolver.html">FlameSolver</a> - Main integrator driver</p></li>
 <li><p>Operator split systems of equations:</p>
 <ul>
-<li><p><span>SourceSystem</span> - chemical source (reaction) term</p>
+<li><p><a class="reference external" href="./../../doxygen/html/classSourceSystem.html">SourceSystem</a> - chemical source (reaction) term</p>
 <ul>
-<li><p><span>SourceSystemCVODE</span> - used with <em>sundialsCVODE</em></p></li>
-<li><p><span>SourceSystemQSS</span> - used with <em>QssIntegrator</em></p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classSourceSystemCVODE.html">SourceSystemCVODE</a> - used with <em>sundialsCVODE</em></p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classSourceSystemQSS.html">SourceSystemQSS</a> - used with <em>QssIntegrator</em></p></li>
 </ul>
 </li>
-<li><p><span>DiffusionSystem</span> - diffusion term for a single component</p></li>
-<li><p><span>ConvectionSystemSplit</span> - Wrapper that integrates convection terms for
+<li><p><a class="reference external" href="./../../doxygen/html/classDiffusionSystem.html">DiffusionSystem</a> - diffusion term for a single component</p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classConvectionSystemSplit.html">ConvectionSystemSplit</a> - Wrapper that integrates convection terms for
 all components</p>
 <ul>
-<li><p><span>ConvectionSystemY</span> - convection term for a single species</p></li>
-<li><p><span>ConvectionSystemUTW</span> - convection term for velocity, temperature,
+<li><p><a class="reference external" href="./../../doxygen/html/classConvectionSystemY.html">ConvectionSystemY</a> - convection term for a single species</p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classConvectionSystemUTW.html">ConvectionSystemUTW</a> - convection term for velocity, temperature,
 and molecular weight</p></li>
 </ul>
 </li>
@@ -61,18 +64,18 @@ and molecular weight</p></li>
 </li>
 <li><p>Integrators:</p>
 <ul>
-<li><p><span>sundialsCVODE</span> - Integrator used for convection systems and
+<li><p><a class="reference external" href="./../../doxygen/html/classSundialsCvode.html">SundialsCvode</a> - Integrator used for convection systems and
 <em>SourceSystemCVODE</em></p></li>
-<li><p><span>QssIntegrator</span> - Integrator used with <em>SourceSystemQSS</em></p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classQssIntegrator.html">QssIntegrator</a> - Integrator used with <em>SourceSystemQSS</em></p></li>
 </ul>
 </li>
 <li><p>Other classes of interest:</p>
 <ul>
-<li><p><span>OneDimGrid</span> - an adaptive, non-uniform one-dimensional grid</p></li>
-<li><p><span>GridBased</span> - base class used with several other classes to provide
+<li><p><a class="reference external" href="./../../doxygen/html/classOneDimGrid.html">OneDimGrid</a> - an adaptive, non-uniform one-dimensional grid</p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classGridBased.html">GridBased</a> - base class used with several other classes to provide
 access to the grid parameters</p></li>
-<li><p><span>configOptions</span> - options used to set up the <em>FlameSolver</em></p></li>
-<li><p><span>CanteraGas</span> - Wrapper around a set of Cantera objects used to compute
+<li><p><a class="reference external" href="./../../doxygen/html/classConfigOptions.html">ConfigOptions</a> - options used to set up the <em>FlameSolver</em></p></li>
+<li><p><a class="reference external" href="./../../doxygen/html/classCanteraGas.html">CanteraGas</a> - Wrapper around a set of Cantera objects used to compute
 thermodynamic, kinetic, and transport properties of an ideal gas mixture.</p></li>
 </ul>
 </li>
@@ -85,7 +88,7 @@ thermodynamic, kinetic, and transport properties of an ideal gas mixture.</p></l
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>Previous topic</h4>
@@ -99,7 +102,7 @@ thermodynamic, kinetic, and transport properties of an ideal gas mixture.</p></l
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -107,28 +110,31 @@ thermodynamic, kinetic, and transport properties of an ideal gas mixture.</p></l
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="postprocessing.html" title="Post-Processing"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Ember 1.5.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">C++ Implementation Docs</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2008-2023, Raymond Speth.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; Copyright 2008-2025, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

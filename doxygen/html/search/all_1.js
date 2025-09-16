@@ -21,6 +21,6 @@ var searchData=
   ['almostequal_18',['almostEqual',['../namespacemathUtils.html#aada21c7708cf507a9537eb1eadd7a670',1,'mathUtils']]],
   ['alpha_19',['alpha',['../classOneDimGrid.html#a833785b5afafc26fc0cec8834fe31fb0',1,'OneDimGrid::alpha'],['../classGridBased.html#a0713a53403601b224712da6cb89224bf',1,'GridBased::alpha']]],
   ['alwaysupdateheatflux_20',['alwaysUpdateHeatFlux',['../classConfigOptions.html#a810c18a895b363d17be75d222553397d',1,'ConfigOptions']]],
-  ['approxmixtransport_21',['ApproxMixTransport',['../classApproxMixTransport.html#aa5677e6bdb2bcad879c6472814f04edb',1,'ApproxMixTransport::ApproxMixTransport()'],['../classApproxMixTransport.html',1,'ApproxMixTransport']]],
+  ['approxmixtransport_21',['ApproxMixTransport',['../classApproxMixTransport.html',1,'ApproxMixTransport'],['../classApproxMixTransport.html#aa5677e6bdb2bcad879c6472814f04edb',1,'ApproxMixTransport::ApproxMixTransport()']]],
   ['array2dtovectorvector_22',['array2DToVectorVector',['../namespacemathUtils.html#ab06845af67223e0875dd988f0fabeaf2',1,'mathUtils']]]
 ];

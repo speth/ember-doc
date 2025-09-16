@@ -8,9 +8,9 @@ This example shows how to simulate a steady premixed strained flame. This is
 essentially the "default" flame configuration for Ember, and most other flame
 configurations are described by how they differ from this one.
 
-``example_premixed.py``:
+``example_single.py``:
 
-.. literalinclude:: ../../../../python/ember/examples/example_premixed.py
+.. literalinclude:: ../../../../python/ember/examples/example_single.py
 
 The given configuration parameters override default values. The full set of
 configuration parameters is described in :ref:`sec-conf-options`.

@@ -5,30 +5,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Sequential Simulations (multirun) &#8212; Ember 1.5.0b1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=d59dc883" />
-    <script src="../_static/documentation_options.js?v=b7825e20"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <title>Sequential Simulations (multirun) &#8212; Ember 1.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=34905f61" />
+    <script src="../_static/documentation_options.js?v=e0a75244"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Batch Jobs" href="batch.html" />
     <link rel="prev" title="Laminar Flame" href="laminar.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="batch.html" title="Batch Jobs"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="laminar.html" title="Laminar Flame"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Sequential Simulations (multirun)</a></li> 
       </ul>
@@ -52,8 +55,8 @@ strain rate values.</p>
 <span class="sd">profile for the following strain rate.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">ember</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ember</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
 
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
     <span class="n">General</span><span class="p">(</span><span class="n">nThreads</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()),</span>
@@ -73,7 +76,7 @@ strain rate values.</p>
 configuration parameters is described in <a class="reference internal" href="../input.html#sec-conf-options"><span class="std std-ref">Configuration Options</span></a>. Specific
 parameters of interest in this example:</p>
 <ul class="simple">
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">General</span></code></p>
+<li><p><a class="reference internal" href="../input.html#ember.input.General" title="ember.input.General"><code class="xref py py-class docutils literal notranslate"><span class="pre">General</span></code></a></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">nThreads</span></code> - By using the <code class="docutils literal notranslate"><span class="pre">multiprocessing.cpu_count())</span></code> function, we
 always use the maximum number of processors available. Note that for systems
@@ -81,9 +84,9 @@ with hyperthreading enabled, this will use the total number of virtual
 cores, which may be less efficient than using the number of physical cores.</p></li>
 </ul>
 </li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Chemistry</span></code> - these alternative kinetic and transport models achieve
+<li><p><a class="reference internal" href="../input.html#ember.input.Chemistry" title="ember.input.Chemistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chemistry</span></code></a> - these alternative kinetic and transport models achieve
 increases in speed at a small cost in accuracy.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">StrainParameters</span></code></p>
+<li><p><a class="reference internal" href="../input.html#ember.input.StrainParameters" title="ember.input.StrainParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrainParameters</span></code></a></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">rates</span></code> - A list of strain rates to step through. For the supported
 opposed flow flame (this example), stepping through strain rates from high
@@ -117,7 +120,7 @@ modifications you desire, then run:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>Previous topic</h4>
@@ -136,7 +139,7 @@ modifications you desire, then run:</p>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -144,32 +147,35 @@ modifications you desire, then run:</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="batch.html" title="Batch Jobs"
              >next</a> |</li>
         <li class="right" >
           <a href="laminar.html" title="Laminar Flame"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Sequential Simulations (multirun)</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2008-2023, Raymond Speth.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; Copyright 2008-2025, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

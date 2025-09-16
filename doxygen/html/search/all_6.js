@@ -14,12 +14,12 @@ var searchData=
   ['fixedleftloc_11',['fixedLeftLoc',['../classOneDimGrid.html#ab8948dbe63e4107f07451fc067a40a9f',1,'OneDimGrid::fixedLeftLoc'],['../classConfigOptions.html#a95e519b36040c3c3d9c41d896bc17e55',1,'ConfigOptions::fixedLeftLoc']]],
   ['fixedvalue_12',['FixedValue',['../namespaceBoundaryCondition.html#ad3b38f103a1cfac65d6b9c0ef0cd922bae0a29899dd6d7f250fad912bfd05707e',1,'BoundaryCondition']]],
   ['flameposintegralerror_13',['flamePosIntegralError',['../classFlameSolver.html#ad322696e6730a4592aa55a1fba190f77',1,'FlameSolver']]],
-  ['flamesolver_14',['FlameSolver',['../classFlameSolver.html#ae97f129f14c1005911c7f835ef118988',1,'FlameSolver::FlameSolver()'],['../classFlameSolver.html',1,'FlameSolver']]],
+  ['flamesolver_14',['FlameSolver',['../classFlameSolver.html',1,'FlameSolver'],['../classFlameSolver.html#ae97f129f14c1005911c7f835ef118988',1,'FlameSolver::FlameSolver()']]],
   ['flamesolver_2ecpp_15',['flameSolver.cpp',['../flameSolver_8cpp.html',1,'']]],
   ['flamesolver_2eh_16',['flameSolver.h',['../flameSolver_8h.html',1,'']]],
   ['flametype_17',['flameType',['../classConfigOptions.html#aa8282264b89b3fa1554a1d93e46f667c',1,'ConfigOptions']]],
   ['floating_18',['Floating',['../namespaceBoundaryCondition.html#ad3b38f103a1cfac65d6b9c0ef0cd922ba936ce7ace9c8716e2cda6409e67ad899',1,'BoundaryCondition']]],
-  ['forsundials_19',['forSundials',['../classsdBandMatrix.html#a636f6f357ecefc95ee27314e3124e312',1,'sdBandMatrix::forSundials()'],['../classsdMatrix.html#a0a006f03f289c703e8cdf10b0bec894b',1,'sdMatrix::forSundials()'],['../classsdVector.html#a1d7771b13206d85ab57675f18d858a9f',1,'sdVector::forSundials()']]],
+  ['forsundials_19',['forSundials',['../classsdVector.html#a1d7771b13206d85ab57675f18d858a9f',1,'sdVector::forSundials()'],['../classsdMatrix.html#a0a006f03f289c703e8cdf10b0bec894b',1,'sdMatrix::forSundials()'],['../classsdBandMatrix.html#a636f6f357ecefc95ee27314e3124e312',1,'sdBandMatrix::forSundials()']]],
   ['fuelleft_20',['fuelLeft',['../classConfigOptions.html#a285f33e06073860be0159b761ba09bf4',1,'ConfigOptions']]],
   ['func_21',['func',['../classTbbWrapper.html#a7f0087e494c497b8c57947439520770e',1,'TbbWrapper']]]
 ];

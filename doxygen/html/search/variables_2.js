@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['b_0',['b',['../classTridiagonalIntegrator.html#a735be299f76cb3fddd382b82cdbc214e',1,'TridiagonalIntegrator']]],
-  ['b_1',['B',['../classDiffusionSystem.html#aef15d4f2c845169b95a0d23ca21c9c3f',1,'DiffusionSystem']]],
+  ['b_0',['B',['../classDiffusionSystem.html#aef15d4f2c845169b95a0d23ca21c9c3f',1,'DiffusionSystem']]],
+  ['b_1',['b',['../classTridiagonalIntegrator.html#a735be299f76cb3fddd382b82cdbc214e',1,'TridiagonalIntegrator']]],
   ['bandwidth_5flower_2',['bandwidth_lower',['../classSundialsCvode.html#adecb2f8646f8a28193d85a577ceaf90e',1,'SundialsCvode']]],
   ['bandwidth_5fupper_3',['bandwidth_upper',['../classSundialsCvode.html#ae46b03f715b1692d328cf01a37199e42',1,'SundialsCvode']]],
   ['beta_4',['beta',['../classOneDimGrid.html#a0376f9ef0d62d0e70ad54642170cb2da',1,'OneDimGrid::beta'],['../classGridBased.html#a7746a7f350bf5dfb3fa7e171badb17d1',1,'GridBased::beta']]],

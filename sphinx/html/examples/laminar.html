@@ -5,18 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Laminar Flame &#8212; Ember 1.5.0b1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=d59dc883" />
-    <script src="../_static/documentation_options.js?v=b7825e20"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <title>Laminar Flame &#8212; Ember 1.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css?v=34905f61" />
+    <script src="../_static/documentation_options.js?v=e0a75244"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sequential Simulations (multirun)" href="multirun.html" />
     <link rel="prev" title="Counterflow Diffusion Flame" href="diffusion.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="diffusion.html" title="Counterflow Diffusion Flame"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Laminar Flame</a></li> 
       </ul>
@@ -46,6 +46,53 @@
 <h1>Laminar Flame<a class="headerlink" href="#laminar-flame" title="Link to this heading">¶</a></h1>
 <p>This example shows how to simulate a freely-propagating, unstrained laminar
 flame.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An unstrained flame converges to a stable propagation rate for a slightly</span>
+<span class="sd">lean methane/air mixture.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ember</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;run/ex_lfs&#39;</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">Paths</span><span class="p">(</span><span class="n">outputDir</span><span class="o">=</span><span class="n">output</span><span class="p">),</span>
+    <span class="n">InitialCondition</span><span class="p">(</span><span class="n">fuel</span><span class="o">=</span><span class="s1">&#39;CH4:1.0&#39;</span><span class="p">,</span>
+                     <span class="n">oxidizer</span><span class="o">=</span><span class="s1">&#39;O2:1, N2:3.76&#39;</span><span class="p">,</span>
+                     <span class="n">equivalenceRatio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">xLeft</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                     <span class="n">xRight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">StrainParameters</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                     <span class="n">final</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">General</span><span class="p">(</span><span class="n">fixedLeftLocation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fixedBurnedVal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">nThreads</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">Grid</span><span class="p">(</span><span class="n">vtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dvtol</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">gridMin</span><span class="o">=</span><span class="mf">5e-6</span><span class="p">,</span> <span class="n">gridMax</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span>
+    <span class="n">PositionControl</span><span class="p">(</span><span class="n">proportionalGain</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">xInitial</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">xFinal</span><span class="o">=</span><span class="mf">0.005</span><span class="p">),</span>
+    <span class="n">TerminationCondition</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
+    <span class="n">Times</span><span class="p">(</span><span class="n">profileStepInterval</span><span class="o">=</span><span class="mi">50</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+    <span class="n">struct</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;/profNow.h5&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">V</span> <span class="o">/</span> <span class="n">struct</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Position [m]&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Axial Velocity [m/s]&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (K)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="o">+</span><span class="s1">&#39;/FinalProfiles.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>The following configuration parameters are particularly important for unstrained
 flames:</p>
 <blockquote>
@@ -72,7 +119,7 @@ numerical instabilities.</p></li>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>Previous topic</h4>
@@ -91,7 +138,7 @@ numerical instabilities.</p></li>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -99,13 +146,13 @@ numerical instabilities.</p></li>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -120,14 +167,14 @@ numerical instabilities.</p></li>
         <li class="right" >
           <a href="diffusion.html" title="Counterflow Diffusion Flame"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0b1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ember 1.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Laminar Flame</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2008-2023, Raymond Speth.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; Copyright 2008-2025, Raymond Speth.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>
